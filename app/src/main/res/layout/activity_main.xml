@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context=".MainActivity">
+    tools:context="com.example.calculator.MainActivity">
 
     <View
         android:id="@+id/vertSeparator0"
@@ -417,6 +417,29 @@
         app:layout_constraintStart_toEndOf="@+id/vertSeparator1"
         app:layout_constraintTop_toBottomOf="@+id/horizSeparator1" />
 
+    <EditText
+        android:id="@+id/edittext_input"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:backgroundTint="#00FFFFFF"
+        android:gravity="end|bottom"
+        android:textCursorDrawable="@drawable/line"
+        app:layout_constraintBottom_toTopOf="@+id/textview_answer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="DuplicateIds" />
+
+    <TextView
+        android:id="@+id/textview_answer"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/horizSeparator6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
