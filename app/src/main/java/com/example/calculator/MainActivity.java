@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     EditText inputField;
     TextView outputField;
     Editable inputForField;
-    StringBuilder inputForCalculations;
     int rightSelectionPositions = 0;
 
     @Override
@@ -33,32 +32,43 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //Скрыло клавиатуру
         inputField = (EditText) findViewById(R.id.edittext_input);
         outputField = (TextView) findViewById(R.id.textview_output);
-        inputField.setText("1 233 123");
+
     }
 
     public void onNumberClick(View view){
-
-       // int numberOfSpaces;
         Button button = (Button) view;
         inputForField = inputField.getText();
-
         int selectionStart = inputField.getSelectionStart();
         inputForField.insert(selectionStart,button.getText());
         rightSelectionPositions = inputForField.length() - selectionStart - 1;
-
-
-
-
         inputField.setText(StringUtil.separation(inputForField.toString(), selectionStart+1));//+1, т.к минммум на 1 позицию будет сдвиг
         inputField.setSelection(inputField.length() - rightSelectionPositions);
+        if(inputField.length() <=11)
+            inputField.setTextSize(50);
+
+        if( inputField.length() < 14 && inputField.length() >= 12)
+            inputField.setTextSize(48);
+
+        if(inputField.length() < 17 && inputField.length() >=14)
+            inputField.setTextSize(40);
+
+        if(inputField.length() < 19 && inputField.length() >= 17)
+            inputField.setTextSize(34);
+
+        if(inputField.length() >=19)
+            inputField.setTextSize(30);
+
+        Log.i("qwerty",String.valueOf(inputField.length()));
+        //if(inputField.length() > 12)
+        //    inputField.setTextSize(42);
+
     }
 
     public void onOperationClick(View view) {
         Button button = (Button) view;
-       //if(button.getText() == "C"){
+        if (button.getId() == R.id.btn_clear) {
             inputField.setText("");
-      //  }
-
+        }
 
 
     }

@@ -9,5 +9,6 @@
     <solid
         android:color="@color/blue" />
     <padding
-        android:top="1dp"/>
+        android:top="-4dp"
+        android:bottom="-2dp"/>
 </shape>
