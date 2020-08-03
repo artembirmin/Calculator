@@ -5,6 +5,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+<<<<<<< HEAD
 public abstract class StringUtil {
 
     private static  ArrayList<Character> numeral= new ArrayList<Character>(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
@@ -12,6 +13,10 @@ public abstract class StringUtil {
 
     public static void separation(EditText inputField) {
         if(inputField.getText().length() == 0) return;
+=======
+public class StringUtil {
+    public static String separation(String inputStr, int selection) {
+>>>>>>> inputOutputField
         int startNumber;
         int endNumber;
         int selection = inputField.getSelectionStart() ;
@@ -20,10 +25,16 @@ public abstract class StringUtil {
         if(selection != 0 && !numeral.contains(input.charAt(selection - 1)) && input.charAt(selection-1) != ' ') return;
         input.insert(0,'x');
         input.insert(input.length(), 'x');
+<<<<<<< HEAD
         int i;
         for(i = selection; (input.charAt(i) >= '0' && input.charAt(i) <= '9') || input.charAt(i) == ' '; i--) {
         }
         if(input.charAt(i) == ',') return;
+=======
+        for(i = selection;(input.charAt(i) >= '0' && input.charAt(i) <= '9') || input.charAt(i) == ' '; i--) {
+        }
+        if(input.charAt(i) == ',') return inputStr;
+>>>>>>> inputOutputField
         startNumber = ++i;
         for(i = selection;(input.charAt(i) >= '0' && input.charAt(i) <= '9') || input.charAt(i) == ' '; i++) {
         }
@@ -44,6 +55,7 @@ public abstract class StringUtil {
         input.deleteCharAt(0);
         input.deleteCharAt(input.length()-1);
         input.replace(startNumber-1,endNumber-1, number.toString());
+<<<<<<< HEAD
         inputField.setText(input);
         inputField.setSelection(inputField.getText().length() - rightSelectionPositions);
     }
@@ -78,6 +90,9 @@ public abstract class StringUtil {
         inputField.setText(input.toString());
         inputField.setSelection(selection + 1);
         StringUtil.serapationForOperatoin(inputField);
+=======
+        return input.toString();
+>>>>>>> inputOutputField
     }
 
     public static void serapationForOperatoin(EditText inputField) {
