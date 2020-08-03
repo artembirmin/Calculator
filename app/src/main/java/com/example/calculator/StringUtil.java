@@ -15,9 +15,10 @@ public abstract class StringUtil {
         int startNumber;
         int endNumber;
         int selection = inputField.getSelectionStart() ;
-        int rightSelectionPositions = inputField.getText().length() - selection;
+        int rightSelectionPositions = inputField.getText().length() - selection; //запомнил позицию курсора
         StringBuilder input = new StringBuilder(inputField.getText());
         if(selection != 0 && !numeral.contains(input.charAt(selection - 1)) && input.charAt(selection-1) != ' ') return;
+        //Для случая, когда сепарация вызывается между знаками операций
         input.insert(0,'x');
         input.insert(input.length(), 'x');
         int i;
@@ -29,6 +30,7 @@ public abstract class StringUtil {
         }
         endNumber = i;
         StringBuilder number = new StringBuilder(input.substring(startNumber,endNumber).replaceAll("\\s","")).reverse();
+        //убрали пробелы в нужном промежутке и перевернули
         i = 0;
         for(int j = 0; j < number.length(); j++){
             if( (i+1)%3 == 0){
@@ -52,27 +54,33 @@ public abstract class StringUtil {
     public static void append(String operation, EditText inputField){
         StringBuilder input = new StringBuilder(inputField.getText());
         int selection = inputField.getSelectionStart();
-        if(selection != input.length() && input.charAt(selection) == ' ') //Если знак ставится после пробела, сводим к случаю постановки перед пробелом. Он решается автоматом
+        if(selection != input.length() && input.charAt(selection) == ' ')
+            //Если знак ставится после пробела, сводим к случаю постановки перед пробелом. Он решается автоматом
             selection++;
         if(input.length() == 0 && operation.equals("−")) {
+            //минус можно ставить в пустоту
             input.insert(selection, operation);
             inputField.setText(input.toString());
             inputField.setSelection(selection + 1);
             return;
-        }
+        } else  if(input.length() == 0  || ((!operation.equals("−")) && !numeral.contains(input.charAt(selection - 1)) && input.charAt(selection - 1) != ' '))
+            //не минус нельзя ставть в пустоту и не минус после знака арифметической операции
+            //последнее условние для несрабатывания на ситуации 1 +234. Условие не считает пробел за число и return.
+            return;
         else if(selection == 0){
             input.insert(selection, operation);
             inputField.setText(input.toString());
             inputField.setSelection(selection + 1);
             return;
-        }
-        else if(input.charAt(selection - 1) != '−' && !numeral.contains(input.charAt(selection - 1)) && operation.equals("−")){
+        } else if(input.charAt(selection - 1) != '−' && !numeral.contains(input.charAt(selection - 1)) && operation.equals("−")){
+            //позволяет поставить минус после знака арифметической операции
             input.insert(selection, operation);
             inputField.setText(input.toString());
             inputField.setSelection(selection + 1);
             StringUtil.serapationForOperatoin(inputField);
             return;
         } else if(input.charAt(selection - 1) == '−')
+            //два минуса нельзя
             return;
         input.insert(selection, operation);
         inputField.setText(input.toString());
@@ -81,6 +89,7 @@ public abstract class StringUtil {
     }
 
     public static void serapationForOperatoin(EditText inputField) {
+        //Арифметическая операция может разбить какое-то число правая его часть будет нетронута, а левая отправится на сепарацию
         StringBuilder input = new StringBuilder(inputField.getText());
         int selection = inputField.getSelectionStart();
         //if(input.charAt(selection - 2) ==  || input.charAt(selection))

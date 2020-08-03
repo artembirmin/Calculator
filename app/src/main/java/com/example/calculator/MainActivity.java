@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         backspace.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                inputField.setText("99+");
+                inputField.setText("");
                 StringUtil.checkTextSize(inputField);
                 return true;
             }

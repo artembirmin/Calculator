@@ -13,25 +13,30 @@ public class Operations {
     public static void backspace(EditText inputField){
         StringBuilder input = new StringBuilder(inputField.getText());
         int selection = inputField.getSelectionStart();
-        if(input.length() == 1){ //если один символ в поле боя
+        if(input.length() == 1){
+            //если один символ в поле боя
             input.deleteCharAt(0);
             inputField.setText(input.toString());
             inputField.setSelection(0);
             StringUtil.separation(inputField);
             return;
-        } else  if(selection == 0){ //если курсор на 0, то сбросить его
+        } else  if(selection == 0){
+            //если курсор на 0, то сбросить его
             inputField.setSelection(input.length());
             StringUtil.separation(inputField);
             return;
-        } else if(input.charAt(selection - 1) == ' ') //если перед курсором пробел, то удалить символ после него
+        } else if(input.charAt(selection - 1) == ' ')
+            //если перед курсором пробел, то удалить символ после него
             input.deleteCharAt(selection - 2);
-        else if(selection == 1) { //если на 1, то удалить и скинуть
+        else if(selection == 1) {
+            //если на 1, то удалить и скинуть
             input.deleteCharAt(selection - 1);
             inputField.setText(input.toString());
             inputField.setSelection(input.length());
             StringUtil.separation(inputField);
             return;
-        }   else if(selection == 2 && input.charAt(1) == ',' && input.charAt(0) == '0') { //аналогично верхнему случаю, только для дроби
+        }   else if(selection == 2 && input.charAt(1) == ',' && input.charAt(0) == '0') {
+            //аналогично верхнему случаю, только для дроби
             input.delete(0,2);
             inputField.setText(input.toString());
             inputField.setSelection(selection + 1);
@@ -39,7 +44,8 @@ public class Operations {
             inputField.setSelection(input.length());
             return;
         }
-        else if(input.charAt(selection - 1) == ',' && input.charAt(selection - 2) == '0' && !numeral.contains(input.charAt(selection - 3))) { //верхний случай для варианта, когда это дробь с 0 и до 0 есть операция
+        else if(input.charAt(selection - 1) == ',' && input.charAt(selection - 2) == '0' && !numeral.contains(input.charAt(selection - 3))) {
+            //верхний случай для варианта, когда это дробь с 0 и до 0 есть операция
             input.delete(selection - 1,selection - 3);
             inputField.setText(input.toString());
             inputField.setSelection(selection + 1);
