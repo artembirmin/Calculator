@@ -17,10 +17,6 @@ public class MainActivity extends AppCompatActivity {
     EditText inputField;
     TextView outputField;
     Editable inputForField;
-<<<<<<< HEAD
-=======
-    int rightSelectionPositions = 0;
->>>>>>> inputOutputField
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         inputField = (EditText) findViewById(R.id.edittext_input);
         outputField = (TextView) findViewById(R.id.textview_output);
-<<<<<<< HEAD
         Button backspace = (Button) findViewById(R.id.btn_backspace);
         backspace.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -41,49 +36,18 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-=======
-
->>>>>>> inputOutputField
     }
 
     public void onNumberClick(View view){
         Button button = (Button) view;
         inputForField = inputField.getText();
-<<<<<<< HEAD
         inputForField.insert(inputField.getSelectionStart(),button.getText());
         StringUtil.separation(inputField);
         StringUtil.checkTextSize(inputField);
-=======
-        int selectionStart = inputField.getSelectionStart();
-        inputForField.insert(selectionStart,button.getText());
-        rightSelectionPositions = inputForField.length() - selectionStart - 1;
-        inputField.setText(StringUtil.separation(inputForField.toString(), selectionStart+1));//+1, т.к минммум на 1 позицию будет сдвиг
-        inputField.setSelection(inputField.length() - rightSelectionPositions);
-        if(inputField.length() <=11)
-            inputField.setTextSize(50);
-
-        if( inputField.length() < 14 && inputField.length() >= 12)
-            inputField.setTextSize(48);
-
-        if(inputField.length() < 17 && inputField.length() >=14)
-            inputField.setTextSize(40);
-
-        if(inputField.length() < 19 && inputField.length() >= 17)
-            inputField.setTextSize(34);
-
-        if(inputField.length() >=19)
-            inputField.setTextSize(30);
-
-        Log.i("qwerty",String.valueOf(inputField.length()));
-        //if(inputField.length() > 12)
-        //    inputField.setTextSize(42);
-
->>>>>>> inputOutputField
     }
 
     public void onOperationClick(View view) {
         Button button = (Button) view;
-<<<<<<< HEAD
         switch (button.getId()){
             case R.id.btn_clear:
                 inputField.setText("");
@@ -105,12 +69,5 @@ public class MainActivity extends AppCompatActivity {
                 StringUtil.checkTextSize(inputField);
                 break;
         }
-=======
-        if (button.getId() == R.id.btn_clear) {
-            inputField.setText("");
-        }
-
-
->>>>>>> inputOutputField
     }
 }
