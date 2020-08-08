@@ -14,17 +14,14 @@ import androidx.annotation.NonNull;
 
 public class BorderButton extends View {
     private ShapeDrawable vertRect, horizRect;
-    private Rect mRectSquare;
-    private Paint mPaintSquare;
+    private Rect RectSquare;
+    private Paint PaintSquare;
+
     public BorderButton(Context context) {
         super(context);
         init(null);
+    }
 
-    }
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-    }
     public BorderButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         int width = this.getWidth();
@@ -32,11 +29,10 @@ public class BorderButton extends View {
 
         vertRect = new ShapeDrawable(new RectShape());
         vertRect.getPaint().setColor(Color.RED);
-        vertRect.setBounds(0, 0, width/10, height);
+        vertRect.setBounds(0, 0, width / 10, height);
         horizRect = new ShapeDrawable(new RectShape());
         horizRect.getPaint().setColor(Color.RED);
-        horizRect.setBounds(0, 0, width, height/9);
-
+        horizRect.setBounds(0, 0, width, height / 9);
     }
 
     public BorderButton(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -44,21 +40,22 @@ public class BorderButton extends View {
         init(attrs);
     }
 
-    private void init(@NonNull AttributeSet set){
-        mRectSquare = new Rect();
-        mPaintSquare = new Paint(Paint.ANTI_ALIAS_FLAG);
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+    }
 
+    private void init(@NonNull AttributeSet set) {
+        RectSquare = new Rect();
+        PaintSquare = new Paint(Paint.ANTI_ALIAS_FLAG);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         Paint paint = new Paint();
-        paint.setColor( Color.RED );
-        paint.setStrokeWidth( 1.5f );
-        paint.setStyle( Paint.Style.STROKE );
-        canvas.drawLine(0,0,0,getHeight(),paint);
-
-
+        paint.setColor(Color.RED);
+        paint.setStrokeWidth(1.5f);
+        paint.setStyle(Paint.Style.STROKE);
+        canvas.drawLine(0, 0, 0, getHeight(), paint);
     }
-
 }

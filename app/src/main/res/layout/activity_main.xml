@@ -9,41 +9,41 @@
     tools:context="com.example.calculator.MainActivity">
 
     <View
-        android:id="@+id/vertSeparator0"
+        android:id="@+id/vert_separator_0"
         android:layout_width="0.6dp"
         android:layout_height="0dp"
         android:background="@color/grey"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator0"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator1"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_0"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator6" />
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6" />
 
     <View
-        android:id="@+id/vertSeparator1"
+        android:id="@+id/vert_separator_1"
         android:layout_width="0.6dp"
         android:layout_height="0dp"
         android:background="@color/grey"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator0"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator6"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6"
         app:layout_constraintVertical_bias="0.0" />
 
     <View
-        android:id="@+id/vertSeparator2"
+        android:id="@+id/vert_separator_2"
         android:layout_width="0.6dp"
         android:layout_height="0dp"
         android:background="@color/grey"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator0"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator1"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator6" />
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6" />
 
     <View
-        android:id="@+id/horizSeparator0"
+        android:id="@+id/horiz_separator_0"
         android:layout_width="0dp"
         android:layout_height="0.9dp"
         android:background="@color/grey"
@@ -54,69 +54,69 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <View
-        android:id="@+id/horizSeparator1"
+        android:id="@+id/horiz_separator_1"
         android:layout_width="0dp"
         android:layout_height="0.6dp"
         android:background="@color/grey"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator0"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator2"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_0"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator3"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_3"
         app:layout_constraintVertical_bias="0.666666" />
 
     <View
-        android:id="@+id/horizSeparator2"
+        android:id="@+id/horiz_separator_2"
         android:layout_width="0dp"
         android:layout_height="0.6dp"
         android:background="@color/grey"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator1"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator3" />
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_3" />
 
     <View
-        android:id="@+id/horizSeparator3"
+        android:id="@+id/horiz_separator_3"
         android:layout_width="0dp"
         android:layout_height="0.6dp"
         android:background="@color/grey"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator0"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator6" />
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6" />
 
     <View
-        android:id="@+id/horizSeparator4"
+        android:id="@+id/horiz_separator_4"
         android:layout_width="0dp"
         android:layout_height="0.6dp"
         android:background="@color/grey"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator3"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator5" />
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_5" />
 
     <View
-        android:id="@+id/horizSeparator5"
+        android:id="@+id/horiz_separator_5"
         android:layout_width="0dp"
         android:layout_height="0.6dp"
         android:background="@color/grey"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator3"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator6"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6"
         app:layout_constraintVertical_bias="0.3333333" />
 
     <View
-        android:id="@+id/horizSeparator6"
+        android:id="@+id/horiz_separator_6"
         android:layout_width="0dp"
         android:layout_height="0.6dp"
         android:layout_marginTop="172dp"
@@ -134,13 +134,13 @@
         android:layout_height="0dp"
         android:fontFamily="monospace"
         android:onClick="onOperationClick"
-        android:text="С"
+        android:text="@string/clear"
         android:textColor="@color/blue"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator4"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator0"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_4"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator5" />
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_5" />
 
     <Button
         android:id="@+id/btn_division"
@@ -149,13 +149,13 @@
         android:layout_height="0dp"
         android:fontFamily="sans-serif-light"
         android:onClick="onOperationClick"
-        android:text="÷"
+        android:text="@string/division"
         android:textColor="@color/blue"
         android:textSize="42sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator4"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator1"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator0"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator5" />
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_4"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_0"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_5" />
 
     <Button
         android:id="@+id/btn_multiplication"
@@ -164,13 +164,13 @@
         android:layout_height="0dp"
         android:fontFamily="@font/armata"
         android:onClick="onOperationClick"
-        android:text="×"
+        android:text="@string/multiplication"
         android:textColor="@color/blue"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator4"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator2"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator1"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator5" />
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_4"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_5" />
 
     <Button
         android:id="@+id/btn_backspace"
@@ -179,13 +179,13 @@
         android:layout_height="0dp"
         android:fontFamily="@font/fira_sans_thin"
         android:onClick="onOperationClick"
-        android:text="⌫"
+        android:text="@string/backspace"
         android:textColor="@color/blue"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator4"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator2"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator5" />
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_2"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_5" />
 
     <Button
         android:id="@+id/btn_difference"
@@ -194,13 +194,13 @@
         android:layout_height="0dp"
         android:fontFamily="sans-serif-light"
         android:onClick="onOperationClick"
-        android:text="−"
+        android:text="@string/difference"
         android:textColor="@color/blue"
         android:textSize="42sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator3"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator2"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator4" />
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_2"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_4" />
 
     <Button
         android:id="@+id/btn_sum"
@@ -209,13 +209,13 @@
         android:layout_height="0dp"
         android:fontFamily="@font/armata"
         android:onClick="onOperationClick"
-        android:text="+"
+        android:text="@string/sum"
         android:textColor="@color/blue"
         android:textSize="36sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator2"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator2"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator3" />
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_2"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_3" />
 
     <Button
         android:id="@+id/btn_equal"
@@ -223,76 +223,76 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="sans-serif-light"
-        android:text="="
+        android:text="@string/equal"
         android:textColor="@color/white"
         android:textSize="42sp"
-        app:layout_constraintBottom_toTopOf="@id/horizSeparator0"
+        app:layout_constraintBottom_toTopOf="@id/horiz_separator_0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator2"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator2" />
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_2"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_2" />
 
     <Button
-        android:id="@+id/btn_mc"
+        android:id="@+id/btn_memory_clear"
         style="@style/GreyButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="@font/nunito"
-        android:text="mc"
+        android:text="@string/memory_clear"
         android:textAllCaps="false"
         android:textColor="#848484"
         android:textSize="26sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator5"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_5"
         app:layout_constraintDimensionRatio="h,"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator0"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator6" />
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6" />
 
     <Button
-        android:id="@+id/btn_m_sum"
+        android:id="@+id/btn_memoty_sum"
         style="@style/GreyButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="@font/nunito"
-        android:text="m+"
+        android:text="@string/memory_sum"
         android:textAllCaps="false"
         android:textColor="#848484"
         android:textSize="26sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator5"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator1"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator0"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator6" />
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_5"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_0"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6" />
 
     <Button
-        android:id="@+id/btn_m_difference"
+        android:id="@+id/btn_memory_difference"
         style="@style/GreyButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="@font/nunito"
-        android:text="m-"
+        android:text="@string/memory_difference"
         android:textAllCaps="false"
         android:textColor="#848484"
         android:textSize="26sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator5"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator2"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_5"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator1"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator6"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6"
         app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/btn_mr"
+        android:id="@+id/btn_memory_read"
         style="@style/GreyButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="@font/nunito"
-        android:text="mr"
+        android:text="@string/memory_read"
         android:textAllCaps="false"
         android:textColor="#848484"
         android:textSize="26sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator5"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_5"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator2"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator6" />
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_2"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6" />
 
     <Button
         android:id="@+id/btn_7"
@@ -300,11 +300,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:onClick="onNumberClick"
-        android:text="7"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator3"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator0"
+        android:text="@string/seven"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_3"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator4" />
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_4" />
 
     <Button
         android:id="@+id/btn_8"
@@ -312,11 +312,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:onClick="onNumberClick"
-        android:text="8"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator3"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator1"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator0"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator4" />
+        android:text="@string/eight"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_3"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_0"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_4" />
 
     <Button
         android:id="@+id/btn_9"
@@ -324,11 +324,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:onClick="onNumberClick"
-        android:text="9"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator3"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator2"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator1"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator4" />
+        android:text="@string/nine"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_3"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_4" />
 
     <Button
         android:id="@+id/btn_4"
@@ -336,11 +336,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:onClick="onNumberClick"
-        android:text="4"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator2"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator0"
+        android:text="@string/four"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_2"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator3" />
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_3" />
 
     <Button
         android:id="@+id/btn_5"
@@ -348,11 +348,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:onClick="onNumberClick"
-        android:text="5"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator2"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator1"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator0"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator3" />
+        android:text="@string/five"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_2"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_0"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_3" />
 
     <Button
         android:id="@+id/btn_6"
@@ -360,11 +360,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:onClick="onNumberClick"
-        android:text="6"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator2"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator2"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator1"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator3" />
+        android:text="@string/six"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_2"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_3" />
 
     <Button
         android:id="@+id/btn_1"
@@ -372,11 +372,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:onClick="onNumberClick"
-        android:text="1"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator1"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator0"
+        android:text="@string/one"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_1"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator2" />
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_2" />
 
     <Button
         android:id="@+id/btn_2"
@@ -384,11 +384,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:onClick="onNumberClick"
-        android:text="2"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator1"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator1"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator0"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator2" />
+        android:text="@string/two"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_1"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_0"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_2" />
 
     <Button
         android:id="@+id/btn_3"
@@ -396,22 +396,22 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:onClick="onNumberClick"
-        android:text="3"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator1"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator2"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator1"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator2" />
+        android:text="@string/three"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_1"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_2" />
 
     <Button
         android:id="@+id/btn_percent"
         style="@style/WhiteButton"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:text="%"
-        app:layout_constraintBottom_toTopOf="@id/horizSeparator0"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator0"
+        android:text="@string/percent"
+        app:layout_constraintBottom_toTopOf="@id/horiz_separator_0"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator1" />
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_1" />
 
     <Button
         android:id="@+id/btn_0"
@@ -419,11 +419,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:onClick="onNumberClick"
-        android:text="0"
-        app:layout_constraintBottom_toTopOf="@id/horizSeparator0"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator1"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator0"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator1" />
+        android:text="@string/zero"
+        app:layout_constraintBottom_toTopOf="@id/horiz_separator_0"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_0"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_1" />
 
     <Button
         android:id="@+id/bnt_fraction"
@@ -431,11 +431,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:onClick="onOperationClick"
-        android:text=","
-        app:layout_constraintBottom_toTopOf="@id/horizSeparator0"
-        app:layout_constraintEnd_toStartOf="@+id/vertSeparator2"
-        app:layout_constraintStart_toEndOf="@+id/vertSeparator1"
-        app:layout_constraintTop_toBottomOf="@+id/horizSeparator1" />
+        android:text="@string/comma"
+        app:layout_constraintBottom_toTopOf="@id/horiz_separator_0"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_1" />
 
     <EditText
         android:id="@+id/edittext_input"
@@ -445,12 +445,12 @@
         android:cursorVisible="true"
         android:gravity="end|bottom"
         android:longClickable="false"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:singleLine="true"
+        android:textSize="49sp"
         android:textCursorDrawable="@drawable/cursor"
         android:textSelectHandle="@drawable/handle"
-        android:textSize="46sp"
         app:layout_constraintBottom_toTopOf="@+id/textview_output"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -465,10 +465,10 @@
         android:gravity="end|bottom"
         android:paddingRight="24dp"
         android:paddingBottom="35dp"
-        android:text="1515"
+        android:text="реклама"
         android:textColor="#AEAEAE"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizSeparator6"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
