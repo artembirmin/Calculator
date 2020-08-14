@@ -55,18 +55,18 @@ public class MainActivity extends AppCompatActivity {
                 StringUtil.checkTextSize(inputField);
                 break;
             case R.id.btn_backspace:
-                ComplexOperations.backspace(inputField);
+                ComplexOperations.onClickMakeBackspace(inputField);
                 StringUtil.checkTextSize(inputField);
                 break;
             case R.id.btn_sum:
             case R.id.btn_difference:
             case R.id.btn_multiplication:
             case btn_division:
-                StringUtil.appendArithmeticSign((String) button.getText(), inputField);
+                StringUtil.insertArithmeticSign((String) button.getText(), inputField);
                 StringUtil.checkTextSize(inputField);
                 break;
             case R.id.bnt_fraction:
-                ComplexOperations.fraction(inputField);
+                ComplexOperations.onClickCreateFraction(inputField);
                 StringUtil.checkTextSize(inputField);
                 break;
         }
