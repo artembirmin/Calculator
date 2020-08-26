@@ -8,7 +8,11 @@ import java.util.Arrays;
 public abstract class StringUtil {
 
     private static final int ZERO_POSITION = 0;
-    private static ArrayList<Character> numeral = new ArrayList<>(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
+    private static final ArrayList<Character> numeral = new ArrayList<>(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
+    private static final ArrayList<Character> arithmeticOperations = new ArrayList<>(Arrays.asList('+', '−', '×', '÷'));
+    private static final char MINUS = '−';
+    private static final char PLUS = '+';
+    private static final char COMMA = ',';
 
     public static int getNumberOf(char character, String thisString) {
         int amt = 0;
@@ -24,7 +28,7 @@ public abstract class StringUtil {
         int selection = inputField.getSelectionStart();
         int rightSelectionPositions = inputField.getText().length() - selection; //запомнил позицию курсора
         StringBuilder input = new StringBuilder(inputField.getText());
-        if (selection != 0 && !numeral.contains(input.charAt(selection - 1)) && input.charAt(selection - 1) != ',' && input.charAt(selection - 1) != ' ')
+        if (selection != 0 && !numeral.contains(input.charAt(selection - 1)) && input.charAt(selection - 1) != COMMA && input.charAt(selection - 1) != ' ')
             return;
         //Для случая, когда сепарация вызывается между знаками операций
         input.insert(ZERO_POSITION, 'x');
@@ -113,36 +117,16 @@ public abstract class StringUtil {
         if (selection != input.length() && input.charAt(selection) == ' ')
             //Если знак ставится после пробела, сводим к случаю постановки перед пробелом. Он решается автоматом
             selection++;
-        if (selection == ZERO_POSITION && !operation.equals("−"))
-            return;
-        if (selection == ZERO_POSITION) {
-            addMinusToStart(operation, inputField, input, selection);
+        if(operation.equals(String.valueOf(MINUS))) {
+            ArithmeticOperations.insertMinus(inputField, input, selection);
             return;
         }
-        if (input.length() == 0
-                || ((!operation.equals("−")) && !numeral.contains(input.charAt(selection - 1)) && input.charAt(selection - 1) != ' ')
-                || input.charAt(selection - 1) == ',')
-            //не минус нельзя ставть в пустоту и не минус после знака арифметической операции
-            //последнее условние для несрабатывания на ситуации 1 +234. Условие не считает пробел за число и return.
-            return;
-        if (selection < input.length() && !numeral.contains(input.charAt(selection)))
-            //не допускает ситуацию, когда знак операци можно было поствить 55здесь+464
-            return;
-        if (input.charAt(selection - 1) != '−' && numeral.contains(input.charAt(selection - 1)) && operation.equals("−")) {
-            //позволяет поставить минус после знака арифметической операции
-            defaultInsertArithmeticSign(operation, inputField, input, selection);
+        if(operation.equals(String.valueOf(PLUS))) {
+            ArithmeticOperations.insertSign(operation, inputField, input, selection);
             return;
         }
-        if (input.charAt(selection - 1) == '−')
-            //два минуса нельзя
-            return;
-        defaultInsertArithmeticSign(operation, inputField, input, selection);
-    }
-
-    private static void addMinusToStart(String operation, EditText inputField, StringBuilder input, int selection) {
-        input.insert(selection, operation);
-        inputField.setText(input.toString());
-        inputField.setSelection(selection + 1);
+        if(arithmeticOperations.contains(operation.charAt(ZERO_POSITION)))
+            ArithmeticOperations.insertSign(operation, inputField, input, selection);
     }
 
     public static void separationForArithmeticOperation(EditText inputField) {
@@ -154,14 +138,12 @@ public abstract class StringUtil {
         if (input.length() == 1)
             return;
         StringUtil.separation(inputField);
+        try {
+            inputField.setSelection(selection + 1);
+            StringUtil.separation(inputField);
+        } catch (Exception ignored) {
+        }
         inputField.setSelection(inputField.getText().length() - rightSelectionPositions);
-    }
-
-    private static void defaultInsertArithmeticSign(String operation, EditText inputField, StringBuilder input, int selection) {
-        input.insert(selection, operation);
-        inputField.setText(input.toString());
-        inputField.setSelection(selection + 1);
-        StringUtil.separationForArithmeticOperation(inputField);
     }
 
     public static void checkTextSize(EditText inputField) {
@@ -171,18 +153,19 @@ public abstract class StringUtil {
             inputField.setTextSize(minSizeValue);
             return;
         }
-        if (inputField.length() >= maxLengthValue - 3) {
+        if (inputField.length() >= maxLengthValue - 4) {
             inputField.setTextSize(minSizeValue + 4);
             return;
         }
-        if (inputField.length() >= maxLengthValue - 5) {
+        if (inputField.length() >= maxLengthValue - 6) {
             inputField.setTextSize(minSizeValue + 10);
             return;
         }
-        if (inputField.length() >= maxLengthValue - 7) {
+        if (inputField.length() >= maxLengthValue - 8) {
             inputField.setTextSize(minSizeValue + 16);
             return;
         }
         inputField.setTextSize(minSizeValue + 24);
     }
+
 }

@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
                 StringUtil.checkTextSize(inputField);
                 break;
             case R.id.btn_backspace:
-                ComplexOperations.onClickMakeBackspace(inputField);
+                ComplexOperations.onClickBackspace(inputField);
                 StringUtil.checkTextSize(inputField);
                 break;
             case R.id.btn_sum:
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 StringUtil.checkTextSize(inputField);
                 break;
             case R.id.bnt_fraction:
-                ComplexOperations.onClickCreateFraction(inputField);
+                ComplexOperations.onClickFraction(inputField);
                 StringUtil.checkTextSize(inputField);
                 break;
         }

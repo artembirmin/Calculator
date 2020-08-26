@@ -10,13 +10,14 @@ public class ComplexOperations {
     private static final int ZERO_POSITION = 0;
     private static final int FIRST_POSITION = 1;
     private static final int SECOND_POSITION = 2;
-    private static ArrayList<Character> numeral = new ArrayList<>(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
+    private static final ArrayList<Character> numeral = new ArrayList<>(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
+    private static final char COMMA = ',';
 
     /*
         Индексу курсора соответствует символ справа от него
     */
 
-    public static void onClickMakeBackspace(EditText inputField) {
+    public static void onClickBackspace(EditText inputField) {
         StringBuilder input = new StringBuilder(inputField.getText());
         int selection = inputField.getSelectionStart();
         if (input.length() == 1) {
@@ -31,7 +32,7 @@ public class ComplexOperations {
             RemoveAfterSpaceLeft(inputField, input, selection);
             return;
         }
-        if ((selection == FIRST_POSITION || selection == SECOND_POSITION) && input.charAt(1) == ',' && input.charAt(ZERO_POSITION) == '0') {
+        if ((selection == FIRST_POSITION || selection == SECOND_POSITION) && input.charAt(1) == COMMA && input.charAt(ZERO_POSITION) == '0') {
             RemoveFractionLessThenOne(inputField, input, selection);
             return;
         }
@@ -40,12 +41,12 @@ public class ComplexOperations {
             return;
         }
         if (selection > SECOND_POSITION && selection != input.length()
-                && ((input.charAt(selection - 1) == ',' && input.charAt(selection - 2) == '0' && !numeral.contains(input.charAt(selection - 3)))
-                || (input.charAt(selection) == ',' && input.charAt(selection - 1) == '0' && !numeral.contains(input.charAt(selection - 2))))) {
+                && ((input.charAt(selection - 1) == COMMA && input.charAt(selection - 2) == '0' && !numeral.contains(input.charAt(selection - 3)))
+                || (input.charAt(selection) == COMMA && input.charAt(selection - 1) == '0' && !numeral.contains(input.charAt(selection - 2))))) {
             RemoveFractionLessThenOne(inputField, input, selection);
             return;
         }
-        if (input.charAt(selection - 1) == ',' && selection != input.length()) {
+        if (input.charAt(selection - 1) == COMMA && selection != input.length()) {
             RemoveCommaInMiddle(inputField, input, selection);
             return;
         }
@@ -88,9 +89,9 @@ public class ComplexOperations {
     }
 
     private static void RemoveCommaInMiddle(EditText inputField, StringBuilder input, int selection) {
-        int oldNumberSpaces = StringUtil.getNumberOf(' ', inputField.getText().toString().substring(0, selection));
+        int oldNumberSpaces = StringUtil.getNumberOf(' ', inputField.getText().toString().substring(ZERO_POSITION, selection));
         defaultBackspace(inputField, input, selection);
-        int newNumberSpaces = StringUtil.getNumberOf(' ', inputField.getText().toString().substring(0, selection));
+        int newNumberSpaces = StringUtil.getNumberOf(' ', inputField.getText().toString().substring(ZERO_POSITION, selection));
         inputField.setSelection(selection - 1 - oldNumberSpaces + newNumberSpaces);
     }
 
@@ -98,10 +99,18 @@ public class ComplexOperations {
         input.deleteCharAt(selection - 1);
         inputField.setText(input.toString());
         inputField.setSelection(selection - 1);
+        try {
+            if(input.charAt(selection - 1) == ' '){
+                input.deleteCharAt(selection - 1);
+                inputField.setText(input.toString());
+                inputField.setSelection(selection - 1);
+            }
+        } catch (Exception ignored){
+        }
         StringUtil.separation(inputField);
     }
 
-    public static void onClickCreateFraction(EditText inputField) {
+    public static void onClickFraction(EditText inputField) {
         StringBuilder input = new StringBuilder(inputField.getText());
         int selection = inputField.getSelectionStart();
         if (StringUtil.isFraction(inputField) || (selection == ZERO_POSITION && input.length() > 2 && !numeral.contains(input.charAt(selection))))
