@@ -1,34 +1,19 @@
-package com.example.calculator;
+package com.example.calculatormain;
 
 import android.widget.EditText;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
-public abstract class StringUtil {
+public class StringUtil {
 
     private static final int ZERO_POSITION = 0;
-    private static final ArrayList<Character> numeral = new ArrayList<>(Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'));
-    private static final ArrayList<Character> arithmeticOperations = new ArrayList<>(Arrays.asList('+', '−', '×', '÷'));
     private static final char MINUS = '−';
     private static final char PLUS = '+';
-    private static final char COMMA = ',';
-
-    public static int getNumberOf(char character, String thisString) {
-        int amt = 0;
-        for (char ch : thisString.toCharArray()) {
-            if (ch == character)
-                amt++;
-        }
-        return amt;
-    }
 
     public static void separation(EditText inputField) {
         if (inputField.getText().length() == 0) return;
         int selection = inputField.getSelectionStart();
         int rightSelectionPositions = inputField.getText().length() - selection; //запомнил позицию курсора
         StringBuilder input = new StringBuilder(inputField.getText());
-        if (selection != 0 && !numeral.contains(input.charAt(selection - 1)) && input.charAt(selection - 1) != COMMA && input.charAt(selection - 1) != ' ')
+        if (selection != 0 && !StringUtil.isNumeral(input.charAt(selection - 1)) && input.charAt(selection - 1) != ' ')
             return;
         //Для случая, когда сепарация вызывается между знаками операций
         input.insert(ZERO_POSITION, 'x');
@@ -90,6 +75,19 @@ public abstract class StringUtil {
         }
     }
 
+    public static int getCountOf(char character, String thisString) {
+        int amt = 0;
+        for (char ch : thisString.toCharArray()) {
+            if (ch == character)
+                amt++;
+        }
+        return amt;
+    }
+
+    public static boolean isNumeral(char item) {
+        return item >= '0' && item <= '9' || item == ' ';
+    }
+
     public static boolean isFraction(EditText inputField) {
         StringBuilder input = new StringBuilder(inputField.getText());
         int selection = inputField.getSelectionStart();
@@ -111,22 +109,27 @@ public abstract class StringUtil {
         return input.charAt(startNumber - 1) == ',' || input.charAt(endNumber) == ',';
     }
 
+    public static boolean isArithmeticOperation(char item) {
+        return item == '+' || item == '−' || item == '×' || item == '÷' || item == '^';
+    }
+
     public static void insertArithmeticSign(String operation, EditText inputField) {
         StringBuilder input = new StringBuilder(inputField.getText());
+        ArithmeticOperations arithmeticOperations = new ArithmeticOperations(inputField, input);
         int selection = inputField.getSelectionStart();
         if (selection != input.length() && input.charAt(selection) == ' ')
             //Если знак ставится после пробела, сводим к случаю постановки перед пробелом. Он решается автоматом
             selection++;
         if(operation.equals(String.valueOf(MINUS))) {
-            ArithmeticOperations.insertMinus(inputField, input, selection);
+            arithmeticOperations.insertMinus(selection);
             return;
         }
         if(operation.equals(String.valueOf(PLUS))) {
-            ArithmeticOperations.insertSign(operation, inputField, input, selection);
+            arithmeticOperations.insertSign(operation, selection);
             return;
         }
-        if(arithmeticOperations.contains(operation.charAt(ZERO_POSITION)))
-            ArithmeticOperations.insertSign(operation, inputField, input, selection);
+        if(StringUtil.isArithmeticOperation(operation.charAt(ZERO_POSITION)))
+            arithmeticOperations.insertSign(operation, selection);
     }
 
     public static void separationForArithmeticOperation(EditText inputField) {
@@ -147,7 +150,7 @@ public abstract class StringUtil {
     }
 
     public static void checkTextSize(EditText inputField) {
-        int maxLengthValue = 19 + StringUtil.getNumberOf(',', inputField.getText().toString()) / 2;
+        int maxLengthValue = 19 + StringUtil.getCountOf(',', inputField.getText().toString()) / 2;
         int minSizeValue = 30;
         if (inputField.length() >= maxLengthValue) {
             inputField.setTextSize(minSizeValue);
