@@ -60,16 +60,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveInstanceState() {
         preferences = getPreferences(MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString(SAVE_EXPRESSION,inputField.getText().toString());
-        editor.putString(SAVE_ANSWER, outputField.getText().toString());
-        editor.apply();
+        preferences.edit()
+                .putString(SAVE_EXPRESSION,inputField.getText().toString())
+                .putString(SAVE_ANSWER, outputField.getText().toString())
+                .apply();
     }
 
     private void loadInstanceState(){
         preferences = getPreferences(MODE_PRIVATE);
         inputField.setText(preferences.getString(SAVE_EXPRESSION,""));
         outputField.setText(preferences.getString(SAVE_ANSWER,""));
+        preferences.edit().clear().apply();
     }
 
     public void calculate(){
