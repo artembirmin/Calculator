@@ -1,5 +1,6 @@
 package com.example.calculatormain;
 
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.Editable;
@@ -23,7 +24,11 @@ public class MainActivity extends AppCompatActivity {
     AnswerTextView outputField;
     Editable inputForField;
     StringBuilder input;
+    SharedPreferences preferences;
     ReversePolishNotation pn = new ReversePolishNotation();
+
+    final static String SAVE_EXPRESSION = "save_expression";
+    final static String SAVE_ANSWER = "save_answer";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //Скрыло клавиатуру
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         inputField = (EditText) findViewById(R.id.edittext_input);
-
         outputField = (AnswerTextView) findViewById(R.id.textview_output);
+        loadInstanceState();
         Button backspace = findViewById(R.id.btn_backspace);
         backspace.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -45,13 +50,26 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
-        View separator = (View) findViewById(horiz_separator_6);
-        separator.setBottom(120);
-        Log.i("qwerty", String.valueOf(separator.getY()));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        saveInstanceState();
+    }
+
+    private void saveInstanceState() {
+        preferences = getPreferences(MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(SAVE_EXPRESSION,inputField.getText().toString());
+        editor.putString(SAVE_ANSWER, outputField.getText().toString());
+        editor.apply();
+    }
+
+    private void loadInstanceState(){
+        preferences = getPreferences(MODE_PRIVATE);
+        inputField.setText(preferences.getString(SAVE_EXPRESSION,""));
+        outputField.setText(preferences.getString(SAVE_ANSWER,""));
     }
 
     public void calculate(){
