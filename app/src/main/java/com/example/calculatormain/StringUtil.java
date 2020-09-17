@@ -5,6 +5,8 @@ import android.widget.EditText;
 public class StringUtil {
 
     private static final int ZERO_POSITION = 0;
+    private static final int FIRST_POSITION = 1;
+    private static final int SECOND_POSITION = 2;
     private static final char MINUS = '−';
     private static final char PLUS = '+';
 
@@ -88,8 +90,14 @@ public class StringUtil {
         return item >= '0' && item <= '9' || item == ' ';
     }
 
+    public static boolean isPartOfNumber(char item) {
+        return item >= '0' && item <= '9' || item == ' ' || item == ',' || item == '(' || item == ')';
+    }
+
     public static boolean isFraction(EditText inputField) {
         StringBuilder input = new StringBuilder(inputField.getText());
+        if(input.length() == 0)
+            return false;
         int selection = inputField.getSelectionStart();
         input.insert(ZERO_POSITION, 'x');
         input.insert(input.length(), 'x');
@@ -101,7 +109,7 @@ public class StringUtil {
         int startNumber = ++i;
         if (selection == ZERO_POSITION)
             selection++;
-        i = selection;
+        i = ++selection;
         while ((input.charAt(i) >= '0' && input.charAt(i) <= '9') || input.charAt(i) == ' ') {
             i++;
         }
@@ -111,6 +119,17 @@ public class StringUtil {
 
     public static boolean isArithmeticOperation(char item) {
         return item == '+' || item == '−' || item == '×' || item == '÷' || item == '^';
+    }
+
+    public static boolean isNumberOnly(String str){
+        int i;
+        for( i = 0; i < str.length(); i++){
+            if (!isPartOfNumber(str.charAt(i))){
+                i = -1;
+                break;
+            }
+        }
+        return i == str.length();
     }
 
     public static void insertArithmeticSign(String operation, EditText inputField) {

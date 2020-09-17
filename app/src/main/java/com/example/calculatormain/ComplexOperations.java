@@ -24,7 +24,7 @@ public class ComplexOperations {
         StringBuilder input = new StringBuilder(inputField.getText());
         int selection = inputField.getSelectionStart();
         if (input.length() == 1) {
-            removeEdgeSymbol(inputField, input, true);
+            removeEdgeSymbol(true);
             return;
         }
         if (selection == ZERO_POSITION) {
@@ -35,22 +35,27 @@ public class ComplexOperations {
             removeAfterSpaceLeft(selection);
             return;
         }
-        if ((selection == FIRST_POSITION || selection == SECOND_POSITION) && input.charAt(1) == COMMA && StringUtil.isNumeral(input.charAt(ZERO_POSITION))) {
+        if ((selection == input.length() || selection == input.length() - 1) && input.charAt(input.length() - 1) == COMMA && input.charAt(input.length() - 2) == '0') {
             removeFractionWithLeftNumber(selection);
             return;
         }
         if(selection == FIRST_POSITION && input.length() > 1 &&  StringUtil.isArithmeticOperation(input.charAt(selection))){
-            removeEdgeSymbol(inputField,input, false);
+            removeEdgeSymbol(false);
+            return;
+        }
+        if (selection >= 1 && selection != input.length()
+                && ((input.charAt(selection) == COMMA
+                && input.charAt(selection - 1) == '0'
+                && (selection - 1 == 0
+                || !StringUtil.isNumeral(input.charAt(selection - 2))))
+            ||(input.charAt(selection - 1) == COMMA
+                && input.charAt(selection - 2) == '0'
+                && (selection - 2 == 0 || !StringUtil.isNumeral(input.charAt(selection - 3)))))) {
+            removeFractionWithLeftNumber(selection);
             return;
         }
         if (selection == FIRST_POSITION) {
-            removeEdgeSymbol(inputField, input, true);
-            return;
-        }
-        if (selection > SECOND_POSITION && selection != input.length()
-                && ((input.charAt(selection - 1) == COMMA && StringUtil.isNumeral(input.charAt(selection - 2))  && !StringUtil.isNumeral(input.charAt(selection - 3)))
-                || (input.charAt(selection) == COMMA && StringUtil.isNumeral(input.charAt(selection - 1)) && !StringUtil.isNumeral(input.charAt(selection - 2))))) {
-            removeFractionWithLeftNumber(selection);
+            removeEdgeSymbol(true);
             return;
         }
         if (input.charAt(selection - 1) == COMMA && selection != input.length()) {
@@ -60,7 +65,7 @@ public class ComplexOperations {
         defaultBackspace(selection);
     }
 
-    private void removeEdgeSymbol(EditText inputField, StringBuilder input, boolean moveSelection) {
+    private void removeEdgeSymbol(boolean moveSelection) {
         input.deleteCharAt(ZERO_POSITION);
         inputField.setText(input.toString());
         if(moveSelection)
@@ -123,9 +128,12 @@ public class ComplexOperations {
     public void onClickFraction() {
         StringBuilder input = new StringBuilder(inputField.getText());
         int selection = inputField.getSelectionStart();
-        if (StringUtil.isFraction(inputField)
-                || (selection == ZERO_POSITION && input.length() > 2 && !StringUtil.isNumeral(input.charAt(selection))))
+        if (StringUtil.isFraction(inputField))
             return;
+        if(selection == ZERO_POSITION && input.length() > 1 && !StringUtil.isNumeral(input.charAt(selection))) {
+            createFractionOnEdgeOfNumber(selection);
+            return;
+        }
         if ((input.length() == 0 || (selection == ZERO_POSITION && StringUtil.isNumeral(input.charAt(selection))))
                 || (!StringUtil.isNumeral(input.charAt(selection - 1)) && input.charAt(selection - 1) != ' ')) {
             createFractionOnEdgeOfNumber(selection);
@@ -166,5 +174,89 @@ public class ComplexOperations {
         } catch (Exception ex) {
             inputField.setSelection(selection + 1);
         }
+    }
+
+    public void insertZero() {
+        StringBuilder input = new StringBuilder(inputField.getText());
+        ComplexOperations complexOperations = new ComplexOperations(inputField, input);
+        int selection = inputField.getSelectionStart();
+        //TODO
+//        if(input.length() == 0){
+//            complexOperations.onClickFraction();
+//            return;
+//        }
+//        if(selection == 0){
+////            if(StringUtil.isArithmeticOperation(input.charAt(selection)) || input.charAt(selection) == '('){
+////                defaultInsertZero(selection);
+////                return;
+////            }
+////            if(input.length() > 1 && input.charAt(selection + 1) != ',')
+////                onClickFraction();
+//            if(onClickFraction())
+//                return;
+//        }
+//        if(selection == input.length()){
+//            if(StringUtil.isArithmeticOperation(input.charAt(selection - 1))){
+//                createFractionOnEdgeOfNumber(selection);
+//                return;
+//            }
+//            defaultInsertZero(selection);
+//            return;
+//        }
+//        if((StringUtil.isArithmeticOperation(input.charAt(selection - 1)) || input.charAt(selection) == ')')
+//                && StringUtil.isNumeral(input.charAt(selection))){
+//            createFractionOnEdgeOfNumber(selection);
+//            return;
+//        }
+//        try{
+//            int commaIndex = input.substring(ZERO_POSITION, selection + 2).indexOf(",");
+//            if(commaIndex > selection - 2  && input.charAt(commaIndex - 1) == '0'
+//                    && (commaIndex == 1 || !StringUtil.isNumeral(input.charAt(commaIndex - 2))))
+//                return;
+//        } catch (Exception e) {
+//            int commaIndex = input.substring(ZERO_POSITION, selection + 1).indexOf(",");
+//            if(commaIndex > selection - 2 && input.charAt(commaIndex - 1) == '0'
+//                    && (commaIndex == 1 || !StringUtil.isNumeral(input.charAt(commaIndex - 1))))
+//                return;
+//        }
+
+
+        if(canCreateFractionOnEdge(selection)){
+            createFractionOnEdgeOfNumber(selection);
+            return;
+        }
+        defaultInsertZero(selection);
+    }
+
+    private boolean canCreateFractionOnEdge(int selection) {
+        if(input.length() == 0)
+            return  true;
+        if (StringUtil.isFraction(inputField)
+                || (selection == ZERO_POSITION && input.length() > 2 && !StringUtil.isNumeral(input.charAt(selection)))) {
+            return false;
+        }
+        try{
+            if(StringUtil.isArithmeticOperation(input.charAt(selection - 1)) && StringUtil.isArithmeticOperation(input.charAt(selection)))
+                return false;
+        } catch (Exception ignored){
+        }
+        if(selection == ZERO_POSITION && input.length() > 1 && !StringUtil.isNumeral(input.charAt(selection))){
+            return false;
+        }
+        if (input.charAt(selection - 1) != ',' &&(input.length() == 0 || (selection == ZERO_POSITION && StringUtil.isNumeral(input.charAt(selection))))
+                || (!StringUtil.isNumeral(input.charAt(selection - 1)) && input.charAt(selection - 1) != ' ')) {
+            return true;
+        }
+        if (((selection <= input.length() && StringUtil.isNumeral(input.charAt(selection - 1))))) {
+            return false;
+        }
+            return true;
+    }
+
+    private void defaultInsertZero(int selection) {
+        input.insert(selection, '0');
+        inputField.setText(input);
+        inputField.setSelection(selection + 1);
+        StringUtil.separation(inputField);
     }
 }

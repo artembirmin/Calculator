@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     EditText inputField;
     AnswerTextView outputField;
     Editable inputForField;
+    StringBuilder input;
+    ReversePolishNotation pn = new ReversePolishNotation();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,12 +54,41 @@ public class MainActivity extends AppCompatActivity {
         Log.i("qwerty", String.valueOf(separator.getY()));
     }
 
+    public void calculate(){
+        input = new StringBuilder(inputField.getText().toString());
+        if (StringUtil.isArithmeticOperation(input.charAt(input.length() - 1))){
+            input.deleteCharAt(input.length() - 1);
+        }
+        if(input.length() == 0){
+            outputField.setText("");
+            return;
+        }
+        if (StringUtil.isArithmeticOperation(input.charAt(input.length() - 1))){
+            input.deleteCharAt(input.length() - 1);
+        }
+        try {
+            if(StringUtil.isNumberOnly(input.toString())) //TODO Сделать ситуацию с минусом в начале -134
+                outputField.setText("");
+            else
+                outputField.setAnswerText(((String.valueOf(pn.calculateExpression(input.toString())))));
+        } catch (Exception e){
+            outputField.setText("Чо дурак?");
+        }
+
+    }
+
     public void onNumberClick(View view) {
         Button button = (Button) view;
+        if(button.getId() == R.id.btn_0){
+            new ComplexOperations(inputField, new StringBuilder(inputField.getText().toString())).insertZero();
+            calculate();
+            return;
+        }
         inputForField = inputField.getText(); //Нужен ли тут inputForField
         inputForField.insert(inputField.getSelectionStart(), button.getText());
         StringUtil.separation(inputField);
         StringUtil.checkTextSize(inputField);
+        calculate();
     }
 
     public void onOperationClick(View view) {
@@ -82,10 +113,13 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.btn_equal:
                 if(inputField.length() != 0)
-                    outputField.setAnswerText((String.valueOf(new ReversePolishNotation().calculateExpression(String.valueOf(inputField.getText())))));
+                    calculate();
                 else outputField.setText("");
                 //animation
         }
         StringUtil.checkTextSize(inputField);
+        if(inputField.length() != 0)
+            calculate();
+        else outputField.setText("");
     }
 }

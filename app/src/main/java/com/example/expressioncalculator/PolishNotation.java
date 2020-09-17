@@ -89,31 +89,6 @@ abstract class PolishNotation implements ExpressionCalculator {
         return expressionInPN;
     }
 
-    protected String expressionFormatting(StringBuilder expression) {
-
-        if (isArithmeticOperation(expression.charAt(expression.length() - 1))){
-            expression.deleteCharAt(expression.length() - 1);
-        }
-        if (isArithmeticOperation(expression.charAt(expression.length() - 1))){
-            expression.deleteCharAt(expression.length() - 1);
-        }
-        if (expression.charAt(0) == '-')
-            expression.insert(0, '0');
-        for (int i = 0; i < expression.length(); i++) {
-            if(expression.charAt(i) == '-'
-                    && isArithmeticOperation(expression.charAt(i - 1))
-                    && !isArithmeticOperation(expression.charAt(i + 1))){
-                expression.insert(i,'0');
-                expression.setCharAt(i + 1, 'M');
-            }
-        }
-        return expression.toString();
-    }
-
-    //  private String processingDoubleSign(){
-    //
-    // }
-
     private boolean arithmeticOperationProcessing(Stack<Character> signStack, char item) {
         if (signStack.isEmpty()) {
             signStack.push(item);
@@ -151,6 +126,21 @@ abstract class PolishNotation implements ExpressionCalculator {
         }
     }
 
+    protected String expressionFormatting(StringBuilder expression) {
+
+        if (expression.charAt(0) == '-')
+            expression.insert(0, '0');
+        for (int i = 0; i < expression.length(); i++) {
+            if(expression.charAt(i) == '-'
+                    && (isArithmeticOperation(expression.charAt(i - 1))
+                    && !isArithmeticOperation(expression.charAt(i + 1)) || expression.charAt(i - 1) == '(')){
+                expression.insert(i,'0');
+                expression.setCharAt(i + 1, 'M');
+            }
+        }
+        return expression.toString();
+    }
+
     private String getNumber(String expression, int start) {
         int end;
         for (end = start; end < expression.length() && isPartOfNumber(expression.charAt(end)); end++) {
@@ -169,5 +159,6 @@ abstract class PolishNotation implements ExpressionCalculator {
     private boolean isPartOfNumber(char item) {
         return item >= '0' && item <= '9' || item == '.';
     }
+
 }
 

@@ -16,5 +16,6 @@ public class ReversePolishNotation extends PolishNotation{
                 .replace('÷', '/')
                 .replace('−', '-') //минус на тире
                 .replaceAll("\\s", "")));
+        //FIXME возможно сделать свою реализацию, ибо создается дохрена строк
     }
 }
