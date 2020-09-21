@@ -26,14 +26,14 @@ public class StringUtil {
             i--;
         }
         int startNumber = ++i;
-        if (selection == ZERO_POSITION || input.charAt(selection) == ',')
+        if (selection == ZERO_POSITION || input.charAt(selection) == ',' || input.charAt(selection) == '.')
             selection++;
         i = selection;
         while ((input.charAt(i) >= '0' && input.charAt(i) <= '9') || input.charAt(i) == ' ') {
             i++;
         }
         int endNumber = i;
-        if (input.charAt(startNumber - 1) == ',') {
+        if (input.charAt(startNumber - 1) == ',' || input.charAt(startNumber - 1) == '.') {
             fractionalPart(inputField, rightSelectionPositions, input, startNumber, endNumber);
             return;
         }
@@ -75,6 +75,10 @@ public class StringUtil {
         } catch (Exception ex) {
             inputField.setSelection(input.length());
         }
+    }
+
+    public static String format(String expression){
+        return expression.replace('.',',').replace('-',MINUS);
     }
 
     public static int getCountOf(char character, String thisString) {

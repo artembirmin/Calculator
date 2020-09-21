@@ -131,9 +131,12 @@ public class MainActivity extends AppCompatActivity {
                 complexOperations.onClickFraction();
                 break;
             case R.id.btn_equal:
-                if(inputField.length() != 0)
-                    calculate();
-                else outputField.setText("");
+                if(outputField.length() == 0)
+                    return;
+                inputField.setText(StringUtil.format(outputField.getText().toString()));
+                outputField.setText("");
+                StringUtil.separation(inputField);
+                return;
                 //animation
         }
         StringUtil.checkTextSize(inputField);
