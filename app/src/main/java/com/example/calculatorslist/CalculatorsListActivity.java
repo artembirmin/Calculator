@@ -26,44 +26,23 @@ import java.util.Arrays;
 public class CalculatorsListActivity extends AppCompatActivity implements NoNameAdapter.OnCalculatorClickListener {
 
     ArrayList<Calculator> calculatorList = new ArrayList<>();
-    InputMethodManager imm;
-
-
-    EditText editText;
-    BottomSheetDialog bottomSheetDialog;
+    SetCalculatorNameBottomSheet bottomSheetDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculators_list);
-
-        bottomSheetDialog = new BottomSheetDialog(CalculatorsListActivity.this, R.style.BottomSheetDialogTheme);
-        editText = bottomSheetDialog.findViewById(R.id.edit_text_bottom_sheet);
-        editText.getText();
-
-        imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+       //androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         initRVWithByGoogleAdapter();
         FloatingActionButton fab = findViewById(R.id.fab);
+        bottomSheetDialog = new SetCalculatorNameBottomSheet();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                View bottomSheetView = LayoutInflater.from(CalculatorsListActivity.this)
-                        .inflate(R.layout.layout_bottom_sheet, (LinearLayout) findViewById(R.id.layout_bottom_sheet));
-                bottomSheetDialog.setContentView(bottomSheetView);
-                bottomSheetDialog.show();
+                bottomSheetDialog.show(getSupportFragmentManager(), "");
         }
         });
-    }
-
-    protected void showInputMethod() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-        }
     }
 
     @Override
