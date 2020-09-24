@@ -10,9 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.calculatorslist.CalculatorActivity;
-import com.example.calculatorslist.R;
-import com.example.calculatorslist.models.Calculator;
+
+import com.example.calculatormain.CalculatorActivity;
+import com.example.calculatormain.R;
+
+import com.example.models.Calculator;
 
 import java.util.ArrayList;
 import java.util.Collection;

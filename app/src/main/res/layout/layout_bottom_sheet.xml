@@ -1,18 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_top_rounded"
+    android:id="@+id/layout_bottom_sheet"
     android:layout_width="match_parent"
-    android:background = "@drawable/bottom_sheet_background"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="40dp"
+    android:background="@drawable/bottom_sheet_background"
+    android:orientation="vertical">
 
     <EditText
-        android:id="@+id/edit_text"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+        android:id="@+id/edit_text_bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginBottom="100dp"
-        android:textSize="28sp"
-        android:paddingHorizontal="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:paddingHorizontal="10dp"
+        android:textSize="28sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="40dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="CANCEL" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="CONTINUE" />
+
+    </LinearLayout>
 
 </LinearLayout>
