@@ -1,27 +1,30 @@
 package com.example.calculatorslist;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.calculatormain.CalculatorActivity;
 import com.example.calculatormain.R;
-import com.example.calculatorslist.adapters.ByGoogleAdapter;
 import com.example.calculatorslist.adapters.NoNameAdapter;
 import com.example.models.Calculator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
-public class CalculatorsListActivity extends AppCompatActivity implements NoNameAdapter.OnCalculatorClickListener {
+public class CalculatorsListActivity extends AppCompatActivity implements NoNameAdapter.OnCalculatorClickListener, CreateCalculatorBottomSheet.OnBottomSheetContinueClick {
 
-    ArrayList<Calculator> calculatorList = new ArrayList<>();
+    LinkedList<Calculator> calculatorList = new LinkedList<>();
     CreateCalculatorBottomSheet bottomSheetDialog;
-    ByGoogleAdapter adapter;
+    NoNameAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +32,7 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
         setContentView(R.layout.activity_calculators_list);
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        initRVWithByGoogleAdapter();
+        initRVWithNoNameAdapter();
         FloatingActionButton fab = findViewById(R.id.fab);
         bottomSheetDialog = new CreateCalculatorBottomSheet(CalculatorsListActivity.this);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -43,53 +46,30 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
     @Override
     public void onCalculatorClick(int position) {
         Log.d("qwerty", "onCalculatorClick: " + position);
+        Intent intent = new Intent( this, CalculatorActivity.class);
+        intent.putExtra("selected_calculator", calculatorList.get(position));
+        startActivity(intent);
         overridePendingTransition(R.anim.animate_swipe_left_enter, R.anim.animate_swipe_left_exit);
     }
 
-    public void addCalculator(Calculator calculator){
-        adapter.addCalculator(calculator);
-    }
-
-    private void initRVWithByGoogleAdapter() {
-        RecyclerView rv = findViewById(R.id.recyclerView);
-        rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ByGoogleAdapter(calculatorList, CalculatorsListActivity.this);
-        rv.setAdapter(adapter);
-        adapter.setItems(Arrays.asList(new Calculator("qqqq", "13213", "131313")));
-//        adapter.setItems(Arrays.asList(new Calculator("Калькулятор 1", "1232435+433543+24*-3+5*-3"), new Calculator("Калькулятор 1", "1232435+433543+24*-3+5*-3"),
-//                new Calculator("Калькулятор 2", "1233434343425544535532435+433543+24*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "1232435+433543+24*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3")));
-        adapter.notifyDataSetChanged();
+    @Override
+    public void onBottomSheetContinueClick(Calculator calculator) {
+        Intent intent = new Intent(this, CalculatorActivity.class);
+        intent.putExtra("new_calculator", calculator);
+        startActivity(intent);
+        overridePendingTransition(R.anim.animate_swipe_left_enter, R.anim.animate_swipe_left_exit);
+        adapter.setItem(calculator);
     }
 
     private void initRVWithNoNameAdapter() {
         RecyclerView rv = findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        NoNameAdapter adapter = new NoNameAdapter(calculatorList, this);
+        adapter = new NoNameAdapter(calculatorList, this);
         rv.setAdapter(adapter);
-//        adapter.setItems(Arrays.asList(new Calculator("Калькулятор 1", "1232435+433543+24*-3+5*-3"), new Calculator("Калькулятор 1", "1232435+433543+24*-3+5*-3"),
-//                new Calculator("Калькулятор 2", "1233434343425544535532435+433543+24*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "1232435+433543+24*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3"),
-//                new Calculator("Калькулятор 3", "*-3+5*-3")));
+        LinkedList<Calculator> calculators = new LinkedList<>();
+        calculators.add(new Calculator("Калькулятор 1", "1235+433543+24*-3+5*-3", "242"));
+        calculators.add(new Calculator("Калькулятор 2", "1232435+433543+24*-3+5*-3", "24242"));
+        adapter.setItems(calculators);
         adapter.notifyDataSetChanged();
     }
 }

@@ -18,20 +18,29 @@ import com.example.models.Calculator;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
 
 public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHolder> {
 
-    private ArrayList<Calculator> calculatorList;
+    private LinkedList<Calculator> calculatorList;
     private OnCalculatorClickListener onCalculatorClickListener;
 
-    public NoNameAdapter(ArrayList<Calculator> calculatorList , OnCalculatorClickListener calculatorClickListener) {
+    public NoNameAdapter(LinkedList<Calculator> calculatorList , OnCalculatorClickListener calculatorClickListener) {
         this.calculatorList = calculatorList;
         this.onCalculatorClickListener = calculatorClickListener;
     }
 
+    public void setItem(Calculator calculator){
+        calculatorList.push(calculator);
+        notifyDataSetChanged();
+    }
+
     public void setItems(Collection<Calculator> calculators){
         calculatorList.addAll(calculators);
-        notifyDataSetChanged(); //Дает адаптеру знать об изменении списка элементов и что надо перерисовать
+        Collections.reverse(calculatorList);
+        notifyDataSetChanged();
+        //Дает адаптеру знать об изменении списка элементов и что надо перерисовать
     }
 
     public void clearItems(){
@@ -78,9 +87,6 @@ public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHo
         @Override
         public void onClick(View view) {
             //Здесь основные действия
-            Intent intent = new Intent(view.getContext(), CalculatorActivity.class);
-            view.getContext().startActivity(intent);
-            Log.d("qwerty", "onClick: " + getAdapterPosition());
             calculatorClickListener.onCalculatorClick(getAdapterPosition());
         }
     }
