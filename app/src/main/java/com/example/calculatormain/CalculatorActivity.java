@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -12,10 +13,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.expressioncalculator.ReversePolishNotation;
-import com.r0adkll.slidr.Slidr;
+import com.example.models.Calculator;
+
 public class CalculatorActivity extends AppCompatActivity {
 
-    TextView name;
+    TextView nameField;
     EditText inputField;
     AnswerTextView outputField;
     Editable inputForField;
@@ -30,13 +32,26 @@ public class CalculatorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //Скрыло клавиатуру
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        name = findViewById(R.id.textview_name);
+        nameField = findViewById(R.id.textview_name);
         inputField = findViewById(R.id.edittext_input);
         outputField = findViewById(R.id.textview_output);
-        loadInstanceState();
+        if(getIntent().hasExtra("selected_calculator")){
+            Calculator calculator = getIntent().getParcelableExtra("selected_calculator");
+            nameField.setText(calculator.getName());
+            inputField.setText(calculator.getContent());
+            outputField.setText(calculator.getAnswer());
+        }
+        if(getIntent().hasExtra("new_calculator")){
+            Calculator calculator = getIntent().getParcelableExtra("new_calculator");
+            nameField.setText(calculator.getName());
+            inputField.setText(calculator.getContent());
+            outputField.setText(calculator.getAnswer());
+        }
+        //loadInstanceState();
         Button backspace = findViewById(R.id.btn_backspace);
         backspace.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

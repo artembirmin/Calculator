@@ -28,6 +28,11 @@ public class ByGoogleAdapter extends RecyclerView.Adapter<ByGoogleAdapter.CalcVi
         this.firstActivity = firstActivity;
     }
 
+    public void addCalculator(Calculator calculator){
+        calculatorList.add(calculator);
+        notifyDataSetChanged();
+    }
+
     public void setItems(Collection<Calculator> calculators){
         calculatorList.addAll(calculators);
         notifyDataSetChanged(); //Дает адаптеру знать об изменении списка элементов и что надо перерисовать
@@ -67,8 +72,8 @@ public class ByGoogleAdapter extends RecyclerView.Adapter<ByGoogleAdapter.CalcVi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("qwerty", "onClick: "  + getAdapterPosition());
                     Intent intent = new Intent(view.getContext(), CalculatorActivity.class);
+                    intent.putExtra("selected_calculator", calculatorList.get(getAdapterPosition()));
                     view.getContext().startActivity(intent);
                     firstActivity.overridePendingTransition(R.anim.animate_swipe_left_enter, R.anim.animate_swipe_left_exit);
                 }
