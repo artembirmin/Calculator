@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraint"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/vert_separator_0"
+        android:layout_width="0.6dp"
+        android:layout_height="0dp"
+        android:background="@color/grey"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_0"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6" />
+
+    <View
+        android:id="@+id/vert_separator_1"
+        android:layout_width="0.6dp"
+        android:layout_height="0dp"
+        android:background="@color/grey"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/vert_separator_2"
+        android:layout_width="0.6dp"
+        android:layout_height="0dp"
+        android:background="@color/grey"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6" />
+
+    <View
+        android:id="@+id/horiz_separator_0"
+        android:layout_width="0dp"
+        android:layout_height="0.00001dp"
+        android:background="@color/grey"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <View
+        android:id="@+id/horiz_separator_1"
+        android:layout_width="0dp"
+        android:layout_height="0.6dp"
+        android:background="@color/grey"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_0"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_3"
+        app:layout_constraintVertical_bias="0.666666" />
+
+    <View
+        android:id="@+id/horiz_separator_2"
+        android:layout_width="0dp"
+        android:layout_height="0.6dp"
+        android:background="@color/grey"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_3" />
+
+    <View
+        android:id="@+id/horiz_separator_3"
+        android:layout_width="0dp"
+        android:layout_height="0.6dp"
+        android:background="@color/grey"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6" />
+
+    <View
+        android:id="@+id/horiz_separator_4"
+        android:layout_width="0dp"
+        android:layout_height="0.6dp"
+        android:background="@color/grey"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_5" />
+
+    <View
+        android:id="@+id/horiz_separator_5"
+        android:layout_width="0dp"
+        android:layout_height="0.6dp"
+        android:background="@color/grey"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6"
+        app:layout_constraintVertical_bias="0.3333333" />
+
+    <View
+        android:id="@+id/horiz_separator_6"
+        android:layout_width="0dp"
+        android:layout_height="0.6dp"
+        android:background="@color/grey"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_clear"
+        style="@style/GreyButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="monospace"
+        android:onClick="onOperationClick"
+        android:text="@string/clear"
+        android:textColor="@color/blue"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_4"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_5" />
+
+    <Button
+        android:id="@+id/btn_division"
+        style="@style/GreyButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="sans-serif-light"
+        android:onClick="onOperationClick"
+        android:text="@string/division"
+        android:textColor="@color/blue"
+        android:textSize="42sp"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_4"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_0"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_5" />
+
+    <Button
+        android:id="@+id/btn_multiplication"
+        style="@style/GreyButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/armata"
+        android:onClick="onOperationClick"
+        android:text="@string/multiplication"
+        android:textColor="@color/blue"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_4"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_5" />
+
+    <Button
+        android:id="@+id/btn_backspace"
+        style="@style/GreyButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/fira_sans_thin"
+        android:onClick="onOperationClick"
+        android:text="@string/backspace"
+        android:textColor="@color/blue"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_2"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_5" />
+
+    <Button
+        android:id="@+id/btn_difference"
+        style="@style/GreyButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="sans-serif-light"
+        android:onClick="onOperationClick"
+        android:text="@string/difference"
+        android:textColor="@color/blue"
+        android:textSize="42sp"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_2"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_4" />
+
+    <Button
+        android:id="@+id/btn_sum"
+        style="@style/GreyButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/armata"
+        android:onClick="onOperationClick"
+        android:text="@string/sum"
+        android:textColor="@color/blue"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_2"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_3" />
+
+    <Button
+        android:id="@+id/btn_equal"
+        style="@style/BlueButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="sans-serif-light"
+        android:onClick="onOperationClick"
+        android:text="@string/equal"
+        android:textColor="@color/white"
+        android:textSize="42sp"
+        app:layout_constraintBottom_toTopOf="@id/horiz_separator_0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_2"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_2" />
+
+    <Button
+        android:id="@+id/btn_memory_clear"
+        style="@style/GreyButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/nunito"
+        android:text="@string/memory_clear"
+        android:textAllCaps="false"
+        android:textColor="#848484"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_5"
+        app:layout_constraintDimensionRatio="h,"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6" />
+
+    <Button
+        android:id="@+id/btn_memoty_sum"
+        style="@style/GreyButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/nunito"
+        android:text="@string/memory_sum"
+        android:textAllCaps="false"
+        android:textColor="#848484"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_5"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_0"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6" />
+
+    <Button
+        android:id="@+id/btn_memory_difference"
+        style="@style/GreyButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/nunito"
+        android:text="@string/memory_difference"
+        android:textAllCaps="false"
+        android:textColor="#848484"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_5"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/btn_memory_read"
+        style="@style/GreyButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="@font/nunito"
+        android:text="@string/memory_read"
+        android:textAllCaps="false"
+        android:textColor="#848484"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_2"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_6" />
+
+    <Button
+        android:id="@+id/btn_7"
+        style="@style/WhiteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="onNumberClick"
+        android:text="@string/seven"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_3"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_4" />
+
+    <Button
+        android:id="@+id/btn_8"
+        style="@style/WhiteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="onNumberClick"
+        android:text="@string/eight"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_3"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_0"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_4" />
+
+    <Button
+        android:id="@+id/btn_9"
+        style="@style/WhiteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="onNumberClick"
+        android:text="@string/nine"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_3"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_4" />
+
+    <Button
+        android:id="@+id/btn_4"
+        style="@style/WhiteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="onNumberClick"
+        android:text="@string/four"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_2"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_3" />
+
+    <Button
+        android:id="@+id/btn_5"
+        style="@style/WhiteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="onNumberClick"
+        android:text="@string/five"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_2"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_0"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_3" />
+
+    <Button
+        android:id="@+id/btn_6"
+        style="@style/WhiteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="onNumberClick"
+        android:text="@string/six"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_2"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_3" />
+
+    <Button
+        android:id="@+id/btn_1"
+        style="@style/WhiteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="onNumberClick"
+        android:text="@string/one"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_1"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_2" />
+
+    <Button
+        android:id="@+id/btn_2"
+        style="@style/WhiteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="onNumberClick"
+        android:text="@string/two"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_1"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_0"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_2" />
+
+    <Button
+        android:id="@+id/btn_3"
+        style="@style/WhiteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="onNumberClick"
+        android:text="@string/three"
+        app:layout_constraintBottom_toTopOf="@+id/horiz_separator_1"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_2" />
+
+    <Button
+        android:id="@+id/btn_percent"
+        style="@style/WhiteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="@string/percent"
+        app:layout_constraintBottom_toTopOf="@id/horiz_separator_0"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_1" />
+
+    <Button
+        android:id="@+id/btn_0"
+        style="@style/WhiteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="onNumberClick"
+        android:text="@string/zero"
+        app:layout_constraintBottom_toTopOf="@id/horiz_separator_0"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_1"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_0"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_1" />
+
+    <Button
+        android:id="@+id/bnt_fraction"
+        style="@style/WhiteButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:onClick="onOperationClick"
+        android:text="@string/comma"
+        app:layout_constraintBottom_toTopOf="@id/horiz_separator_0"
+        app:layout_constraintEnd_toStartOf="@+id/vert_separator_2"
+        app:layout_constraintStart_toEndOf="@+id/vert_separator_1"
+        app:layout_constraintTop_toBottomOf="@+id/horiz_separator_1" />
+</androidx.constraintlayout.widget.ConstraintLayout>
