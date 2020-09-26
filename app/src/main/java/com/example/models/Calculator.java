@@ -6,21 +6,21 @@ import android.os.Parcelable;
 public class Calculator implements Parcelable {
 
     public String name = "";
-    public String content = "";
+    public String expression = "";
     public String answer = "";
 
-    public Calculator(String name, String content, String answer) {
+    public Calculator(String name, String expression, String answer) {
         if(name != null)
             this.name = name;
-        if(content != null)
-            this.content = content;
+        if(expression != null)
+            this.expression = expression;
         if(answer!= null)
             this.answer = answer;
     }
 
     protected Calculator(Parcel in) {
         name = in.readString();
-        content = in.readString();
+        expression = in.readString();
         answer = in.readString();
     }
 
@@ -40,19 +40,31 @@ public class Calculator implements Parcelable {
         return name;
     }
 
-    public String getContent() {
-        return content;
+    public String getExpression() {
+        return expression;
     }
 
     public String getAnswer() {
         return answer;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setExpression(String expression) {
+        this.expression = expression;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
     @Override
     public String toString() {
         return "Calculator{" +
                 "name='" + name + '\'' +
-                ", content='" + content + '\'' +
+                ", content='" + expression + '\'' +
                 ", answer='" + answer + '\'' +
                 '}';
     }
@@ -65,7 +77,7 @@ public class Calculator implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
-        parcel.writeString(content);
+        parcel.writeString(expression);
         parcel.writeString(answer);
     }
 }

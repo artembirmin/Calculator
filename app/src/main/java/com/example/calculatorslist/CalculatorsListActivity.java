@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,8 +16,6 @@ import com.example.calculatorslist.adapters.NoNameAdapter;
 import com.example.models.Calculator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 public class CalculatorsListActivity extends AppCompatActivity implements NoNameAdapter.OnCalculatorClickListener, CreateCalculatorBottomSheet.OnBottomSheetContinueClick {
@@ -28,6 +26,15 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(getIntent().hasExtra("old_calculator")){
+            Toast.makeText(this, "калькулятор получил old", Toast.LENGTH_LONG).show();
+        }
+        if(getIntent().hasExtra("new_calculator")){
+            Toast.makeText(this, "калькулятор получил new", Toast.LENGTH_LONG).show();
+        }
+        if(getIntent().hasExtra("updated_calculator")){
+            Toast.makeText(this, "калькулятор получил udp", Toast.LENGTH_LONG).show();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculators_list);
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
@@ -58,7 +65,7 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
         intent.putExtra("new_calculator", calculator);
         startActivity(intent);
         overridePendingTransition(R.anim.animate_swipe_left_enter, R.anim.animate_swipe_left_exit);
-        adapter.setItem(calculator);
+        adapter.addNewCalculator(calculator);
     }
 
     private void initRVWithNoNameAdapter() {

@@ -1,7 +1,5 @@
 package com.example.calculatorslist.adapters;
 
-import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import com.example.calculatormain.CalculatorActivity;
 import com.example.calculatormain.R;
 
 import com.example.models.Calculator;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -31,7 +27,7 @@ public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHo
         this.onCalculatorClickListener = calculatorClickListener;
     }
 
-    public void setItem(Calculator calculator){
+    public void addNewCalculator(Calculator calculator){
         calculatorList.push(calculator);
         notifyDataSetChanged();
     }
@@ -81,7 +77,7 @@ public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHo
 
         public void bind(Calculator calculator) {
             nameTextView.setText(calculator.getName());
-            contentTextView.setText(calculator.getContent());
+            contentTextView.setText(calculator.getExpression());
         }
 
         @Override

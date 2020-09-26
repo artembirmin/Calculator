@@ -1,17 +1,19 @@
 
 package com.example.calculatormain;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.Editable;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.calculatorslist.CalculatorsListActivity;
 import com.example.expressioncalculator.ReversePolishNotation;
 import com.example.models.Calculator;
 
@@ -24,6 +26,9 @@ public class CalculatorActivity extends AppCompatActivity {
     StringBuilder input;
     SharedPreferences preferences;
     ReversePolishNotation pn = new ReversePolishNotation();
+    Calculator calculator;
+    boolean isNewCalculator;
+    boolean isUpdatedCalculator;
 
     final static String SAVE_EXPRESSION = "save_expression";
     final static String SAVE_ANSWER = "save_answer";
@@ -32,7 +37,6 @@ public class CalculatorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //Скрыло клавиатуру
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -40,16 +44,18 @@ public class CalculatorActivity extends AppCompatActivity {
         inputField = findViewById(R.id.edittext_input);
         outputField = findViewById(R.id.textview_output);
         if(getIntent().hasExtra("selected_calculator")){
-            Calculator calculator = getIntent().getParcelableExtra("selected_calculator");
+            calculator = getIntent().getParcelableExtra("selected_calculator");
             nameField.setText(calculator.getName());
-            inputField.setText(calculator.getContent());
+            inputField.setText(calculator.getExpression());
             outputField.setText(calculator.getAnswer());
+            isNewCalculator = false;
         }
         if(getIntent().hasExtra("new_calculator")){
-            Calculator calculator = getIntent().getParcelableExtra("new_calculator");
+            calculator = getIntent().getParcelableExtra("new_calculator");
             nameField.setText(calculator.getName());
-            inputField.setText(calculator.getContent());
+            inputField.setText(calculator.getExpression());
             outputField.setText(calculator.getAnswer());
+            isNewCalculator = true;
         }
         //loadInstanceState();
         Button backspace = findViewById(R.id.btn_backspace);
@@ -69,6 +75,16 @@ public class CalculatorActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
+        calculator.setExpression(inputField.getText().toString());
+        calculator.setAnswer(outputField.getText().toString());
+        Intent intent = new Intent(this, CalculatorsListActivity.class);
+        if (isNewCalculator)
+            intent.putExtra("new_calculator", calculator);
+        else if(isUpdatedCalculator)
+            intent.putExtra("updated_calculator", calculator);
+        else
+            intent.putExtra("old_calculator", calculator);
+        startActivity(intent);
         overridePendingTransition(R.anim.animate_swipe_right_enter, R.anim.animate_swipe_right_exit);
     }
 
@@ -94,6 +110,7 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void calculate() {
+        isUpdatedCalculator = true;
         input = new StringBuilder(inputField.getText().toString());
         if (StringUtil.isArithmeticOperation(input.charAt(input.length() - 1))) {
             input.deleteCharAt(input.length() - 1);
@@ -113,7 +130,6 @@ public class CalculatorActivity extends AppCompatActivity {
         } catch (Exception e) {
             outputField.setText("Чо дурак?");
         }
-
     }
 
     public void onNumberClick(View view) {
@@ -160,8 +176,6 @@ public class CalculatorActivity extends AppCompatActivity {
             //animation
         }
         StringUtil.checkTextSize(inputField);
-        if (inputField.length() != 0)
-            calculate();
-        else outputField.setText("");
+        calculate();
     }
 }
