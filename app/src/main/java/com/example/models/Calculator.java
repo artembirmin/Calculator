@@ -3,19 +3,25 @@ package com.example.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Calculator implements Parcelable {
 
+    @PrimaryKey
     public String name = "";
     public String expression = "";
     public String answer = "";
 
+    public Calculator(String name){
+        this.name = name;
+    }
+
     public Calculator(String name, String expression, String answer) {
-        if(name != null)
-            this.name = name;
-        if(expression != null)
-            this.expression = expression;
-        if(answer!= null)
-            this.answer = answer;
+        this.name = name;
+        this.expression = expression;
+        this.answer = answer;
     }
 
     protected Calculator(Parcel in) {

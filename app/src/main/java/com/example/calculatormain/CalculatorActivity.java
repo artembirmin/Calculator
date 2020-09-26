@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import com.example.models.Calculator;
 
 public class CalculatorActivity extends AppCompatActivity {
 
+    private static final String TAG = "qwerty";
     TextView nameField;
     EditText inputField;
     AnswerTextView outputField;
@@ -29,12 +31,14 @@ public class CalculatorActivity extends AppCompatActivity {
     Calculator calculator;
     boolean isNewCalculator;
     boolean isUpdatedCalculator;
+    int index;
 
     final static String SAVE_EXPRESSION = "save_expression";
     final static String SAVE_ANSWER = "save_answer";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: calc");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
@@ -45,8 +49,10 @@ public class CalculatorActivity extends AppCompatActivity {
         outputField = findViewById(R.id.textview_output);
         if(getIntent().hasExtra("selected_calculator")){
             calculator = getIntent().getParcelableExtra("selected_calculator");
+            index = getIntent().getIntExtra("index", -1);
             nameField.setText(calculator.getName());
             inputField.setText(calculator.getExpression());
+            inputField.setSelection(inputField.length());
             outputField.setText(calculator.getAnswer());
             isNewCalculator = false;
         }
@@ -57,6 +63,7 @@ public class CalculatorActivity extends AppCompatActivity {
             outputField.setText(calculator.getAnswer());
             isNewCalculator = true;
         }
+        StringUtil.checkTextSize(inputField);
         //loadInstanceState();
         Button backspace = findViewById(R.id.btn_backspace);
         backspace.setOnLongClickListener(new View.OnLongClickListener() {
@@ -80,8 +87,10 @@ public class CalculatorActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CalculatorsListActivity.class);
         if (isNewCalculator)
             intent.putExtra("new_calculator", calculator);
-        else if(isUpdatedCalculator)
+        else if(isUpdatedCalculator){
             intent.putExtra("updated_calculator", calculator);
+            intent.putExtra("index", index);
+        }
         else
             intent.putExtra("old_calculator", calculator);
         startActivity(intent);
@@ -153,7 +162,7 @@ public class CalculatorActivity extends AppCompatActivity {
             case R.id.btn_clear:
                 inputField.setText("");
                 outputField.setText("");
-                break;
+                return;
             case R.id.btn_backspace:
                 complexOperations.onClickBackspace();
                 break;

@@ -1,5 +1,6 @@
 package com.example.calculatorslist.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,7 @@ public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHo
         notifyDataSetChanged();
     }
 
-    public void setItems(Collection<Calculator> calculators){
+    public void setCalculators(Collection<Calculator> calculators){
         calculatorList.addAll(calculators);
         Collections.reverse(calculatorList);
         notifyDataSetChanged();
@@ -61,6 +62,11 @@ public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHo
         return calculatorList.size();
     }
 
+    public void updateCalculator(Calculator calculator, int index) {
+        calculatorList.remove(index);
+        calculatorList.push(calculator);
+    }
+
     static class CalcViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView nameTextView;
@@ -78,6 +84,8 @@ public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHo
         public void bind(Calculator calculator) {
             nameTextView.setText(calculator.getName());
             contentTextView.setText(calculator.getExpression());
+            if(contentTextView.getText().length() == 0)
+                contentTextView.setText("0");
         }
 
         @Override

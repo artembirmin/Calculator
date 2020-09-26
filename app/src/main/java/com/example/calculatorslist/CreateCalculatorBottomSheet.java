@@ -37,7 +37,7 @@ public class CreateCalculatorBottomSheet extends BottomSheetDialogFragment {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBottomSheetContinueClick.onBottomSheetContinueClick(new Calculator(nameField.getText().toString(), "",""));
+                onBottomSheetContinueClick.onBottomSheetContinueClick(new Calculator(nameField.getText().toString()));
                 nameField.setText("");
             }
         });
