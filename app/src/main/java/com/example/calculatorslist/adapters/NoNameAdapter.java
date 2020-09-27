@@ -17,20 +17,28 @@ import com.example.models.Calculator;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHolder> {
 
-    private LinkedList<Calculator> calculatorList;
+    private static final String TAG = "qwerty";
+    private List<Calculator> calculatorList;
     private OnCalculatorClickListener onCalculatorClickListener;
 
-    public NoNameAdapter(LinkedList<Calculator> calculatorList , OnCalculatorClickListener calculatorClickListener) {
+    public NoNameAdapter(List<Calculator> calculatorList , OnCalculatorClickListener calculatorClickListener) {
         this.calculatorList = calculatorList;
         this.onCalculatorClickListener = calculatorClickListener;
     }
 
     public void addNewCalculator(Calculator calculator){
-        calculatorList.push(calculator);
+        calculatorList.add(0,calculator);
+        Log.d(TAG, "addNewCalculator: " + calculatorList);
         notifyDataSetChanged();
+    }
+
+    public void updateCalculator(Calculator calculator, int index) {
+        calculatorList.remove(index);
+        calculatorList.add(0, calculator);
     }
 
     public void setCalculators(Collection<Calculator> calculators){
@@ -62,11 +70,6 @@ public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHo
         return calculatorList.size();
     }
 
-    public void updateCalculator(Calculator calculator, int index) {
-        calculatorList.remove(index);
-        calculatorList.push(calculator);
-    }
-
     static class CalcViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView nameTextView;
@@ -82,7 +85,7 @@ public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHo
         }
 
         public void bind(Calculator calculator) {
-            nameTextView.setText(calculator.getName());
+            nameTextView.setText(calculator.getId());
             contentTextView.setText(calculator.getExpression());
             if(contentTextView.getText().length() == 0)
                 contentTextView.setText("0");

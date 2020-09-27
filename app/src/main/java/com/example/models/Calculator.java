@@ -3,29 +3,37 @@ package com.example.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.util.Objects;
 
 @Entity
 public class Calculator implements Parcelable {
 
     @PrimaryKey
-    public String name = "";
+    @NonNull
+    public String id = "";
     public String expression = "";
     public String answer = "";
 
-    public Calculator(String name){
-        this.name = name;
+    public Calculator(){
+        this("");
     }
 
-    public Calculator(String name, String expression, String answer) {
-        this.name = name;
+    public Calculator(@NonNull String name){
+        this.id = name;
+    }
+
+    public Calculator(@NonNull String name, String expression, String answer) {
+        this.id = name;
         this.expression = expression;
         this.answer = answer;
     }
 
     protected Calculator(Parcel in) {
-        name = in.readString();
+        id = Objects.requireNonNull(in.readString());
         expression = in.readString();
         answer = in.readString();
     }
@@ -42,8 +50,9 @@ public class Calculator implements Parcelable {
         }
     };
 
-    public String getName() {
-        return name;
+    @NonNull
+    public String getId() {
+        return id;
     }
 
     public String getExpression() {
@@ -54,8 +63,8 @@ public class Calculator implements Parcelable {
         return answer;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(@NonNull String id) {
+        this.id = id;
     }
 
     public void setExpression(String expression) {
@@ -66,10 +75,11 @@ public class Calculator implements Parcelable {
         this.answer = answer;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return "Calculator{" +
-                "name='" + name + '\'' +
+                "name='" + id + '\'' +
                 ", content='" + expression + '\'' +
                 ", answer='" + answer + '\'' +
                 '}';
@@ -82,7 +92,7 @@ public class Calculator implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
+        parcel.writeString(id);
         parcel.writeString(expression);
         parcel.writeString(answer);
     }

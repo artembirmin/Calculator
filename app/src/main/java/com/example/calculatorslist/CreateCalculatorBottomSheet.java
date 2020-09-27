@@ -33,12 +33,12 @@ public class CreateCalculatorBottomSheet extends BottomSheetDialogFragment {
         view = inflater.inflate(R.layout.layout_bottom_sheet, container, false);
         nameField = view.findViewById(R.id.edit_text_bottom_sheet);
         nameField.requestFocus();
+        nameField.setText("");
         continueButton = view.findViewById(R.id.continue_button);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBottomSheetContinueClick.onBottomSheetContinueClick(new Calculator(nameField.getText().toString()));
-                nameField.setText("");
             }
         });
         return view;

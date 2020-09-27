@@ -2,6 +2,10 @@ package com.example.calculatormain;
 
 import android.widget.EditText;
 
+import com.example.models.Calculator;
+
+import java.util.List;
+
 public class StringUtil {
 
     private static final int ZERO_POSITION = 0;
@@ -194,4 +198,12 @@ public class StringUtil {
         inputField.setTextSize(minSizeValue + 24);
     }
 
+    public static void reverse(List<Calculator> calculatorList) {
+        int size = calculatorList.size();
+        for (int i = 0; i < size / 2; i++) {
+            Calculator temp = calculatorList.get(i);
+            calculatorList.set(i, calculatorList.get(size - i - 1));
+            calculatorList.set(size - i - 1, temp);
+        }
+    }
 }

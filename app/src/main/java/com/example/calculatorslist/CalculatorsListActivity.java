@@ -3,38 +3,55 @@ package com.example.calculatorslist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calculatormain.CalculatorActivity;
 import com.example.calculatormain.R;
+import com.example.calculatormain.StringUtil;
 import com.example.calculatorslist.adapters.NoNameAdapter;
+import com.example.calculatorslist.database.AppDatabase;
+import com.example.calculatorslist.database.CalculatorDao;
 import com.example.models.Calculator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 public class CalculatorsListActivity extends AppCompatActivity implements NoNameAdapter.OnCalculatorClickListener, CreateCalculatorBottomSheet.OnBottomSheetContinueClick {
 
     private static final String TAG = "qwerty";
-    LinkedList<Calculator> calculatorList = new LinkedList<>();
+    List<Calculator> calculatorList = new ArrayList<>();
     CreateCalculatorBottomSheet bottomSheetDialog;
     NoNameAdapter adapter;
+    private AppDatabase db;
+    private CalculatorDao calculatorDao;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: list");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculators_list);
-        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        initToolbar();
+        initDB();
+        calculatorList = calculatorDao.getAll();
+        StringUtil.reverse(calculatorList);
+        Log.d(TAG, "onCreate: list" + calculatorList);
         initRVWithNoNameAdapter();
-        FloatingActionButton fab = findViewById(R.id.fab);
+        adapter.notifyDataSetChanged();
         bottomSheetDialog = new CreateCalculatorBottomSheet(CalculatorsListActivity.this);
+        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,9 +74,14 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
 
     @Override
     protected void onStop() {
+       // calculatorDao.deleteAll();
+        Log.d(TAG, "onStop: " + calculatorList);
+        calculatorDao.insert(calculatorList);
         super.onStop();
-        Log.d(TAG, "onStop: list");
+    }
 
+    private void insertList(){
+        calculatorDao.deleteAll();
     }
 
     @Override
@@ -87,14 +109,44 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
         overridePendingTransition(R.anim.animate_swipe_left_enter, R.anim.animate_swipe_left_exit);
     }
 
+    private void initToolbar(){
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.delete_all:{
+                calculatorDao.deleteAll();
+                calculatorList.clear();
+                adapter.notifyDataSetChanged();
+                break;
+            }
+        }
+        return true;
+    }
+
+    private void initDB(){
+        db = AppDatabase.getDatabase(this);
+        calculatorDao = db.CalculatorDao();
+    }
+
     private void initRVWithNoNameAdapter() {
         RecyclerView rv = findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new NoNameAdapter(calculatorList, this);
         rv.setAdapter(adapter);
         LinkedList<Calculator> calculators = new LinkedList<>();
-        calculators.add(new Calculator("Калькулятор 1", "1235+433543+24*-3+5*-3", "242"));
-        calculators.add(new Calculator("Калькулятор 2", "1232435+433543+24*-3+5*-3", "24242"));
+      //  calculators.add(new Calculator("Калькулятор 1", "1235+433543+24*-3+5*-3", "242"));
+      //  calculators.add(new Calculator("Калькулятор 2", "1232435+433543+24*-3+5*-3", "24242"));
         adapter.setCalculators(calculators);
         adapter.notifyDataSetChanged();
     }

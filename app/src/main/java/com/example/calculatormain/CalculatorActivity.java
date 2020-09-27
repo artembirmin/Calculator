@@ -50,7 +50,7 @@ public class CalculatorActivity extends AppCompatActivity {
         if(getIntent().hasExtra("selected_calculator")){
             calculator = getIntent().getParcelableExtra("selected_calculator");
             index = getIntent().getIntExtra("index", -1);
-            nameField.setText(calculator.getName());
+            nameField.setText(calculator.getId());
             inputField.setText(calculator.getExpression());
             inputField.setSelection(inputField.length());
             outputField.setText(calculator.getAnswer());
@@ -58,7 +58,7 @@ public class CalculatorActivity extends AppCompatActivity {
         }
         if(getIntent().hasExtra("new_calculator")){
             calculator = getIntent().getParcelableExtra("new_calculator");
-            nameField.setText(calculator.getName());
+            nameField.setText(calculator.getId());
             inputField.setText(calculator.getExpression());
             outputField.setText(calculator.getAnswer());
             isNewCalculator = true;
@@ -100,7 +100,14 @@ public class CalculatorActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        Log.d(TAG, "onStop: calc");
         saveInstanceState();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy: calc");
     }
 
     private void saveInstanceState() {
