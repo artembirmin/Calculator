@@ -12,21 +12,19 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {Calculator.class}, version = 1, exportSchema = false)//Вместо последнего можно сделать так https://stackoverflow.com/a/44424908/1363731
-public abstract class AppDatabase extends RoomDatabase {
+public abstract class CalculatorRoomDatabase extends RoomDatabase {
 
     public abstract CalculatorDao CalculatorDao();
 
-    private static volatile AppDatabase INSTANCE;
-    private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor =
-            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    private static volatile CalculatorRoomDatabase INSTANCE;
+    public static final String DATABASE_NAME = "database";
 
-    public static AppDatabase getDatabase(final Context context) {
+    public static CalculatorRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (AppDatabase.class) {
+            synchronized (CalculatorRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "database").allowMainThreadQueries()
+                            CalculatorRoomDatabase.class, DATABASE_NAME).allowMainThreadQueries()
                             .build();
                 }
             }

@@ -21,16 +21,16 @@ public interface CalculatorDao {
     Calculator getById(long id);
 
     @Insert
-    void insert(Calculator employee);
+    void insert(Calculator calculator);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(List<Calculator> calculators);
 
     @Update
-    void update(Calculator employee);
+    void update(Calculator calculator);
 
     @Delete
-    void delete(Calculator employee);
+    void delete(Calculator calculator);
 
     @Query("DELETE FROM calculator")
     void deleteAll();

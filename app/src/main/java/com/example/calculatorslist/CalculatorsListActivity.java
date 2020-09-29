@@ -16,16 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calculatormain.CalculatorActivity;
 import com.example.calculatormain.R;
-import com.example.calculatormain.StringUtil;
 import com.example.calculatorslist.adapters.NoNameAdapter;
-import com.example.calculatorslist.database.AppDatabase;
+import com.example.calculatorslist.database.CalculatorRepository;
+import com.example.calculatorslist.database.CalculatorRoomDatabase;
 import com.example.calculatorslist.database.CalculatorDao;
 import com.example.models.Calculator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,7 +33,8 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
     List<Calculator> calculatorList = new ArrayList<>();
     CreateCalculatorBottomSheet bottomSheetDialog;
     NoNameAdapter adapter;
-    private AppDatabase db;
+    CalculatorRepository calculatorRepository;
+    private CalculatorRoomDatabase db;
     private CalculatorDao calculatorDao;
     int i = 0;
 
@@ -46,7 +45,7 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
         initToolbar();
         initDB();
         calculatorList = calculatorDao.getAll();
-        StringUtil.reverse(calculatorList);
+        // StringUtil.reverse(calculatorList);
         Log.d(TAG, "onCreate:");
 //        Log.d(TAG, "onCreate: list" + calculatorList);
         initRVWithNoNameAdapter();
@@ -57,16 +56,16 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
             @Override
             public void onClick(View view) {
                 bottomSheetDialog.show(getSupportFragmentManager(), "");
-        }
+            }
         });
-        if(getIntent().hasExtra("old_calculator")){
+        if (getIntent().hasExtra("old_calculator")) {
             Toast.makeText(this, "калькулятор получил old", Toast.LENGTH_LONG).show();
         }
-        if(getIntent().hasExtra("new_calculator")){
+        if (getIntent().hasExtra("new_calculator")) {
             Toast.makeText(this, "калькулятор получил new", Toast.LENGTH_LONG).show();
             adapter.addNewCalculator((Calculator) getIntent().getParcelableExtra("new_calculator"));
         }
-        if(getIntent().hasExtra("updated_calculator")){
+        if (getIntent().hasExtra("updated_calculator")) {
             Toast.makeText(this, "калькулятор получил udp", Toast.LENGTH_LONG).show();
             adapter.updateCalculator((Calculator) getIntent().getParcelableExtra("updated_calculator"),
                     getIntent().getIntExtra("index", -1));
@@ -75,11 +74,19 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
 
     @Override
     protected void onStop() {
-       // calculatorDao.deleteAll();
+        // calculatorDao.deleteAll();
         Log.d(TAG, "onStop: ");
-      //  Log.d(TAG, "onStop: " + calculatorList);
-        calculatorDao.insert(calculatorList);
+        //  Log.d(TAG, "onStop: " + calculatorList);
+        //calculatorDao.insert(calculatorList);
         super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        adapter.setCalculators(calculatorRepository.getCalculators());
+        adapter.notifyDataSetChanged();
+        Log.d(TAG, "onResume: ");
+        super.onResume();
     }
 
     @Override
@@ -90,8 +97,8 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
 
     @Override
     public void onCalculatorClick(int position) {
-     //   Log.d("qwerty", "onCalculatorClick: " + position);
-        Intent intent = new Intent( this, CalculatorActivity.class);
+        //   Log.d("qwerty", "onCalculatorClick: " + position);
+        Intent intent = new Intent(this, CalculatorActivity.class);
         intent.putExtra("selected_calculator", calculatorList.get(position));
         intent.putExtra("index", position);
         startActivity(intent);
@@ -107,7 +114,7 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
         overridePendingTransition(R.anim.animate_swipe_left_enter, R.anim.animate_swipe_left_exit);
     }
 
-    private void initToolbar(){
+    private void initToolbar() {
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
@@ -121,20 +128,27 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.delete_all:{
+        switch (item.getItemId()) {
+            case R.id.delete_all: {
                 calculatorDao.deleteAll();
                 calculatorList.clear();
                 adapter.notifyDataSetChanged();
                 break;
             }
+            case R.id.update_third: {
+                Calculator calculator = calculatorList.get(2);
+                calculator.setExpression("2288");
+                calculatorDao.update(calculator);
+                adapter.notifyDataSetChanged();
+            }
         }
         return true;
     }
 
-    private void initDB(){
-        db = AppDatabase.getDatabase(this);
+    private void initDB() {
+        db = CalculatorRoomDatabase.getDatabase(this);
         calculatorDao = db.CalculatorDao();
+        calculatorRepository = new CalculatorRepository(this);
     }
 
     private void initRVWithNoNameAdapter() {
@@ -143,8 +157,8 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
         adapter = new NoNameAdapter(calculatorList, this);
         rv.setAdapter(adapter);
         LinkedList<Calculator> calculators = new LinkedList<>();
-      //  calculators.add(new Calculator("Калькулятор 1", "1235+433543+24*-3+5*-3", "242"));
-      //  calculators.add(new Calculator("Калькулятор 2", "1232435+433543+24*-3+5*-3", "24242"));
+        //  calculators.add(new Calculator("Калькулятор 1", "1235+433543+24*-3+5*-3", "242"));
+        //  calculators.add(new Calculator("Калькулятор 2", "1232435+433543+24*-3+5*-3", "24242"));
         adapter.setCalculators(calculators);
         adapter.notifyDataSetChanged();
     }

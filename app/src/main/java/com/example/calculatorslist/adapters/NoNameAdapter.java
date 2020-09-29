@@ -16,7 +16,6 @@ import com.example.models.Calculator;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHolder> {
@@ -25,10 +24,12 @@ public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHo
     private List<Calculator> calculatorList;
     private OnCalculatorClickListener onCalculatorClickListener;
 
-    public NoNameAdapter(List<Calculator> calculatorList , OnCalculatorClickListener calculatorClickListener) {
+    public NoNameAdapter(List<Calculator> calculatorList, OnCalculatorClickListener calculatorClickListener) {
         this.calculatorList = calculatorList;
         this.onCalculatorClickListener = calculatorClickListener;
     }
+
+
 
     public void addNewCalculator(Calculator calculator){
         calculatorList.add(0,calculator);
@@ -42,6 +43,7 @@ public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHo
     }
 
     public void setCalculators(Collection<Calculator> calculators){
+        calculatorList.clear();
         calculatorList.addAll(calculators);
         Collections.reverse(calculatorList);
         notifyDataSetChanged();

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.calculatorslist.CalculatorsListActivity;
+import com.example.calculatorslist.database.CalculatorRepository;
 import com.example.expressioncalculator.ReversePolishNotation;
 import com.example.models.Calculator;
 
@@ -24,11 +25,10 @@ public class CalculatorActivity extends AppCompatActivity {
     TextView nameField;
     EditText inputField;
     AnswerTextView outputField;
-    Editable inputForField;
     StringBuilder input;
-    SharedPreferences preferences;
     ReversePolishNotation pn = new ReversePolishNotation();
     Calculator calculator;
+    CalculatorRepository calculatorRepository;
     boolean isNewCalculator;
     boolean isUpdatedCalculator;
     int index;
@@ -41,12 +41,13 @@ public class CalculatorActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
-                WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //Скрыло клавиатуру
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         nameField = findViewById(R.id.textview_name);
         inputField = findViewById(R.id.edittext_input);
         outputField = findViewById(R.id.textview_output);
+        calculatorRepository = new CalculatorRepository(this);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
+                WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //Скрыло клавиатуру
         if(getIntent().hasExtra("selected_calculator")){
             calculator = getIntent().getParcelableExtra("selected_calculator");
             index = getIntent().getIntExtra("index", -1);
@@ -85,16 +86,15 @@ public class CalculatorActivity extends AppCompatActivity {
         Log.d(TAG, "finish: ");
         calculator.setExpression(inputField.getText().toString());
         calculator.setAnswer(outputField.getText().toString());
-        Intent intent = new Intent(this, CalculatorsListActivity.class);
-        if (isNewCalculator)
-            intent.putExtra("new_calculator", calculator);
-        else if(isUpdatedCalculator){
-            intent.putExtra("updated_calculator", calculator);
-            intent.putExtra("index", index);
+        if (isNewCalculator){
+            Log.d(TAG, "finish: new calc");
+            calculatorRepository.insertCalculator(calculator);
         }
-        else
-            intent.putExtra("old_calculator", calculator);
-        startActivity(intent);
+        else if(isUpdatedCalculator){
+            Log.d(TAG, "finish: upd calc");
+            calculatorRepository.updateCalculator(calculator);
+
+        }
         overridePendingTransition(R.anim.animate_swipe_right_enter, R.anim.animate_swipe_right_exit);
     }
 
@@ -102,28 +102,12 @@ public class CalculatorActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "onStop:");
-        saveInstanceState();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy:");
-    }
-
-    private void saveInstanceState() {
-        preferences = getPreferences(MODE_PRIVATE);
-        preferences.edit()
-                .putString(SAVE_EXPRESSION, inputField.getText().toString())
-                .putString(SAVE_ANSWER, outputField.getText().toString())
-                .apply();
-    }
-
-    private void loadInstanceState() {
-        preferences = getPreferences(MODE_PRIVATE);
-        inputField.setText(preferences.getString(SAVE_EXPRESSION, ""));
-        outputField.setText(preferences.getString(SAVE_ANSWER, ""));
-        preferences.edit().clear().apply();
     }
 
     public void calculate() {
@@ -156,8 +140,7 @@ public class CalculatorActivity extends AppCompatActivity {
             calculate();
             return;
         }
-        inputForField = inputField.getText(); //Нужен ли тут inputForField
-        inputForField.insert(inputField.getSelectionStart(), button.getText());
+        inputField.getText().insert(inputField.getSelectionStart(), button.getText()); //Нужен ли тут inputForField
         StringUtil.separation(inputField);
         StringUtil.checkTextSize(inputField);
         calculate();
