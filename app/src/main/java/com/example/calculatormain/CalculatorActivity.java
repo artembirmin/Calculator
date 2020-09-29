@@ -20,7 +20,7 @@ import com.example.models.Calculator;
 
 public class CalculatorActivity extends AppCompatActivity {
 
-    private static final String TAG = "qwerty";
+    private static final String TAG = "CalculatorActivity";
     TextView nameField;
     EditText inputField;
     AnswerTextView outputField;
@@ -38,7 +38,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate: calc");
+        Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
@@ -82,6 +82,7 @@ public class CalculatorActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
+        Log.d(TAG, "finish: ");
         calculator.setExpression(inputField.getText().toString());
         calculator.setAnswer(outputField.getText().toString());
         Intent intent = new Intent(this, CalculatorsListActivity.class);
@@ -100,14 +101,14 @@ public class CalculatorActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop: calc");
+        Log.d(TAG, "onStop:");
         saveInstanceState();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy: calc");
+        Log.d(TAG, "onDestroy:");
     }
 
     private void saveInstanceState() {

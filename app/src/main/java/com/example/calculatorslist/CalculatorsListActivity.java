@@ -31,7 +31,7 @@ import java.util.List;
 
 public class CalculatorsListActivity extends AppCompatActivity implements NoNameAdapter.OnCalculatorClickListener, CreateCalculatorBottomSheet.OnBottomSheetContinueClick {
 
-    private static final String TAG = "qwerty";
+    private static final String TAG = "CalculatorsList";
     List<Calculator> calculatorList = new ArrayList<>();
     CreateCalculatorBottomSheet bottomSheetDialog;
     NoNameAdapter adapter;
@@ -47,7 +47,8 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
         initDB();
         calculatorList = calculatorDao.getAll();
         StringUtil.reverse(calculatorList);
-        Log.d(TAG, "onCreate: list" + calculatorList);
+        Log.d(TAG, "onCreate:");
+//        Log.d(TAG, "onCreate: list" + calculatorList);
         initRVWithNoNameAdapter();
         adapter.notifyDataSetChanged();
         bottomSheetDialog = new CreateCalculatorBottomSheet(CalculatorsListActivity.this);
@@ -75,24 +76,21 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
     @Override
     protected void onStop() {
        // calculatorDao.deleteAll();
-        Log.d(TAG, "onStop: " + calculatorList);
+        Log.d(TAG, "onStop: ");
+      //  Log.d(TAG, "onStop: " + calculatorList);
         calculatorDao.insert(calculatorList);
         super.onStop();
-    }
-
-    private void insertList(){
-        calculatorDao.deleteAll();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.d(TAG, "onDestroy: list");
+        Log.d(TAG, "onDestroy: ");
     }
 
     @Override
     public void onCalculatorClick(int position) {
-        Log.d("qwerty", "onCalculatorClick: " + position);
+     //   Log.d("qwerty", "onCalculatorClick: " + position);
         Intent intent = new Intent( this, CalculatorActivity.class);
         intent.putExtra("selected_calculator", calculatorList.get(position));
         intent.putExtra("index", position);
