@@ -6,8 +6,4 @@
         android:id="@+id/delete_all"
         android:title="Delete All"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/update_third"
-        android:title="Update"
-        app:showAsAction="never" />
 </menu>

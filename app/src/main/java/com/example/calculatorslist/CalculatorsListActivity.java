@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,17 +22,18 @@ import com.example.calculatorslist.database.CalculatorRepository;
 import com.example.calculatorslist.database.CalculatorRoomDatabase;
 import com.example.calculatorslist.database.CalculatorDao;
 import com.example.models.Calculator;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CalculatorsListActivity extends AppCompatActivity implements NoNameAdapter.OnCalculatorClickListener, CreateCalculatorBottomSheet.OnBottomSheetContinueClick {
+public class CalculatorsListActivity extends AppCompatActivity implements NoNameAdapter.OnCalculatorClickListener, NewCalculatorBottomSheet.OnBottomSheetContinueClick {
 
     private static final String TAG = "CalculatorsList";
     List<Calculator> calculatorList = new ArrayList<>();
-    CreateCalculatorBottomSheet bottomSheetDialog;
+    NewCalculatorBottomSheet bottomSheetDialog;
     NoNameAdapter adapter;
     CalculatorRepository calculatorRepository;
     private CalculatorRoomDatabase db;
@@ -50,7 +52,7 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
 //        Log.d(TAG, "onCreate: list" + calculatorList);
         initRVWithNoNameAdapter();
         adapter.notifyDataSetChanged();
-        bottomSheetDialog = new CreateCalculatorBottomSheet(CalculatorsListActivity.this);
+        bottomSheetDialog = new NewCalculatorBottomSheet(CalculatorsListActivity.this);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,12 +136,6 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
                 calculatorList.clear();
                 adapter.notifyDataSetChanged();
                 break;
-            }
-            case R.id.update_third: {
-                Calculator calculator = calculatorList.get(2);
-                calculator.setExpression("2288");
-                calculatorDao.update(calculator);
-                adapter.notifyDataSetChanged();
             }
         }
         return true;

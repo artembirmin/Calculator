@@ -129,15 +129,34 @@ public class StringUtil {
         return item == '+' || item == '−' || item == '×' || item == '÷' || item == '^';
     }
 
-    public static boolean isNumberOnly(String str){
+    public static boolean haveSmthToCalculate(StringBuilder input){
+        int lenght = input.length();
+        if(input.length() == 0)
+            return false;
+        if (StringUtil.isArithmeticOperation(input.charAt(lenght - 1))){
+            input.deleteCharAt(input.length() - 1);
+            --lenght;
+        }
+        if (input.length() == 0)
+            return false;
+        if (StringUtil.isArithmeticOperation(input.charAt(lenght - 1))){
+            input.deleteCharAt(input.length() - 1);
+            --lenght;
+        }
+        if (StringUtil.isArithmeticOperation(input.charAt(0))){
+            input.deleteCharAt(0);
+            --lenght;
+        }
+        if(lenght == 0)
+            return false;
         int i;
-        for( i = 0; i < str.length(); i++){
-            if (!isPartOfNumber(str.charAt(i))){
+        for( i = 0; i < input.length(); i++){
+            if (!isPartOfNumber(input.charAt(i))){
                 i = -1;
                 break;
             }
         }
-        return i == str.length();
+        return i != input.length();
     }
 
     public static void insertArithmeticSign(String operation, EditText inputField) {

@@ -1,11 +1,8 @@
 
 package com.example.calculatormain;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,7 +11,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.calculatorslist.CalculatorsListActivity;
 import com.example.calculatorslist.database.CalculatorRepository;
 import com.example.expressioncalculator.ReversePolishNotation;
 import com.example.models.Calculator;
@@ -32,9 +28,6 @@ public class CalculatorActivity extends AppCompatActivity {
     boolean isNewCalculator;
     boolean isUpdatedCalculator;
     int index;
-
-    final static String SAVE_EXPRESSION = "save_expression";
-    final static String SAVE_ANSWER = "save_answer";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,18 +106,9 @@ public class CalculatorActivity extends AppCompatActivity {
     public void calculate() {
         isUpdatedCalculator = true;
         input = new StringBuilder(inputField.getText().toString());
-        if (StringUtil.isArithmeticOperation(input.charAt(input.length() - 1))) {
-            input.deleteCharAt(input.length() - 1);
-        }
-        if (input.length() == 0) {
-            outputField.setText("");
-            return;
-        }
-        if (StringUtil.isArithmeticOperation(input.charAt(input.length() - 1))) {
-            input.deleteCharAt(input.length() - 1);
-        }
+
         try {
-            if (StringUtil.isNumberOnly(input.toString())) //TODO Сделать ситуацию с минусом в начале -134
+            if (!StringUtil.haveSmthToCalculate(input)) //TODO Сделать ситуацию с минусом в начале -134
                 outputField.setText("");
             else
                 outputField.setAnswerText(((String.valueOf(pn.calculateExpression(input.toString())))));
@@ -172,6 +156,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 inputField.setText(StringUtil.format(outputField.getText().toString()));
                 outputField.setText("");
                 StringUtil.separation(inputField);
+                inputField.setSelection(inputField.length());
                 return;
             //animation
         }
