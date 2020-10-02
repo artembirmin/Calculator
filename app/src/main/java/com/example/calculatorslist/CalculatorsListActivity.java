@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,9 +39,7 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
     NewCalculatorBottomSheet bottomSheetDialog;
     NoNameAdapter adapter;
     CalculatorRepository calculatorRepository;
-    private CalculatorRoomDatabase db;
     private CalculatorDao calculatorDao;
-    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +48,11 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
         initToolbar();
         initDB();
         calculatorList = calculatorDao.getAll();
-        // StringUtil.reverse(calculatorList);
         Log.d(TAG, "onCreate:");
-//        Log.d(TAG, "onCreate: list" + calculatorList);
         initRVWithNoNameAdapter();
+        initBottomSheet(savedInstanceState);
         adapter.notifyDataSetChanged();
-        bottomSheetDialog = new NewCalculatorBottomSheet(CalculatorsListActivity.this);
+        bottomSheetDialog = new NewCalculatorBottomSheet(this);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +72,10 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
             adapter.updateCalculator((Calculator) getIntent().getParcelableExtra("updated_calculator"),
                     getIntent().getIntExtra("index", -1));
         }
+    }
+
+    private void initBottomSheet(Bundle savedInstanceState) {
+
     }
 
     @Override
@@ -142,7 +146,7 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
     }
 
     private void initDB() {
-        db = CalculatorRoomDatabase.getDatabase(this);
+        CalculatorRoomDatabase db = CalculatorRoomDatabase.getDatabase(this);
         calculatorDao = db.CalculatorDao();
         calculatorRepository = new CalculatorRepository(this);
     }

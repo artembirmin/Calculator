@@ -1,12 +1,16 @@
 package com.example.calculatorslist;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,7 +32,7 @@ public class NewCalculatorBottomSheet extends BottomSheetDialogFragment {
     OnBottomSheetContinueClick onBottomSheetContinueClick;
 
     public NewCalculatorBottomSheet(OnBottomSheetContinueClick onBottomSheetContinueClick) {
-       this.onBottomSheetContinueClick = onBottomSheetContinueClick;
+        this.onBottomSheetContinueClick = onBottomSheetContinueClick;
     }
 
     @Nullable
@@ -41,17 +45,28 @@ public class NewCalculatorBottomSheet extends BottomSheetDialogFragment {
         nameEditText.setText("");
       //  bottomSheetBehavior = BottomSheetBehavior.from(view);
         continueButton = view.findViewById(R.id.continue_button);
+        cancelButton = view.findViewById(R.id.cancel1_button);
+        return view;
+    }
 
-
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onBottomSheetContinueClick.onBottomSheetContinueClick(new Calculator(nameEditText.getText().toString()));
-           //     bottomSheetBehavior.setHideable(true);
-           //     bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+                nameEditText.setText("");
+                dismiss();
             }
         });
-        return view;
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nameEditText.setText("");
+                dismiss();
+            }
+        });
     }
 
     interface OnBottomSheetContinueClick{

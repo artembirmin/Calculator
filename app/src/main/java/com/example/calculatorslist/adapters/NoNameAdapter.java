@@ -29,8 +29,6 @@ public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHo
         this.onCalculatorClickListener = calculatorClickListener;
     }
 
-
-
     public void addNewCalculator(Calculator calculator){
         calculatorList.add(0,calculator);
         Log.d(TAG, "addNewCalculator: " + calculatorList);
