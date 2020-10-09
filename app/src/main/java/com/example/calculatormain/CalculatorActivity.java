@@ -76,7 +76,12 @@ public class CalculatorActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        Log.d(TAG, "finish: ");
+        overridePendingTransition(R.anim.animate_swipe_right_enter, R.anim.animate_swipe_right_exit);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         calculator.setExpression(inputField.getText().toString());
         calculator.setAnswer(outputField.getText().toString());
         if (isNewCalculator){
@@ -88,19 +93,7 @@ public class CalculatorActivity extends AppCompatActivity {
             calculatorRepository.updateCalculator(calculator);
 
         }
-        overridePendingTransition(R.anim.animate_swipe_right_enter, R.anim.animate_swipe_right_exit);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
         Log.d(TAG, "onStop:");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "onDestroy:");
     }
 
     public void calculate() {
@@ -157,6 +150,7 @@ public class CalculatorActivity extends AppCompatActivity {
                 outputField.setText("");
                 StringUtil.separation(inputField);
                 inputField.setSelection(inputField.length());
+                StringUtil.checkTextSize(inputField);
                 return;
             //animation
         }
