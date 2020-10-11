@@ -1,4 +1,4 @@
-package com.example.expressioncalculator;
+package com.example.domain.calculator;
 
 import java.util.ArrayList;
 import java.util.HashMap;

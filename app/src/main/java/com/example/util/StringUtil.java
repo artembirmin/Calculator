@@ -1,4 +1,4 @@
-package com.example.calculatormain;
+package com.example.util;
 
 import android.widget.EditText;
 

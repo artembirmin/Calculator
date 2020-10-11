@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textview_name"
         app:layout_constraintVertical_bias="0.0" />
 
-    <com.example.calculatormain.AnswerTextView
+    <com.example.presentation.ui.widgets.AnswerTextView
         android:id="@+id/textview_output"
         android:layout_width="0dp"
         android:layout_height="60dp"

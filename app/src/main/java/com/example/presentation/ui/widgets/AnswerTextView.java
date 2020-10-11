@@ -1,4 +1,4 @@
-package com.example.calculatormain;
+package com.example.presentation.ui.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;

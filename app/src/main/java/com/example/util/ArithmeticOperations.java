@@ -1,6 +1,8 @@
-package com.example.calculatormain;
+package com.example.util;
 
 import android.widget.EditText;
+
+import com.example.util.StringUtil;
 
 public class ArithmeticOperations {
 
@@ -9,7 +11,7 @@ public class ArithmeticOperations {
     private final char MINUS = '−';
     private final char COMMA = ',';
 
-    ArithmeticOperations(EditText inputField, StringBuilder input){
+    public ArithmeticOperations(EditText inputField, StringBuilder input){
         this.inputField = inputField;
         this.input = input;
     }

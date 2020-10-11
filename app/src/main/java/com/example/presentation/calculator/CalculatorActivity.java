@@ -1,5 +1,5 @@
 
-package com.example.calculatormain;
+package com.example.presentation.calculator;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -11,9 +11,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.calculatorslist.database.CalculatorRepository;
-import com.example.expressioncalculator.ReversePolishNotation;
+import com.example.calculatormain.R;
+import com.example.data.repositories.CalculatorsListRepository;
+import com.example.util.ComplexOperations;
+import com.example.domain.calculator.ExpressionCalculator;
+import com.example.domain.calculator.ReversePolishNotation;
 import com.example.models.Calculator;
+import com.example.presentation.ui.widgets.AnswerTextView;
+import com.example.util.StringUtil;
 
 public class CalculatorActivity extends AppCompatActivity {
 
@@ -22,9 +27,9 @@ public class CalculatorActivity extends AppCompatActivity {
     EditText inputField;
     AnswerTextView outputField;
     StringBuilder input;
-    ReversePolishNotation pn = new ReversePolishNotation();
+    ExpressionCalculator pn = new ReversePolishNotation();
     Calculator calculator;
-    CalculatorRepository calculatorRepository;
+    CalculatorsListRepository calculatorsListRepository;
     boolean isNewCalculator;
     boolean isUpdatedCalculator;
     int index;
@@ -38,7 +43,7 @@ public class CalculatorActivity extends AppCompatActivity {
         nameField = findViewById(R.id.textview_name);
         inputField = findViewById(R.id.edittext_input);
         outputField = findViewById(R.id.textview_output);
-        calculatorRepository = new CalculatorRepository(this);
+        calculatorsListRepository = new CalculatorsListRepository(this);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //Скрыло клавиатуру
         if(getIntent().hasExtra("selected_calculator")){
@@ -86,11 +91,11 @@ public class CalculatorActivity extends AppCompatActivity {
         calculator.setAnswer(outputField.getText().toString());
         if (isNewCalculator){
             Log.d(TAG, "finish: new calc");
-            calculatorRepository.insertCalculator(calculator);
+            calculatorsListRepository.insertCalculator(calculator);
         }
         else if(isUpdatedCalculator){
             Log.d(TAG, "finish: upd calc");
-            calculatorRepository.updateCalculator(calculator);
+            calculatorsListRepository.updateCalculator(calculator);
 
         }
         Log.d(TAG, "onStop:");

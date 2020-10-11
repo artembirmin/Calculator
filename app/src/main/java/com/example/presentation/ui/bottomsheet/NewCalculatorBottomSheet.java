@@ -1,16 +1,12 @@
-package com.example.calculatorslist;
+package com.example.presentation.ui.bottomsheet;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -69,7 +65,7 @@ public class NewCalculatorBottomSheet extends BottomSheetDialogFragment {
         });
     }
 
-    interface OnBottomSheetContinueClick{
+    public interface OnBottomSheetContinueClick{
         void onBottomSheetContinueClick(Calculator calculator);
     }
 

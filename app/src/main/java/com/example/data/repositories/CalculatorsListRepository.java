@@ -1,18 +1,20 @@
-package com.example.calculatorslist.database;
+package com.example.data.repositories;
 
 import android.content.Context;
 import android.util.Log;
 
+import com.example.data.db.CalculatorDao;
+import com.example.data.db.CalculatorRoomDatabase;
 import com.example.models.Calculator;
 
 import java.util.List;
 
-public class CalculatorRepository {
+public class CalculatorsListRepository {
 
     private static final String TAG = "CalculatorRepository";
     private CalculatorDao calculatorDao;
 
-    public CalculatorRepository(Context context){
+    public CalculatorsListRepository(Context context){
         CalculatorRoomDatabase calculatorRoomDatabase = CalculatorRoomDatabase.getDatabase(context);
         calculatorDao = calculatorRoomDatabase.CalculatorDao();
     }

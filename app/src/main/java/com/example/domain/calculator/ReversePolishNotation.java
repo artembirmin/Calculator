@@ -1,4 +1,4 @@
-package com.example.expressioncalculator;
+package com.example.domain.calculator;
 
 public class ReversePolishNotation extends PolishNotation{
 

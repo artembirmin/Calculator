@@ -1,4 +1,4 @@
-package com.example.calculatorslist.database;
+package com.example.data.db;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -9,7 +9,6 @@ import androidx.room.Update;
 
 import com.example.models.Calculator;
 
-import java.util.LinkedList;
 import java.util.List;
 
 @Dao

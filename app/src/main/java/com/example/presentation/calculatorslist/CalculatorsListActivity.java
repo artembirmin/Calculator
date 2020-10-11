@@ -1,4 +1,4 @@
-package com.example.calculatorslist;
+package com.example.presentation.calculatorslist;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,38 +7,34 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.calculatormain.CalculatorActivity;
+import com.example.presentation.calculator.CalculatorActivity;
 import com.example.calculatormain.R;
-import com.example.calculatorslist.adapters.NoNameAdapter;
-import com.example.calculatorslist.database.CalculatorRepository;
-import com.example.calculatorslist.database.CalculatorRoomDatabase;
-import com.example.calculatorslist.database.CalculatorDao;
+import com.example.presentation.calculatorslist.adapters.CalculatorsListAdapter;
+import com.example.data.repositories.CalculatorsListRepository;
+import com.example.data.db.CalculatorRoomDatabase;
+import com.example.data.db.CalculatorDao;
 import com.example.models.Calculator;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.example.presentation.ui.bottomsheet.NewCalculatorBottomSheet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CalculatorsListActivity extends AppCompatActivity implements NoNameAdapter.OnCalculatorClickListener, NewCalculatorBottomSheet.OnBottomSheetContinueClick {
+public class CalculatorsListActivity extends AppCompatActivity implements CalculatorsListAdapter.OnCalculatorClickListener, NewCalculatorBottomSheet.OnBottomSheetContinueClick {
 
     private static final String TAG = "CalculatorsList";
     List<Calculator> calculatorList = new ArrayList<>();
     NewCalculatorBottomSheet bottomSheetDialog;
-    NoNameAdapter adapter;
-    CalculatorRepository calculatorRepository;
+    CalculatorsListAdapter adapter;
+    CalculatorsListRepository calculatorsListRepository;
     private CalculatorDao calculatorDao;
 
     @Override
@@ -89,7 +85,7 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
 
     @Override
     protected void onResume() {
-        adapter.setCalculators(calculatorRepository.getCalculators());
+        adapter.setCalculators(calculatorsListRepository.getCalculators());
         adapter.notifyDataSetChanged();
         Log.d(TAG, "onResume: ");
         super.onResume();
@@ -148,13 +144,13 @@ public class CalculatorsListActivity extends AppCompatActivity implements NoName
     private void initDB() {
         CalculatorRoomDatabase db = CalculatorRoomDatabase.getDatabase(this);
         calculatorDao = db.CalculatorDao();
-        calculatorRepository = new CalculatorRepository(this);
+        calculatorsListRepository = new CalculatorsListRepository(this);
     }
 
     private void initRVWithNoNameAdapter() {
         RecyclerView rv = findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new NoNameAdapter(calculatorList, this);
+        adapter = new CalculatorsListAdapter(calculatorList, this);
         rv.setAdapter(adapter);
         LinkedList<Calculator> calculators = new LinkedList<>();
         //  calculators.add(new Calculator("Калькулятор 1", "1235+433543+24*-3+5*-3", "242"));

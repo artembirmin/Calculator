@@ -1,4 +1,4 @@
-package com.example.calculatorslist.adapters;
+package com.example.presentation.calculatorslist.adapters;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,13 +18,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class NoNameAdapter extends RecyclerView.Adapter<NoNameAdapter.CalcViewHolder> {
+public class CalculatorsListAdapter extends RecyclerView.Adapter<CalculatorsListAdapter.CalcViewHolder> {
 
     private static final String TAG = "qwerty";
     private List<Calculator> calculatorList;
     private OnCalculatorClickListener onCalculatorClickListener;
 
-    public NoNameAdapter(List<Calculator> calculatorList, OnCalculatorClickListener calculatorClickListener) {
+    public CalculatorsListAdapter(List<Calculator> calculatorList, OnCalculatorClickListener calculatorClickListener) {
         this.calculatorList = calculatorList;
         this.onCalculatorClickListener = calculatorClickListener;
     }

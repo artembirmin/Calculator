@@ -1,4 +1,4 @@
-package com.example.calculatormain;
+package com.example.util;
 
 import android.widget.EditText;
 
@@ -15,7 +15,7 @@ public class ComplexOperations {
         Индексу курсора соответствует символ справа от него
     */
 
-    ComplexOperations(EditText inputField, StringBuilder input){
+    public ComplexOperations(EditText inputField, StringBuilder input){
         this.inputField = inputField;
         this.input = input;
     }

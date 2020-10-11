@@ -7,11 +7,11 @@
 
     <activity
         android:id="@+id/calculatorsListActivity"
-        android:name="com.example.calculatorslist.CalculatorsListActivity"
+        android:name="com.example.presentation.calculatorslist.CalculatorsListActivity"
         android:label="activity_calculators_list"
         tools:layout="@layout/activity_calculators_list" />
     <activity
         android:id="@+id/calculatorActivity"
-        android:name="com.example.calculatormain.CalculatorActivity"
+        android:name="com.example.presentation.calculator.CalculatorActivity"
         android:label="CalculatorActivity" />
 </navigation>
