@@ -12,7 +12,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.calculatormain.R;
-import com.example.data.repositories.CalculatorsListRepository;
+import com.example.data.repositories.CalculatorsListRepositoryImpl;
+import com.example.domain.calculatorslist.CalculatorsListRepository;
 import com.example.util.ComplexOperations;
 import com.example.domain.calculator.ExpressionCalculator;
 import com.example.domain.calculator.ReversePolishNotation;
@@ -43,7 +44,7 @@ public class CalculatorActivity extends AppCompatActivity {
         nameField = findViewById(R.id.textview_name);
         inputField = findViewById(R.id.edittext_input);
         outputField = findViewById(R.id.textview_output);
-        calculatorsListRepository = new CalculatorsListRepository(this);
+        calculatorsListRepository = new CalculatorsListRepositoryImpl();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //Скрыло клавиатуру
         if(getIntent().hasExtra("selected_calculator")){
@@ -79,14 +80,8 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(R.anim.animate_swipe_right_enter, R.anim.animate_swipe_right_exit);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        Log.d(TAG, "onPause: ");
         calculator.setExpression(inputField.getText().toString());
         calculator.setAnswer(outputField.getText().toString());
         if (isNewCalculator){
@@ -96,9 +91,14 @@ public class CalculatorActivity extends AppCompatActivity {
         else if(isUpdatedCalculator){
             Log.d(TAG, "finish: upd calc");
             calculatorsListRepository.updateCalculator(calculator);
-
         }
-        Log.d(TAG, "onStop:");
+        super.onPause();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.animate_swipe_right_enter, R.anim.animate_swipe_right_exit);
     }
 
     public void calculate() {

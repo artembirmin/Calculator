@@ -13,19 +13,4 @@ public abstract class CalculatorRoomDatabase extends RoomDatabase {
 
     public abstract CalculatorDao CalculatorDao();
 
-    private static volatile CalculatorRoomDatabase INSTANCE;
-    public static final String DATABASE_NAME = "database";
-
-    public static CalculatorRoomDatabase getDatabase(final Context context) {
-        if (INSTANCE == null) {
-            synchronized (CalculatorRoomDatabase.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            CalculatorRoomDatabase.class, DATABASE_NAME).allowMainThreadQueries()
-                            .build();
-                }
-            }
-        }
-        return INSTANCE;
-    }
 }

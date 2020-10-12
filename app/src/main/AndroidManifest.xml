@@ -4,12 +4,13 @@
 
     <application
         android:allowBackup="true"
+        android:name="com.example.app.App"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/ListTheme">
-        <activity android:name="com.example.presentation.calculatorslist.CalculatorsListActivity">
+        <activity android:name="com.example.presentation.calculatorslist.CalculatorsListActivityImpl">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.calculatormain.com.example.presentation.ui.calculator.CalculatorActivity"
+            android:name="com.example.presentation.calculator.CalculatorActivity"
             android:theme="@style/CalculatorTheme">
 
         </activity>
