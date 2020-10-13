@@ -1,7 +1,7 @@
 package com.example.presentation.calculatorslist;
 
+import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,8 +11,9 @@ import com.example.domain.calculatorslist.CalculatorsListInteractorImpl;
 import com.example.models.Calculator;
 import com.example.presentation.calculatorslist.adapters.CalculatorsListAdapter;
 import com.example.presentation.calculatorslist.adapters.CalculatorsListAdapterImpl;
+import com.example.presentation.routers.CommonCalculatorRouter;
+import com.example.presentation.routers.CommonCalculatorRouterImpl;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
@@ -20,12 +21,12 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
     private static final String TAG = "CalculatorListPresenter";
     CalculatorsListInteractor interactor;
     CalculatorsListActivity activity;
-    LinkedList<Calculator> calculators;
     CalculatorsListAdapter adapter;
-
+    private CommonCalculatorRouter router;
 
     CalculatorsListPresenterImpl() {
         interactor = new CalculatorsListInteractorImpl();
+        router = new CommonCalculatorRouterImpl();
     }
 
     @Override
@@ -40,13 +41,12 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
 
     @Override
     public void onClickCalculator(int position) {
-
+        router.goToCalculator((Activity) activity, position);
     }
 
     @Override
     public void onClickDeleteAll() {
         interactor.deleteAll();
-      //  calculators = (LinkedList<Calculator>) interactor.getCalculators();
         adapter.setCalculators(interactor.getCalculators());
         adapter.notifyDataSetChanged();
     }
@@ -59,16 +59,18 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
 
     @Override
     public void setAdapter(RecyclerView recyclerView) {
-        calculators = new LinkedList<>();
         recyclerView.setLayoutManager(new LinearLayoutManager((Context) activity));
-        adapter = new CalculatorsListAdapterImpl(calculators, (CalculatorsListAdapterImpl.OnCalculatorClickListener) activity);
+        adapter = new CalculatorsListAdapterImpl((List<Calculator>) interactor.getCalculators(), (CalculatorsListAdapterImpl.OnCalculatorClickListener) activity);
         recyclerView.setAdapter((CalculatorsListAdapterImpl) adapter);
-        adapter.setCalculators(calculators);
+    }
+
+    @Override
+    public void goToNewCalculator(String name) {
+        router.goToCalculator((Activity) activity, interactor.getNewCalculator(name));
     }
 
     @Override
     public Calculator getCalculator(int position) {
-        Log.d(TAG, "getCalculator: " + interactor.getCalculator(position));
         return interactor.getCalculator(position);
     }
 }

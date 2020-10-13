@@ -27,4 +27,9 @@ public class CalculatorsListInteractorImpl implements CalculatorsListInteractor 
     public Collection<Calculator> getCalculators() {
         return calculatorsListRepository.getCalculators();
     }
+
+    @Override
+    public Calculator getNewCalculator(String name) {
+        return calculatorsListRepository.getNewCalculator(name);
+    }
 }

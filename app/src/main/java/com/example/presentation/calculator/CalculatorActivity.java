@@ -14,12 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.calculatormain.R;
 import com.example.data.repositories.CalculatorsListRepositoryImpl;
 import com.example.domain.calculatorslist.CalculatorsListRepository;
-import com.example.util.ComplexOperations;
+import com.example.domain.calculator.ComplexOperations;
 import com.example.domain.calculator.ExpressionCalculator;
 import com.example.domain.calculator.ReversePolishNotation;
 import com.example.models.Calculator;
 import com.example.presentation.ui.widgets.AnswerTextView;
-import com.example.util.StringUtil;
+import com.example.domain.calculator.StringUtil;
 
 public class CalculatorActivity extends AppCompatActivity {
 
@@ -48,7 +48,7 @@ public class CalculatorActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //Скрыло клавиатуру
         if(getIntent().hasExtra("selected_calculator")){
-            calculator = getIntent().getParcelableExtra("selected_calculator");
+            calculator = calculatorsListRepository.getCalculator(getIntent().getIntExtra("selected_calculator", -1));
             index = getIntent().getIntExtra("index", -1);
             nameField.setText(calculator.getId());
             inputField.setText(calculator.getExpression());
@@ -98,7 +98,6 @@ public class CalculatorActivity extends AppCompatActivity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(R.anim.animate_swipe_right_enter, R.anim.animate_swipe_right_exit);
     }
 
     public void calculate() {

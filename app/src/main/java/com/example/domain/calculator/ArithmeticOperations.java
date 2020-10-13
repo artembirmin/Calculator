@@ -1,8 +1,6 @@
-package com.example.util;
+package com.example.domain.calculator;
 
 import android.widget.EditText;
-
-import com.example.util.StringUtil;
 
 public class ArithmeticOperations {
 

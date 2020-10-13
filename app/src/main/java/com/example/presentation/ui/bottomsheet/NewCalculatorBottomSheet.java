@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.calculatormain.R;
-import com.example.models.Calculator;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -51,7 +50,8 @@ public class NewCalculatorBottomSheet extends BottomSheetDialogFragment {
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBottomSheetContinueClick.onBottomSheetContinueClick(new Calculator(nameEditText.getText().toString()));
+
+                onBottomSheetContinueClick.onBottomSheetContinueClick(nameEditText.getText().toString());
                 nameEditText.setText("");
                 dismiss();
             }
@@ -66,7 +66,7 @@ public class NewCalculatorBottomSheet extends BottomSheetDialogFragment {
     }
 
     public interface OnBottomSheetContinueClick{
-        void onBottomSheetContinueClick(Calculator calculator);
+        void onBottomSheetContinueClick(String name);
     }
 
     @Override

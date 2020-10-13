@@ -23,36 +23,37 @@ public class CalculatorsListAdapterImpl
         implements CalculatorsListAdapter{
 
     private static final String TAG = "qwerty";
-    private List<Calculator> calculatorList;
+    private List<Calculator> calculators;
     private OnCalculatorClickListener onCalculatorClickListener;
 
-    public CalculatorsListAdapterImpl(List<Calculator> calculatorList, OnCalculatorClickListener calculatorClickListener) {
-        this.calculatorList = calculatorList;
+    public CalculatorsListAdapterImpl(List<Calculator> calculators, OnCalculatorClickListener calculatorClickListener) {
+        this.calculators = calculators;
+        setCalculators(calculators);
         this.onCalculatorClickListener = calculatorClickListener;
     }
 
     public void addNewCalculator(Calculator calculator){
-        calculatorList.add(0,calculator);
-        Log.d(TAG, "addNewCalculator: " + calculatorList);
+        calculators.add(0,calculator);
+        Log.d(TAG, "addNewCalculator: " + calculators);
         notifyDataSetChanged();
     }
 
     public void updateCalculator(Calculator calculator, int index) {
-        calculatorList.remove(index);
-        calculatorList.add(0, calculator);
+        calculators.remove(index);
+        calculators.add(0, calculator);
     }
 
     @Override
     public void setCalculators(Collection<Calculator> calculators){
-        calculatorList.clear();
-        calculatorList.addAll(calculators);
-        Collections.reverse(calculatorList);
+        this.calculators.clear();
+        this.calculators.addAll(calculators);
+        Collections.reverse(this.calculators);
         notifyDataSetChanged();
         //Дает адаптеру знать об изменении списка элементов и что надо перерисовать
     }
 
     public void clearItems(){
-        calculatorList.clear();
+        calculators.clear();
         notifyDataSetChanged();
     }
 
@@ -65,12 +66,12 @@ public class CalculatorsListAdapterImpl
 
     @Override
     public void onBindViewHolder(@NonNull CalcViewHolder holder, int position) {
-        holder.bind(calculatorList.get(position));
+        holder.bind(calculators.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return calculatorList.size();
+        return calculators.size();
     }
 
     static class CalcViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
