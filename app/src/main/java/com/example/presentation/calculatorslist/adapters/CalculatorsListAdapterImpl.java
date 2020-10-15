@@ -1,6 +1,5 @@
 package com.example.presentation.calculatorslist.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,66 +11,95 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calculatormain.R;
 
-import com.example.models.Calculator;
+import com.example.models.Calculator;import com.example.models.CommonListItem;
+import com.example.models.Weather;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 public class CalculatorsListAdapterImpl
-        extends RecyclerView.Adapter<CalculatorsListAdapterImpl.CalcViewHolder>
+        extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements CalculatorsListAdapter{
 
-    private static final String TAG = "qwerty";
-    private List<Calculator> calculators;
+
+    private List<CommonListItem> items;
     private OnCalculatorClickListener onCalculatorClickListener;
 
     public CalculatorsListAdapterImpl(List<Calculator> calculators, OnCalculatorClickListener calculatorClickListener) {
-        this.calculators = calculators;
+        items = new LinkedList<>();
+        items.addAll(calculators);
         setCalculators(calculators);
         this.onCalculatorClickListener = calculatorClickListener;
     }
 
-    public void addNewCalculator(Calculator calculator){
-        calculators.add(0,calculator);
-        Log.d(TAG, "addNewCalculator: " + calculators);
+    public void addWeather(Weather weather){
+        items.add(weather);
         notifyDataSetChanged();
-    }
-
-    public void updateCalculator(Calculator calculator, int index) {
-        calculators.remove(index);
-        calculators.add(0, calculator);
     }
 
     @Override
     public void setCalculators(Collection<Calculator> calculators){
-        this.calculators.clear();
-        this.calculators.addAll(calculators);
-        Collections.reverse(this.calculators);
+        items.clear();
+        items.addAll(calculators);
+        Collections.reverse(items);
         notifyDataSetChanged();
-        //Дает адаптеру знать об изменении списка элементов и что надо перерисовать
     }
 
-    public void clearItems(){
-        calculators.clear();
-        notifyDataSetChanged();
+    @Override
+    public List<CommonListItem> getItems() {
+        return items;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if(items.get(position) instanceof Calculator)
+            return CommonListItem.CALCULATOR;
+        if(items.get(position) instanceof Weather)
+            return CommonListItem.WEATHER;
+        else return  -1;
     }
 
     @NonNull
     @Override
-    public CalcViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
-        return new CalcViewHolder(view, onCalculatorClickListener);
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(viewType == CommonListItem.CALCULATOR){
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.calculator_card_view, parent, false);
+            return new CalcViewHolder(view, onCalculatorClickListener);
+        }
+        if(viewType == CommonListItem.WEATHER){
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.calculator_card_view, parent, false);
+            return new WeatherViewHolder(view);
+        }
+        else return null;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CalcViewHolder holder, int position) {
-        holder.bind(calculators.get(position));
+    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+       if(holder instanceof CalcViewHolder)
+           ((CalcViewHolder) holder).bind((Calculator) items.get(position));
+       if(holder instanceof WeatherViewHolder)
+           ((WeatherViewHolder) holder).bind((Weather) items.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return calculators.size();
+        return items.size();
+    }
+
+    static class WeatherViewHolder extends  RecyclerView.ViewHolder{
+
+        private TextView weatherTextView;
+
+        public WeatherViewHolder(@NonNull View itemView) {
+            super(itemView);
+            weatherTextView = itemView.findViewById(R.id.weather_text_view);
+        }
+
+        public void bind(Weather weather){
+            weatherTextView.setText(weather.toString());
+        }
     }
 
     static class CalcViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

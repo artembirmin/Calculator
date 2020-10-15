@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.calculatormain.R;
 import com.example.data.repositories.CalculatorsListRepositoryImpl;
-import com.example.domain.calculatorslist.CalculatorsListRepository;
+import com.example.data.repositories.CalculatorsListRepository;
 import com.example.domain.calculator.ComplexOperations;
 import com.example.domain.calculator.ExpressionCalculator;
 import com.example.domain.calculator.ReversePolishNotation;

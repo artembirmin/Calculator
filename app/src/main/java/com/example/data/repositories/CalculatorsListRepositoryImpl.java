@@ -3,7 +3,6 @@ package com.example.data.repositories;
 import com.example.app.App;
 import com.example.data.db.CalculatorDao;
 import com.example.data.db.CalculatorRoomDatabase;
-import com.example.domain.calculatorslist.CalculatorsListRepository;
 import com.example.models.Calculator;
 
 import java.util.List;

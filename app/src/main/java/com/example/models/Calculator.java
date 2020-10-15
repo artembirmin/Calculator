@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey;
 import java.util.Objects;
 
 @Entity
-public class Calculator implements Parcelable {
+public class Calculator implements Parcelable, CommonListItem {
 
     @PrimaryKey
     @NonNull

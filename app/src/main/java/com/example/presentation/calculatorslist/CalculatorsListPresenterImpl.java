@@ -9,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.domain.calculatorslist.CalculatorsListInteractor;
 import com.example.domain.calculatorslist.CalculatorsListInteractorImpl;
 import com.example.models.Calculator;
+import com.example.models.CommonListItem;
 import com.example.presentation.calculatorslist.adapters.CalculatorsListAdapter;
 import com.example.presentation.calculatorslist.adapters.CalculatorsListAdapterImpl;
 import com.example.presentation.routers.CommonCalculatorRouter;
 import com.example.presentation.routers.CommonCalculatorRouterImpl;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
@@ -60,7 +62,9 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
     @Override
     public void setAdapter(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new LinearLayoutManager((Context) activity));
+        LinkedList<CommonListItem> items = new LinkedList<>();
         adapter = new CalculatorsListAdapterImpl((List<Calculator>) interactor.getCalculators(), (CalculatorsListAdapterImpl.OnCalculatorClickListener) activity);
+        interactor.addWeather(adapter.getItems());
         recyclerView.setAdapter((CalculatorsListAdapterImpl) adapter);
     }
 

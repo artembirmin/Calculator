@@ -1,4 +1,4 @@
-package com.example.domain.calculatorslist;
+package com.example.data.repositories;
 
 import com.example.models.Calculator;
 

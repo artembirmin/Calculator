@@ -15,6 +15,8 @@ import com.example.presentation.calculatorslist.adapters.CalculatorsListAdapterI
 import com.example.presentation.ui.bottomsheet.NewCalculatorBottomSheet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 public class CalculatorsListActivityImpl extends AppCompatActivity
         implements CalculatorsListActivity, CalculatorsListAdapterImpl.OnCalculatorClickListener,
         NewCalculatorBottomSheet.OnBottomSheetContinueClick {
