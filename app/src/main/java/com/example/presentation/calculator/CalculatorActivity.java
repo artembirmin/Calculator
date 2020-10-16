@@ -1,4 +1,3 @@
-
 package com.example.presentation.calculator;
 
 import android.content.pm.ActivityInfo;
@@ -9,17 +8,18 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.calculatormain.R;
-import com.example.data.repositories.CalculatorsListRepositoryImpl;
 import com.example.data.repositories.CalculatorsListRepository;
+import com.example.data.repositories.CalculatorsListRepositoryImpl;
 import com.example.domain.calculator.ComplexOperations;
 import com.example.domain.calculator.ExpressionCalculator;
 import com.example.domain.calculator.ReversePolishNotation;
+import com.example.domain.calculator.StringUtil;
 import com.example.models.Calculator;
 import com.example.presentation.ui.widgets.AnswerTextView;
-import com.example.domain.calculator.StringUtil;
 
 public class CalculatorActivity extends AppCompatActivity {
 
@@ -47,7 +47,7 @@ public class CalculatorActivity extends AppCompatActivity {
         calculatorsListRepository = new CalculatorsListRepositoryImpl();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //Скрыло клавиатуру
-        if(getIntent().hasExtra("selected_calculator")){
+        if (getIntent().hasExtra("selected_calculator")) {
             calculator = calculatorsListRepository.getCalculator(getIntent().getIntExtra("selected_calculator", -1));
             index = getIntent().getIntExtra("index", -1);
             nameField.setText(calculator.getId());
@@ -56,7 +56,7 @@ public class CalculatorActivity extends AppCompatActivity {
             outputField.setText(calculator.getAnswer());
             isNewCalculator = false;
         }
-        if(getIntent().hasExtra("new_calculator")){
+        if (getIntent().hasExtra("new_calculator")) {
             calculator = getIntent().getParcelableExtra("new_calculator");
             nameField.setText(calculator.getId());
             inputField.setText(calculator.getExpression());
@@ -84,11 +84,10 @@ public class CalculatorActivity extends AppCompatActivity {
         Log.d(TAG, "onPause: ");
         calculator.setExpression(inputField.getText().toString());
         calculator.setAnswer(outputField.getText().toString());
-        if (isNewCalculator){
+        if (isNewCalculator) {
             Log.d(TAG, "finish: new calc");
             calculatorsListRepository.insertCalculator(calculator);
-        }
-        else if(isUpdatedCalculator){
+        } else if (isUpdatedCalculator) {
             Log.d(TAG, "finish: upd calc");
             calculatorsListRepository.updateCalculator(calculator);
         }
@@ -152,8 +151,8 @@ public class CalculatorActivity extends AppCompatActivity {
                     return;
                 inputField.setText(StringUtil.format(outputField.getText().toString()));
                 outputField.setText("");
-                StringUtil.separation(inputField);
                 inputField.setSelection(inputField.length());
+                StringUtil.separation(inputField);
                 StringUtil.checkTextSize(inputField);
                 return;
             //animation

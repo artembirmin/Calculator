@@ -3,11 +3,9 @@ package com.example.presentation.routers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
 
 import com.example.models.Calculator;
 import com.example.presentation.calculator.CalculatorActivity;
-import com.example.presentation.calculatorslist.CalculatorsListActivityImpl;
 
 public class CommonCalculatorRouterImpl implements CommonCalculatorRouter {
 

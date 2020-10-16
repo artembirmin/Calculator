@@ -1,9 +1,9 @@
 package com.example.presentation.calculatorslist.adapters;
 
-import com.example.models.Calculator;import com.example.models.CommonListItem;
+import com.example.models.Calculator;
+import com.example.models.CommonListItem;
 
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 public interface CalculatorsListAdapter {
@@ -12,4 +12,6 @@ public interface CalculatorsListAdapter {
     void notifyDataSetChanged();
 
     List<CommonListItem> getItems();
+
+    void updateItems();
 }

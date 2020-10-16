@@ -1,5 +1,6 @@
 package com.example.presentation.calculatorslist.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.example.calculatormain.R;
-
-import com.example.models.Calculator;import com.example.models.CommonListItem;
+import com.example.models.Calculator;
+import com.example.models.CommonListItem;
 import com.example.models.Weather;
 
 import java.util.Collection;
@@ -21,9 +21,9 @@ import java.util.List;
 
 public class CalculatorsListAdapterImpl
         extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-        implements CalculatorsListAdapter{
+        implements CalculatorsListAdapter {
 
-
+    private static final String TAG = "Adapter";
     private List<CommonListItem> items;
     private OnCalculatorClickListener onCalculatorClickListener;
 
@@ -34,13 +34,13 @@ public class CalculatorsListAdapterImpl
         this.onCalculatorClickListener = calculatorClickListener;
     }
 
-    public void addWeather(Weather weather){
+    public void addWeather(Weather weather) {
         items.add(weather);
         notifyDataSetChanged();
     }
 
     @Override
-    public void setCalculators(Collection<Calculator> calculators){
+    public void setCalculators(Collection<Calculator> calculators) {
         items.clear();
         items.addAll(calculators);
         Collections.reverse(items);
@@ -53,34 +53,38 @@ public class CalculatorsListAdapterImpl
     }
 
     @Override
+    public void updateItems() {
+        notifyDataSetChanged();
+    }
+
+    @Override
     public int getItemViewType(int position) {
-        if(items.get(position) instanceof Calculator)
+        if (items.get(position) instanceof Calculator)
             return CommonListItem.CALCULATOR;
-        if(items.get(position) instanceof Weather)
+        if (items.get(position) instanceof Weather)
             return CommonListItem.WEATHER;
-        else return  -1;
+        else return -1;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(viewType == CommonListItem.CALCULATOR){
+        if (viewType == CommonListItem.CALCULATOR) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.calculator_card_view, parent, false);
             return new CalcViewHolder(view, onCalculatorClickListener);
         }
-        if(viewType == CommonListItem.WEATHER){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.calculator_card_view, parent, false);
+        if (viewType == CommonListItem.WEATHER) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.weather_card_view, parent, false);
             return new WeatherViewHolder(view);
-        }
-        else return null;
+        } else return null;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-       if(holder instanceof CalcViewHolder)
-           ((CalcViewHolder) holder).bind((Calculator) items.get(position));
-       if(holder instanceof WeatherViewHolder)
-           ((WeatherViewHolder) holder).bind((Weather) items.get(position));
+        if (holder instanceof CalcViewHolder)
+            ((CalcViewHolder) holder).bind((Calculator) items.get(position));
+        if (holder instanceof WeatherViewHolder)
+            ((WeatherViewHolder) holder).bind((Weather) items.get(position));
     }
 
     @Override
@@ -88,25 +92,31 @@ public class CalculatorsListAdapterImpl
         return items.size();
     }
 
-    static class WeatherViewHolder extends  RecyclerView.ViewHolder{
+    public interface OnCalculatorClickListener {
+        void onCalculatorClick(int position);
+    }
 
+    static class WeatherViewHolder extends RecyclerView.ViewHolder {
+
+        private static final String TAG = "Adapter";
         private TextView weatherTextView;
 
         public WeatherViewHolder(@NonNull View itemView) {
             super(itemView);
+            Log.d(TAG, "WeatherViewHolder:");
             weatherTextView = itemView.findViewById(R.id.weather_text_view);
         }
 
-        public void bind(Weather weather){
+        public void bind(Weather weather) {
             weatherTextView.setText(weather.toString());
         }
     }
 
     static class CalcViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        private final OnCalculatorClickListener calculatorClickListener;
         private TextView nameTextView;
         private TextView contentTextView;
-        private final OnCalculatorClickListener calculatorClickListener;
 
         public CalcViewHolder(@NonNull View itemView, OnCalculatorClickListener calculatorClickListener) {
             super(itemView);
@@ -119,7 +129,7 @@ public class CalculatorsListAdapterImpl
         public void bind(Calculator calculator) {
             nameTextView.setText(calculator.getId());
             contentTextView.setText(calculator.getExpression());
-            if(contentTextView.getText().length() == 0)
+            if (contentTextView.getText().length() == 0)
                 contentTextView.setText("0");
         }
 
@@ -128,9 +138,5 @@ public class CalculatorsListAdapterImpl
             //Здесь основные действия
             calculatorClickListener.onCalculatorClick(getAdapterPosition());
         }
-    }
-
-    public interface OnCalculatorClickListener {
-        void onCalculatorClick(int position);
     }
 }

@@ -15,8 +15,6 @@ import com.example.presentation.calculatorslist.adapters.CalculatorsListAdapterI
 import com.example.presentation.ui.bottomsheet.NewCalculatorBottomSheet;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
-
 public class CalculatorsListActivityImpl extends AppCompatActivity
         implements CalculatorsListActivity, CalculatorsListAdapterImpl.OnCalculatorClickListener,
         NewCalculatorBottomSheet.OnBottomSheetContinueClick {
@@ -53,13 +51,13 @@ public class CalculatorsListActivityImpl extends AppCompatActivity
     @Override
     public void onCalculatorClick(int position) {
         presenter.onClickCalculator(position);
-       // overridePendingTransition(R.anim.animate_swipe_left_enter, R.anim.animate_swipe_left_exit);
+        // overridePendingTransition(R.anim.animate_swipe_left_enter, R.anim.animate_swipe_left_exit);
     }
 
     @Override
     public void onBottomSheetContinueClick(String name) {
         presenter.goToNewCalculator(name);
-       // overridePendingTransition(R.anim.animate_swipe_left_enter, R.anim.animate_swipe_left_exit);
+        // overridePendingTransition(R.anim.animate_swipe_left_enter, R.anim.animate_swipe_left_exit);
     }
 
     @Override

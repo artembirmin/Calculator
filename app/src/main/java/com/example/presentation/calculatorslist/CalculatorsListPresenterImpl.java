@@ -2,6 +2,7 @@ package com.example.presentation.calculatorslist;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,8 +27,8 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
     CalculatorsListAdapter adapter;
     private CommonCalculatorRouter router;
 
-    CalculatorsListPresenterImpl() {
-        interactor = new CalculatorsListInteractorImpl();
+    public CalculatorsListPresenterImpl() {
+        interactor = new CalculatorsListInteractorImpl(this);
         router = new CommonCalculatorRouterImpl();
     }
 
@@ -37,34 +38,44 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
     }
 
     @Override
+    public void updateItems() {
+        adapter.updateItems();
+    }
+
+    @Override
     public void detachView() {
         activity = null;
     }
 
     @Override
     public void onClickCalculator(int position) {
-        router.goToCalculator((Activity) activity, position);
+        router.goToCalculator((Activity) activity, interactor.getRealPosition(position, adapter.getItems()));
     }
 
     @Override
     public void onClickDeleteAll() {
         interactor.deleteAll();
         adapter.setCalculators(interactor.getCalculators());
+        interactor.addWeather(adapter.getItems());
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onResume() {
         adapter.setCalculators(interactor.getCalculators());
+        interactor.addWeather(adapter.getItems());
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void setAdapter(RecyclerView recyclerView) {
+        Log.d(TAG, "setAdapter: ");
         recyclerView.setLayoutManager(new LinearLayoutManager((Context) activity));
         LinkedList<CommonListItem> items = new LinkedList<>();
         adapter = new CalculatorsListAdapterImpl((List<Calculator>) interactor.getCalculators(), (CalculatorsListAdapterImpl.OnCalculatorClickListener) activity);
-        interactor.addWeather(adapter.getItems());
+        //    Log.d(TAG, "setAdapter: " + adapter.getItems());
+        //    interactor.addWeather(adapter.getItems());
+        Log.d(TAG, "setAdapter: " + adapter.getItems());
         recyclerView.setAdapter((CalculatorsListAdapterImpl) adapter);
     }
 
@@ -75,6 +86,6 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
 
     @Override
     public Calculator getCalculator(int position) {
-        return interactor.getCalculator(position);
+        return interactor.getCalculator(position, adapter.getItems());
     }
 }

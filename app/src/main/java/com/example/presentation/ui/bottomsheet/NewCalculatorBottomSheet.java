@@ -38,7 +38,7 @@ public class NewCalculatorBottomSheet extends BottomSheetDialogFragment {
         nameEditText = view.findViewById(R.id.edit_text_bottom_sheet);
         nameEditText.requestFocus();
         nameEditText.setText("");
-      //  bottomSheetBehavior = BottomSheetBehavior.from(view);
+        //  bottomSheetBehavior = BottomSheetBehavior.from(view);
         continueButton = view.findViewById(R.id.continue_button);
         cancelButton = view.findViewById(R.id.cancel1_button);
         return view;
@@ -65,14 +65,14 @@ public class NewCalculatorBottomSheet extends BottomSheetDialogFragment {
         });
     }
 
-    public interface OnBottomSheetContinueClick{
-        void onBottomSheetContinueClick(String name);
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: ");
         setStyle(DialogFragment.STYLE_NORMAL, R.style.BottomSheetDialogTheme);
         super.onCreate(savedInstanceState);
+    }
+
+    public interface OnBottomSheetContinueClick {
+        void onBottomSheetContinueClick(String name);
     }
 }

@@ -4,14 +4,15 @@ import com.example.models.Calculator;
 import com.example.models.CommonListItem;
 
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 public interface CalculatorsListInteractor {
 
-    Calculator getCalculator(int position);
+    Calculator getCalculator(int position, List<CommonListItem> items);
 
     void deleteAll();
+
+    int getRealPosition(int position, List<CommonListItem> items);
 
     Collection<Calculator> getCalculators();
 

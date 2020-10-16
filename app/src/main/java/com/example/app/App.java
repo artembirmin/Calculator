@@ -1,7 +1,6 @@
 package com.example.app;
 
 import android.app.Application;
-import android.content.Context;
 
 import androidx.room.Room;
 
@@ -13,6 +12,10 @@ public class App extends Application {
 
     private CalculatorRoomDatabase database;
 
+    public static App getInstance() {
+        return instance;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -20,10 +23,6 @@ public class App extends Application {
         database = Room.databaseBuilder(this, CalculatorRoomDatabase.class, "database")
                 .allowMainThreadQueries()
                 .build();
-    }
-
-    public static App getInstance() {
-        return instance;
     }
 
     public CalculatorRoomDatabase getDatabase() {

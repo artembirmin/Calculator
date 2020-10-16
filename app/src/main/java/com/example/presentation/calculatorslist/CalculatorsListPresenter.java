@@ -8,6 +8,8 @@ public interface CalculatorsListPresenter {
 
     void attachView(CalculatorsListActivity calculatorsListActivity);
 
+    void updateItems();
+
     void detachView();
 
     void onClickCalculator(int position);
