@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorPrimary"
     android:elevation="4dp"
-    app:titleTextColor="@android:color/white"
+    app:titleTextColor="@color/text_in_toolbar"
     app:popupTheme="@style/Widget.AppCompat.PopupMenu.Overflow"
     >
 

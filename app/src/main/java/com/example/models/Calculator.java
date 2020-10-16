@@ -3,26 +3,14 @@ package com.example.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Calculator implements Parcelable {
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-    public String name = "";
-    public String content = "";
-    public String answer = "";
+import java.util.Objects;
 
-    public Calculator(String name, String content, String answer) {
-        if(name != null)
-            this.name = name;
-        if(content != null)
-            this.content = content;
-        if(answer!= null)
-            this.answer = answer;
-    }
-
-    protected Calculator(Parcel in) {
-        name = in.readString();
-        content = in.readString();
-        answer = in.readString();
-    }
+@Entity
+public class Calculator implements Parcelable, CommonListItem {
 
     public static final Creator<Calculator> CREATOR = new Creator<Calculator>() {
         @Override
@@ -35,24 +23,63 @@ public class Calculator implements Parcelable {
             return new Calculator[size];
         }
     };
+    @PrimaryKey
+    @NonNull
+    public String id = "";
+    public String expression = "";
+    public String answer = "";
 
-    public String getName() {
-        return name;
+    public Calculator() {
+        this("");
     }
 
-    public String getContent() {
-        return content;
+    public Calculator(@NonNull String name) {
+        this.id = name;
+    }
+
+    public Calculator(@NonNull String name, String expression, String answer) {
+        this.id = name;
+        this.expression = expression;
+        this.answer = answer;
+    }
+
+    protected Calculator(Parcel in) {
+        id = Objects.requireNonNull(in.readString());
+        expression = in.readString();
+        answer = in.readString();
+    }
+
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
+
+    public String getExpression() {
+        return expression;
+    }
+
+    public void setExpression(String expression) {
+        this.expression = expression;
     }
 
     public String getAnswer() {
         return answer;
     }
 
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    @NonNull
     @Override
     public String toString() {
         return "Calculator{" +
-                "name='" + name + '\'' +
-                ", content='" + content + '\'' +
+                "name='" + id + '\'' +
+                ", content='" + expression + '\'' +
                 ", answer='" + answer + '\'' +
                 '}';
     }
@@ -64,8 +91,8 @@ public class Calculator implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
-        parcel.writeString(content);
+        parcel.writeString(id);
+        parcel.writeString(expression);
         parcel.writeString(answer);
     }
 }

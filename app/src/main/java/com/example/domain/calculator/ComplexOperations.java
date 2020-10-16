@@ -1,21 +1,21 @@
-package com.example.calculatormain;
+package com.example.domain.calculator;
 
 import android.widget.EditText;
 
 public class ComplexOperations {
 
-    private EditText inputField;
-    private StringBuilder input;
     private final int ZERO_POSITION = 0;
     private final int FIRST_POSITION = 1;
     private final int SECOND_POSITION = 2;
     private final char COMMA = ',';
+    private EditText inputField;
+    private StringBuilder input;
 
     /*
         Индексу курсора соответствует символ справа от него
     */
 
-    ComplexOperations(EditText inputField, StringBuilder input){
+    public ComplexOperations(EditText inputField, StringBuilder input) {
         this.inputField = inputField;
         this.input = input;
     }
@@ -39,7 +39,7 @@ public class ComplexOperations {
             removeFractionWithLeftNumber(selection);
             return;
         }
-        if(selection == FIRST_POSITION && input.length() > 1 &&  StringUtil.isArithmeticOperation(input.charAt(selection))){
+        if (selection == FIRST_POSITION && input.length() > 1 && StringUtil.isArithmeticOperation(input.charAt(selection))) {
             removeEdgeSymbol(false);
             return;
         }
@@ -48,7 +48,7 @@ public class ComplexOperations {
                 && input.charAt(selection - 1) == '0'
                 && (selection - 1 == 0
                 || !StringUtil.isNumeral(input.charAt(selection - 2))))
-            ||(input.charAt(selection - 1) == COMMA
+                || (input.charAt(selection - 1) == COMMA
                 && input.charAt(selection - 2) == '0'
                 && (selection - 2 == 0 || !StringUtil.isNumeral(input.charAt(selection - 3)))))) {
             removeFractionWithLeftNumber(selection);
@@ -68,7 +68,7 @@ public class ComplexOperations {
     private void removeEdgeSymbol(boolean moveSelection) {
         input.deleteCharAt(ZERO_POSITION);
         inputField.setText(input.toString());
-        if(moveSelection)
+        if (moveSelection)
             inputField.setSelection(inputField.length());
         else
             inputField.setSelection(ZERO_POSITION);
@@ -115,12 +115,12 @@ public class ComplexOperations {
         inputField.setText(input.toString());
         inputField.setSelection(selection - 1);
         try {
-            if(input.charAt(selection - 1) == ' '){
+            if (input.charAt(selection - 1) == ' ') {
                 input.deleteCharAt(selection - 1);
                 inputField.setText(input.toString());
                 inputField.setSelection(selection - 1);
             }
-        } catch (Exception ignored){
+        } catch (Exception ignored) {
         }
         StringUtil.separation(inputField);
     }
@@ -130,7 +130,7 @@ public class ComplexOperations {
         int selection = inputField.getSelectionStart();
         if (StringUtil.isFraction(inputField))
             return;
-        if(selection == ZERO_POSITION && input.length() > 1 && !StringUtil.isNumeral(input.charAt(selection))) {
+        if (selection == ZERO_POSITION && input.length() > 1 && !StringUtil.isNumeral(input.charAt(selection))) {
             createFractionOnEdgeOfNumber(selection);
             return;
         }
@@ -221,7 +221,7 @@ public class ComplexOperations {
 //        }
 
 
-        if(canCreateFractionOnEdge(selection)){
+        if (canCreateFractionOnEdge(selection)) {
             createFractionOnEdgeOfNumber(selection);
             return;
         }
@@ -229,28 +229,25 @@ public class ComplexOperations {
     }
 
     private boolean canCreateFractionOnEdge(int selection) {
-        if(input.length() == 0)
-            return  true;
+        if (input.length() == 0)
+            return true;
         if (StringUtil.isFraction(inputField)
                 || (selection == ZERO_POSITION && input.length() > 2 && !StringUtil.isNumeral(input.charAt(selection)))) {
             return false;
         }
-        try{
-            if(StringUtil.isArithmeticOperation(input.charAt(selection - 1)) && StringUtil.isArithmeticOperation(input.charAt(selection)))
+        try {
+            if (StringUtil.isArithmeticOperation(input.charAt(selection - 1)) && StringUtil.isArithmeticOperation(input.charAt(selection)))
                 return false;
-        } catch (Exception ignored){
+        } catch (Exception ignored) {
         }
-        if(selection == ZERO_POSITION && input.length() > 1 && !StringUtil.isNumeral(input.charAt(selection))){
+        if (selection == ZERO_POSITION && input.length() > 1 && !StringUtil.isNumeral(input.charAt(selection))) {
             return false;
         }
-        if (input.charAt(selection - 1) != ',' &&(input.length() == 0 || (selection == ZERO_POSITION && StringUtil.isNumeral(input.charAt(selection))))
+        if (input.charAt(selection - 1) != ',' && (input.length() == 0 || (selection == ZERO_POSITION && StringUtil.isNumeral(input.charAt(selection))))
                 || (!StringUtil.isNumeral(input.charAt(selection - 1)) && input.charAt(selection - 1) != ' ')) {
             return true;
         }
-        if (((selection <= input.length() && StringUtil.isNumeral(input.charAt(selection - 1))))) {
-            return false;
-        }
-            return true;
+        return ((selection > input.length() || !StringUtil.isNumeral(input.charAt(selection - 1))));
     }
 
     private void defaultInsertZero(int selection) {

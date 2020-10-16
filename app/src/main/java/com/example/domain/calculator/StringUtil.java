@@ -1,6 +1,10 @@
-package com.example.calculatormain;
+package com.example.domain.calculator;
 
 import android.widget.EditText;
+
+import com.example.models.Calculator;
+
+import java.util.List;
 
 public class StringUtil {
 
@@ -77,8 +81,8 @@ public class StringUtil {
         }
     }
 
-    public static String format(String expression){
-        return expression.replace('.',',').replace('-',MINUS);
+    public static String format(String expression) {
+        return expression.replace('.', ',').replace('-', MINUS);
     }
 
     public static int getCountOf(char character, String thisString) {
@@ -100,7 +104,7 @@ public class StringUtil {
 
     public static boolean isFraction(EditText inputField) {
         StringBuilder input = new StringBuilder(inputField.getText());
-        if(input.length() == 0)
+        if (input.length() == 0)
             return false;
         int selection = inputField.getSelectionStart();
         input.insert(ZERO_POSITION, 'x');
@@ -125,15 +129,34 @@ public class StringUtil {
         return item == '+' || item == '−' || item == '×' || item == '÷' || item == '^';
     }
 
-    public static boolean isNumberOnly(String str){
+    public static boolean haveSmthToCalculate(StringBuilder input) {
+        int lenght = input.length();
+        if (input.length() == 0)
+            return false;
+        if (StringUtil.isArithmeticOperation(input.charAt(lenght - 1))) {
+            input.deleteCharAt(input.length() - 1);
+            --lenght;
+        }
+        if (input.length() == 0)
+            return false;
+        if (StringUtil.isArithmeticOperation(input.charAt(lenght - 1))) {
+            input.deleteCharAt(input.length() - 1);
+            --lenght;
+        }
+        if (StringUtil.isArithmeticOperation(input.charAt(0))) {
+            input.deleteCharAt(0);
+            --lenght;
+        }
+        if (lenght == 0)
+            return false;
         int i;
-        for( i = 0; i < str.length(); i++){
-            if (!isPartOfNumber(str.charAt(i))){
+        for (i = 0; i < input.length(); i++) {
+            if (!isPartOfNumber(input.charAt(i))) {
                 i = -1;
                 break;
             }
         }
-        return i == str.length();
+        return i != input.length();
     }
 
     public static void insertArithmeticSign(String operation, EditText inputField) {
@@ -143,15 +166,15 @@ public class StringUtil {
         if (selection != input.length() && input.charAt(selection) == ' ')
             //Если знак ставится после пробела, сводим к случаю постановки перед пробелом. Он решается автоматом
             selection++;
-        if(operation.equals(String.valueOf(MINUS))) {
+        if (operation.equals(String.valueOf(MINUS))) {
             arithmeticOperations.insertMinus(selection);
             return;
         }
-        if(operation.equals(String.valueOf(PLUS))) {
+        if (operation.equals(String.valueOf(PLUS))) {
             arithmeticOperations.insertSign(operation, selection);
             return;
         }
-        if(StringUtil.isArithmeticOperation(operation.charAt(ZERO_POSITION)))
+        if (StringUtil.isArithmeticOperation(operation.charAt(ZERO_POSITION)))
             arithmeticOperations.insertSign(operation, selection);
     }
 
@@ -194,4 +217,12 @@ public class StringUtil {
         inputField.setTextSize(minSizeValue + 24);
     }
 
+    public static void reverse(List<Calculator> calculatorList) {
+        int size = calculatorList.size();
+        for (int i = 0; i < size / 2; i++) {
+            Calculator temp = calculatorList.get(i);
+            calculatorList.set(i, calculatorList.get(size - i - 1));
+            calculatorList.set(size - i - 1, temp);
+        }
+    }
 }

@@ -1,10 +1,8 @@
-package com.example.expressioncalculator;
+package com.example.domain.calculator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
-
-import static java.lang.String.valueOf;
 
 abstract class PolishNotation implements ExpressionCalculator {
 
@@ -131,10 +129,10 @@ abstract class PolishNotation implements ExpressionCalculator {
         if (expression.charAt(0) == '-')
             expression.insert(0, '0');
         for (int i = 0; i < expression.length(); i++) {
-            if(expression.charAt(i) == '-'
+            if (expression.charAt(i) == '-'
                     && (isArithmeticOperation(expression.charAt(i - 1))
-                    && !isArithmeticOperation(expression.charAt(i + 1)) || expression.charAt(i - 1) == '(')){
-                expression.insert(i,'0');
+                    && !isArithmeticOperation(expression.charAt(i + 1)) || expression.charAt(i - 1) == '(')) {
+                expression.insert(i, '0');
                 expression.setCharAt(i + 1, 'M');
             }
         }

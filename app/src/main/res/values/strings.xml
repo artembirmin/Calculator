@@ -23,4 +23,7 @@
     <string name="percent">%</string>
     <string name="zero">0</string>
     <string name="comma">,</string>
+    <string name="cancel">CANCEL</string>
+    <string name="continue1">CONTINUE</string>
+    <string name="name">Name</string>
 </resources>
