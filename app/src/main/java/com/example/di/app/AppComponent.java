@@ -14,5 +14,5 @@ public interface AppComponent {
 
     Context getContext();
 
-    WeatherApi provideWeatherApi();
+  //  WeatherApi provideWeatherApi();
 }
