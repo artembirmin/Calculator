@@ -2,6 +2,7 @@ package com.example.di.app;
 
 import android.content.Context;
 
+import com.example.data.db.CalculatorRoomDatabase;
 import com.example.data.network.weather.WeatherApi;
 
 import javax.inject.Singleton;
@@ -14,5 +15,7 @@ public interface AppComponent {
 
     Context getContext();
 
-  //  WeatherApi provideWeatherApi();
+    WeatherApi provideWeatherApi();
+
+    CalculatorRoomDatabase provideCalculatorRoomDatabase();
 }

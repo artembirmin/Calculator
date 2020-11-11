@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class WeatherApiRepositoryImpl implements WeatherApiRepository {
 
     private static final String TAG = "WeatherApiProvider";
-    Retrofit retrofit;
+    private Retrofit retrofit;
 
 
     public WeatherApiRepositoryImpl() {
