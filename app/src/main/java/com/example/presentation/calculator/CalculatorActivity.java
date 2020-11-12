@@ -35,7 +35,7 @@ public class CalculatorActivity extends AppCompatActivity {
     ExpressionCalculator pn = new ReversePolishNotation();
     Calculator calculator;
 
-  //  @Inject
+    @Inject
     CalculatorsListRepository calculatorsListRepository;
 
     boolean isNewCalculator;

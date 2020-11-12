@@ -30,15 +30,13 @@ public class CalculatorsListActivity extends AppCompatActivity
     @Inject
     CalculatorsListPresenter presenter;
 
-    @Inject
-    CalculatorsListRepository calculatorsListRepository;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculators_list);
-        DaggerCalculatorsListComponent.builder().appComponent(App.getInstance().getAppComponent()).build().inject(this);
-         //Тут DI надо
+        DaggerCalculatorsListComponent.builder()
+                .appComponent(App.getInstance().getAppComponent())
+                .build().inject(this);
         presenter.attachView(this);
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
