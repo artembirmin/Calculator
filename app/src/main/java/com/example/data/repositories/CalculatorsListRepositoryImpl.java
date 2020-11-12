@@ -1,6 +1,5 @@
 package com.example.data.repositories;
 
-import com.example.app.App;
 import com.example.data.db.CalculatorDao;
 import com.example.data.db.CalculatorRoomDatabase;
 import com.example.models.Calculator;
@@ -12,8 +11,7 @@ public class CalculatorsListRepositoryImpl implements CalculatorsListRepository 
     private static final String TAG = "CalculatorRepository";
     private CalculatorDao dao;
 
-    public CalculatorsListRepositoryImpl() {
-        CalculatorRoomDatabase calculatorRoomDatabase = App.getInstance().getDatabase();
+    public CalculatorsListRepositoryImpl(CalculatorRoomDatabase calculatorRoomDatabase) {
         dao = calculatorRoomDatabase.CalculatorDao();
     }
 

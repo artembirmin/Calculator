@@ -5,11 +5,8 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.models.GetWeatherCallback;
 import com.example.data.repositories.CalculatorsListRepository;
-import com.example.data.repositories.CalculatorsListRepositoryImpl;
 import com.example.data.repositories.WeatherApiRepository;
-import com.example.data.repositories.WeatherApiRepositoryImpl;
 import com.example.models.Calculator;
 import com.example.models.CommonListItem;
 import com.example.models.Weather;
@@ -18,17 +15,20 @@ import com.example.presentation.calculatorslist.CalculatorsListPresenter;
 import java.util.Collection;
 import java.util.List;
 
+
+import io.reactivex.Observable;
+import io.reactivex.Single;
+
 public class CalculatorsListInteractorImpl implements CalculatorsListInteractor {
 
     private static final String TAG = "CalculatorsListInterato";
-    CalculatorsListPresenter calculatorsListPresenter;
     CalculatorsListRepository calculatorsListRepository;
     WeatherApiRepository weatherApiRepository;
 
-    public CalculatorsListInteractorImpl(CalculatorsListPresenter calculatorsListPresenter) {
-        this.calculatorsListPresenter = calculatorsListPresenter;
-        calculatorsListRepository = new CalculatorsListRepositoryImpl();
-        weatherApiRepository = new WeatherApiRepositoryImpl();
+    public CalculatorsListInteractorImpl(CalculatorsListRepository calculatorsListRepository,
+                                         WeatherApiRepository weatherApiRepository) {
+        this.calculatorsListRepository = calculatorsListRepository;
+        this.weatherApiRepository = weatherApiRepository;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -69,21 +69,9 @@ public class CalculatorsListInteractorImpl implements CalculatorsListInteractor 
     }
 
     @Override
-    public void addWeather(final List<CommonListItem> items) {
+    public Observable<Weather> addWeather() {
         double lat = 45.03;
         double lon = 38.98;
-        weatherApiRepository.getWeather(lat, lon, new GetWeatherCallback() {
-            @Override
-            public void onSuccess(Weather weather) {
-                items.add(0, weather);
-                calculatorsListPresenter.updateItems();
-            }
-
-            @Override
-            public void onError(Throwable throwable) {
-
-            }
-        });
-
+        return weatherApiRepository.getWeather(lat, lon);
     }
 }

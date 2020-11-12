@@ -11,15 +11,19 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.App;
 import com.example.calculatormain.R;
 import com.example.data.repositories.CalculatorsListRepository;
-import com.example.data.repositories.CalculatorsListRepositoryImpl;
+import com.example.di.activity.calculator.CalculatorComponent;
+import com.example.di.activity.calculator.DaggerCalculatorComponent;
 import com.example.domain.calculator.ComplexOperations;
 import com.example.domain.calculator.ExpressionCalculator;
 import com.example.domain.calculator.ReversePolishNotation;
 import com.example.domain.calculator.StringUtil;
 import com.example.models.Calculator;
 import com.example.presentation.ui.widgets.AnswerTextView;
+
+import javax.inject.Inject;
 
 public class CalculatorActivity extends AppCompatActivity {
 
@@ -30,21 +34,29 @@ public class CalculatorActivity extends AppCompatActivity {
     StringBuilder input;
     ExpressionCalculator pn = new ReversePolishNotation();
     Calculator calculator;
+
+  //  @Inject
     CalculatorsListRepository calculatorsListRepository;
+
     boolean isNewCalculator;
     boolean isUpdatedCalculator;
     int index;
+    CalculatorComponent calculatorComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
+
+        DaggerCalculatorComponent.builder()
+                .appComponent(App.getInstance().getAppComponent())
+                .build().inject(this);
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         nameField = findViewById(R.id.textview_name);
         inputField = findViewById(R.id.edittext_input);
         outputField = findViewById(R.id.textview_output);
-        calculatorsListRepository = new CalculatorsListRepositoryImpl();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //Скрыло клавиатуру
         if (getIntent().hasExtra("selected_calculator")) {

@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import javax.inject.Inject;
 
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WeatherNetworkService implements  WeatherApiProvider {
@@ -17,6 +18,7 @@ public class WeatherNetworkService implements  WeatherApiProvider {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(WeatherApiRepository.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         weatherApi = retrofit.create(WeatherApi.class);
     }

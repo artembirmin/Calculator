@@ -6,7 +6,7 @@ import com.example.models.Calculator;
 
 public interface CalculatorsListPresenter {
 
-    void attachView(CalculatorsListActivity calculatorsListActivity);
+    void attachView(CalculatorsListView calculatorsListActivity);
 
     void updateItems();
 

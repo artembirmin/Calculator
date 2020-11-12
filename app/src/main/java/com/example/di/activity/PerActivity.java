@@ -1,4 +1,4 @@
-package com.example.di.calculatorslist;
+package com.example.di.activity;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

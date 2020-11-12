@@ -2,9 +2,14 @@ package com.example.domain.calculatorslist;
 
 import com.example.models.Calculator;
 import com.example.models.CommonListItem;
+import com.example.models.Weather;
 
 import java.util.Collection;
 import java.util.List;
+
+
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public interface CalculatorsListInteractor {
 
@@ -18,5 +23,5 @@ public interface CalculatorsListInteractor {
 
     Calculator getNewCalculator(String name);
 
-    void addWeather(List<CommonListItem> items);
+    Observable<Weather> addWeather();
 }

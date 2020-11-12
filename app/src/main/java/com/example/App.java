@@ -1,8 +1,6 @@
-package com.example.app;
+package com.example;
 
 import android.app.Application;
-
-import androidx.room.Room;
 
 import com.example.data.db.CalculatorRoomDatabase;
 import com.example.di.app.AppComponent;
@@ -24,18 +22,15 @@ public class App extends Application {
         super.onCreate();
         instance = this;
         inject();
-        database = Room.databaseBuilder(this, CalculatorRoomDatabase.class, "database")
-                .allowMainThreadQueries()
-                .build();
+    }
+
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 
     private void inject() {
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
                 .build();
-    }
-
-    public CalculatorRoomDatabase getDatabase() {
-        return database;
     }
 }
