@@ -6,6 +6,9 @@ import com.example.models.Calculator;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.Single;
+
 public class CalculatorsListRepositoryImpl implements CalculatorsListRepository {
 
     private static final String TAG = "CalculatorRepository";
@@ -20,8 +23,8 @@ public class CalculatorsListRepositoryImpl implements CalculatorsListRepository 
     }
 
     @Override
-    public Calculator getNewCalculator(String name) {
-        return new Calculator(name);
+    public Single<Calculator> getNewCalculator(String name) {
+        return Single.just(new Calculator(name));
     }
 
     public void insertCalculator(Calculator calculator) {
@@ -34,12 +37,13 @@ public class CalculatorsListRepositoryImpl implements CalculatorsListRepository 
     }
 
     @Override
-    public Calculator getCalculator(int position) {
-        List<Calculator> calculators = dao.getAll();
-        return calculators.get(calculators.size() - position - 1);
+    public Single<Calculator> getCalculator(String id) {
+        System.out.println(id);
+        return dao.getById(id);
+                //calculators.get(calculators.size() - position - 1);
     }
 
-    public List<Calculator> getCalculators() {
+    public Single<List<Calculator>> getCalculators() {
         return dao.getAll();
     }
 }

@@ -4,7 +4,6 @@ import com.example.models.Calculator;
 import com.example.models.CommonListItem;
 import com.example.models.Weather;
 
-import java.util.Collection;
 import java.util.List;
 
 
@@ -13,15 +12,15 @@ import io.reactivex.Single;
 
 public interface CalculatorsListInteractor {
 
-    Calculator getCalculator(int position, List<CommonListItem> items);
+    Single<Calculator> getCalculator(int position, List<CommonListItem> items);
+
+    String getIdByPosition(int position, List<CommonListItem> items);
 
     void deleteAll();
 
-    int getRealPosition(int position, List<CommonListItem> items);
+    Single<List<Calculator>> getCalculators();
 
-    Collection<Calculator> getCalculators();
+    Single<Calculator> getNewCalculator(String name);
 
-    Calculator getNewCalculator(String name);
-
-    Observable<Weather> addWeather();
+    Observable<Weather> getWeather();
 }

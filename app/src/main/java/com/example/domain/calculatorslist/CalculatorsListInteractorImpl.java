@@ -10,9 +10,7 @@ import com.example.data.repositories.WeatherApiRepository;
 import com.example.models.Calculator;
 import com.example.models.CommonListItem;
 import com.example.models.Weather;
-import com.example.presentation.calculatorslist.CalculatorsListPresenter;
 
-import java.util.Collection;
 import java.util.List;
 
 
@@ -31,17 +29,16 @@ public class CalculatorsListInteractorImpl implements CalculatorsListInteractor 
         this.weatherApiRepository = weatherApiRepository;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public Calculator getCalculator(int position, final List<CommonListItem> items) {
-        for (int i = 0; i < items.size() && i < position; i++) {
-            if (items.get(i) instanceof Weather)
-                position--;
-        }
+    public Single<Calculator> getCalculator(int position, final List<CommonListItem> items) {
         Log.d(TAG, "getCalculator: " + position);
-        return calculatorsListRepository.getCalculator(position);
+        return calculatorsListRepository.getCalculator(((Calculator) items.get(position)).getId());
     }
 
+    @Override
+    public String getIdByPosition(int position, final List<CommonListItem> items) {
+        return ((Calculator) items.get(position)).getId();
+    }
 
     @Override
     public void deleteAll() {
@@ -49,27 +46,17 @@ public class CalculatorsListInteractorImpl implements CalculatorsListInteractor 
     }
 
     @Override
-    public int getRealPosition(int position, List<CommonListItem> items) {
-        for (int i = 0; i < items.size() && i < position; i++) {
-            if (items.get(i) instanceof Weather)
-                position--;
-        }
-        return position;
-    }
-
-    @Override
-    public Collection<Calculator> getCalculators() {
+    public Single<List<Calculator>> getCalculators() {
         return calculatorsListRepository.getCalculators();
     }
 
-
     @Override
-    public Calculator getNewCalculator(String name) {
+    public Single<Calculator> getNewCalculator(String name) {
         return calculatorsListRepository.getNewCalculator(name);
     }
 
     @Override
-    public Observable<Weather> addWeather() {
+    public Observable<Weather> getWeather() {
         double lat = 45.03;
         double lon = 38.98;
         return weatherApiRepository.getWeather(lat, lon);

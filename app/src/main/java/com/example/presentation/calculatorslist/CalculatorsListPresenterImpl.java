@@ -19,10 +19,9 @@ import com.example.presentation.routers.CommonCalculatorRouterImpl;
 import java.util.LinkedList;
 import java.util.List;
 
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
 
 public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
@@ -32,6 +31,7 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
     CalculatorsListView activity;
     CalculatorsListAdapter adapter;
     private CommonCalculatorRouter router;
+    CompositeDisposable compositeDisposable;
 
     public CalculatorsListPresenterImpl(CalculatorsListInteractor interactor) {
         this.interactor = interactor;
@@ -55,31 +55,51 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
 
     @Override
     public void onClickCalculator(int position) {
-        router.goToCalculator((Activity) activity, interactor.getRealPosition(position, adapter.getItems()));
+        router.goToCalculator((Activity) activity, interactor.getIdByPosition(position, adapter.getItems()));
+    }
+
+    final protected void addDisposable(Disposable disposable) {
+        if (compositeDisposable == null) {
+            compositeDisposable = new CompositeDisposable();
+        }
+        compositeDisposable.add(disposable);
     }
 
     @Override
     public void onClickDeleteAll() {
         interactor.deleteAll();
-        adapter.setCalculators(interactor.getCalculators());
-        interactor.addWeather();
+        addCalculators();
+        addWeather();
         adapter.notifyDataSetChanged();
     }
-    private Disposable disposable;
 
     @Override
     public void onResume() {
-        adapter.setCalculators(interactor.getCalculators());
-         disposable = interactor.addWeather().subscribeOn(Schedulers.io())
-                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::acceptWeather, this::onError);
+        addCalculators();
+        addWeather();
     }
+
+    private void addCalculators() {
+        addDisposable(interactor
+                .getCalculators()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(list -> {
+                    adapter.setCalculators(list);
+                    adapter.notifyDataSetChanged();
+                }, e->System.out.println(e.getMessage())));
+    }
+
+    private void addWeather(){
+        addDisposable(interactor.getWeather().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::acceptWeather, this::onError));
+    }
+
     private void onError(Throwable e) {
         Log.d(TAG, e.getMessage());
     }
 
     private void acceptWeather(Weather weather) {
-        RxJavaPlugins.setErrorHandler(e ->Log.d(TAG, e.getMessage()));
         adapter.getItems().add(0, weather);
         adapter.notifyDataSetChanged();
     }
@@ -89,7 +109,11 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
         Log.d(TAG, "setAdapter: ");
         recyclerView.setLayoutManager(new LinearLayoutManager((Context) activity));
         LinkedList<CommonListItem> items = new LinkedList<>();
-        adapter = new CalculatorsListAdapterImpl((List<Calculator>) interactor.getCalculators(), (CalculatorsListAdapterImpl.OnCalculatorClickListener) activity);
+        addDisposable(interactor.getCalculators().subscribe(list->{
+            adapter = new CalculatorsListAdapterImpl(
+                    list, (CalculatorsListAdapterImpl.OnCalculatorClickListener) activity);
+
+        }));
         //    Log.d(TAG, "setAdapter: " + adapter.getItems());
         //    interactor.addWeather(adapter.getItems());
         Log.d(TAG, "setAdapter: " + adapter.getItems());
@@ -98,11 +122,9 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
 
     @Override
     public void goToNewCalculator(String name) {
-        router.goToCalculator((Activity) activity, interactor.getNewCalculator(name));
+        addDisposable(interactor.getNewCalculator(name).subscribe(calculator ->
+            router.goToCalculator((Activity) activity, calculator)
+        ));
     }
 
-    @Override
-    public Calculator getCalculator(int position) {
-        return interactor.getCalculator(position, adapter.getItems());
-    }
 }

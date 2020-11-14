@@ -4,17 +4,20 @@ import com.example.models.Calculator;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.Single;
+
 public interface CalculatorsListRepository {
 
     void insertCalculator(Calculator calculator);
 
     void updateCalculator(Calculator calculator);
 
-    Calculator getCalculator(int position);
+    Single<Calculator> getCalculator(String id);
 
-    List<Calculator> getCalculators();
+    Single<List<Calculator>> getCalculators();
 
     void deleteAll();
 
-    Calculator getNewCalculator(String name);
+    Single<Calculator> getNewCalculator(String name);
 }

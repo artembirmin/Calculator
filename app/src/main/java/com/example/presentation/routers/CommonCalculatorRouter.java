@@ -6,7 +6,7 @@ import com.example.models.Calculator;
 
 public interface CommonCalculatorRouter {
 
-    void goToCalculator(Activity activity, int calculatorPosition);
+    void goToCalculator(Activity activity, String id);
 
     void goToCalculator(Activity activity, Calculator newCalculator);
 }

@@ -22,5 +22,4 @@ public interface CalculatorsListPresenter {
 
     void goToNewCalculator(String name);
 
-    Calculator getCalculator(int position);
 }

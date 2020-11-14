@@ -28,20 +28,18 @@ import javax.inject.Inject;
 public class CalculatorActivity extends AppCompatActivity {
 
     private static final String TAG = "CalculatorActivity";
-    TextView nameField;
-    EditText inputField;
-    AnswerTextView outputField;
-    StringBuilder input;
-    ExpressionCalculator pn = new ReversePolishNotation();
-    Calculator calculator;
+    private TextView nameField;
+    private EditText inputField;
+    private AnswerTextView outputField;
+    private StringBuilder input;
+    private ExpressionCalculator pn = new ReversePolishNotation();
+    private Calculator calculator;
 
     @Inject
     CalculatorsListRepository calculatorsListRepository;
 
-    boolean isNewCalculator;
-    boolean isUpdatedCalculator;
-    int index;
-    CalculatorComponent calculatorComponent;
+    private boolean isNewCalculator;
+    private boolean isUpdatedCalculator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +58,15 @@ public class CalculatorActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //Скрыло клавиатуру
         if (getIntent().hasExtra("selected_calculator")) {
-            calculator = calculatorsListRepository.getCalculator(getIntent().getIntExtra("selected_calculator", -1));
-            index = getIntent().getIntExtra("index", -1);
-            nameField.setText(calculator.getId());
-            inputField.setText(calculator.getExpression());
-            inputField.setSelection(inputField.length());
-            outputField.setText(calculator.getAnswer());
-            isNewCalculator = false;
+            calculatorsListRepository.getCalculator(getIntent().getStringExtra("selected_calculator")).subscribe((calc)->{
+                calculator = calc;
+                nameField.setText(calculator.getId());
+                inputField.setText(calculator.getExpression());
+                inputField.setSelection(inputField.length());
+                outputField.setText(calculator.getAnswer());
+                isNewCalculator = false;
+            });
+
         }
         if (getIntent().hasExtra("new_calculator")) {
             calculator = getIntent().getParcelableExtra("new_calculator");
