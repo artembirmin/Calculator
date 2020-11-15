@@ -19,6 +19,8 @@ import com.example.presentation.routers.CommonCalculatorRouterImpl;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -30,22 +32,20 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
     CalculatorsListInteractor interactor;
     CalculatorsListView activity;
     CalculatorsListAdapter adapter;
-    private CommonCalculatorRouter router;
+    CommonCalculatorRouter router;
     CompositeDisposable compositeDisposable;
 
-    public CalculatorsListPresenterImpl(CalculatorsListInteractor interactor) {
+    public CalculatorsListPresenterImpl(CalculatorsListInteractor interactor,
+                                        CommonCalculatorRouter router,
+                                        CalculatorsListAdapter adapter) {
         this.interactor = interactor;
-        router = new CommonCalculatorRouterImpl();
+        this.router = router;
+        this.adapter = adapter;
     }
 
     @Override
     public void attachView(CalculatorsListView calculatorsListActivity) {
         activity = calculatorsListActivity;
-    }
-
-    @Override
-    public void updateItems() {
-        adapter.updateItems();
     }
 
     @Override
@@ -79,7 +79,8 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
         addWeather();
     }
 
-    private void addCalculators() {
+    @Override
+    public void addCalculators() {
         addDisposable(interactor
                 .getCalculators()
                 .observeOn(AndroidSchedulers.mainThread())
@@ -102,22 +103,6 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
     private void acceptWeather(Weather weather) {
         adapter.getItems().add(0, weather);
         adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void setAdapter(RecyclerView recyclerView) {
-        Log.d(TAG, "setAdapter: ");
-        recyclerView.setLayoutManager(new LinearLayoutManager((Context) activity));
-        LinkedList<CommonListItem> items = new LinkedList<>();
-        addDisposable(interactor.getCalculators().subscribe(list->{
-            adapter = new CalculatorsListAdapterImpl(
-                    list, (CalculatorsListAdapterImpl.OnCalculatorClickListener) activity);
-
-        }));
-        //    Log.d(TAG, "setAdapter: " + adapter.getItems());
-        //    interactor.addWeather(adapter.getItems());
-        Log.d(TAG, "setAdapter: " + adapter.getItems());
-        recyclerView.setAdapter((CalculatorsListAdapterImpl) adapter);
     }
 
     @Override

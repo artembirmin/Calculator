@@ -56,7 +56,7 @@ public class CalculatorsListInteractorImpl implements CalculatorsListInteractor 
     }
 
     @Override
-    public Observable<Weather> getWeather() {
+    public Single<Weather> getWeather() {
         double lat = 45.03;
         double lon = 38.98;
         return weatherApiRepository.getWeather(lat, lon);

@@ -22,5 +22,5 @@ public interface CalculatorsListInteractor {
 
     Single<Calculator> getNewCalculator(String name);
 
-    Observable<Weather> getWeather();
+    Single<Weather> getWeather();
 }

@@ -3,12 +3,11 @@ package com.example.presentation.calculatorslist;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.models.Calculator;
+import com.example.presentation.calculatorslist.adapters.CalculatorsListAdapterImpl;
 
-public interface CalculatorsListPresenter {
+public interface CalculatorsListPresenter{
 
     void attachView(CalculatorsListView calculatorsListActivity);
-
-    void updateItems();
 
     void detachView();
 
@@ -18,7 +17,7 @@ public interface CalculatorsListPresenter {
 
     void onResume();
 
-    void setAdapter(RecyclerView recyclerView);
+    void addCalculators();
 
     void goToNewCalculator(String name);
 

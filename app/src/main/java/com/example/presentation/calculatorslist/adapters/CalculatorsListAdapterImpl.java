@@ -31,7 +31,13 @@ public class CalculatorsListAdapterImpl
         items = new LinkedList<>();
         items.addAll(calculators);
         setCalculators(calculators);
+        notifyDataSetChanged();
         this.onCalculatorClickListener = calculatorClickListener;
+    }
+
+    public void initList(List<Calculator> calculators){
+        items.addAll(calculators);
+        setCalculators(calculators);
     }
 
     public void addWeather(Weather weather) {

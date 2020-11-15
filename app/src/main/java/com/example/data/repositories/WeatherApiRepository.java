@@ -10,5 +10,5 @@ public interface WeatherApiRepository {
     String WEATHER_API_KEY = "52890ff4987cf82ef04c79cccc4bd74c";
     String BASE_URL = "https://api.openweathermap.org/";
 
-    Observable<Weather> getWeather(double lat, double lon);
+    Single<Weather> getWeather(double lat, double lon);
 }

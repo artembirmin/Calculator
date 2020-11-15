@@ -18,7 +18,7 @@ public class WeatherApiRepositoryImpl implements WeatherApiRepository {
     }
 
     @Override
-    public Observable<Weather> getWeather(double lat, double lon) {
+    public Single<Weather> getWeather(double lat, double lon) {
         return weatherApi.getCurrentWeatherData("" + lat, "" + lon, WEATHER_API_KEY);
     }
 }
