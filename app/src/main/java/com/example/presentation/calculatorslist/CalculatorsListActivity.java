@@ -27,8 +27,9 @@ public class CalculatorsListActivity extends AppCompatActivity
         implements CalculatorsListView {
 
     private static final String TAG = "CalculatorsList";
-    private NewCalculatorBottomSheet bottomSheetDialog;
 
+    @Inject
+    NewCalculatorBottomSheet bottomSheetDialog;
     @Inject
     LinearLayoutManager manager;
     @Inject

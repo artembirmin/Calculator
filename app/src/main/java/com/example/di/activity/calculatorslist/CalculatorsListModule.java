@@ -17,6 +17,7 @@ import com.example.presentation.calculatorslist.CalculatorsListView;
 import com.example.presentation.calculatorslist.adapters.CalculatorsListAdapter;
 import com.example.presentation.calculatorslist.adapters.CalculatorsListAdapterImpl;
 import com.example.presentation.routers.CommonCalculatorRouter;
+import com.example.presentation.ui.bottomsheet.NewCalculatorBottomSheet;
 
 import java.util.Collections;
 
@@ -44,6 +45,12 @@ public class CalculatorsListModule {
     @Provides
     LinearLayoutManager provideLinearLayoutManager(){
         return new LinearLayoutManager((Context) view);
+    }
+
+    @PerActivity
+    @Provides
+    NewCalculatorBottomSheet provideNewCalculatorBottomSheet(){
+        return new NewCalculatorBottomSheet(view);
     }
 
     @PerActivity
