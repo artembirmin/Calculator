@@ -1,5 +1,6 @@
 package com.example.presentation.calculatorslist.adapters;
 
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.paging.PagedList;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.calculatormain.R;
 import com.example.models.Calculator;
@@ -20,14 +26,21 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CalculatorsListAdapterImpl
-        extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+        extends PagedListAdapter<CommonListItem,RecyclerView.ViewHolder>
         implements CalculatorsListAdapter {
 
     private static final String TAG = "Adapter";
     private List<CommonListItem> items;
     private OnCalculatorClickListener onCalculatorClickListener;
 
-    public CalculatorsListAdapterImpl(List<Calculator> calculators, OnCalculatorClickListener calculatorClickListener) {
+    @Override
+    public void submitList(@Nullable PagedList<CommonListItem> pagedList) {
+        super.submitList(pagedList);
+    }
+
+    public CalculatorsListAdapterImpl(List<Calculator> calculators,
+                                      OnCalculatorClickListener calculatorClickListener){
+        super(DIFF_CALLBACK);
         items = new LinkedList<>();
         items.addAll(calculators);
         setCalculators(calculators);
@@ -72,6 +85,21 @@ public class CalculatorsListAdapterImpl
         else return -1;
     }
 
+    private static DiffUtil.ItemCallback<CommonListItem> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<CommonListItem>() {
+
+                @Override
+                public boolean areItemsTheSame(@NonNull CommonListItem oldItem, @NonNull CommonListItem newItem) {
+                   // if(oldItem instanceof Calculator)
+                    return ((Calculator) oldItem).getId().equals(((Calculator) newItem).getId());
+                }
+
+                @Override
+                public boolean areContentsTheSame(@NonNull CommonListItem oldItem, @NonNull CommonListItem newItem) {
+                    return ((Calculator) oldItem).equals(((Calculator) newItem));
+                }
+            };
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -87,6 +115,7 @@ public class CalculatorsListAdapterImpl
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder: " + position);
         if (holder instanceof CalcViewHolder)
             ((CalcViewHolder) holder).bind((Calculator) items.get(position));
         if (holder instanceof WeatherViewHolder)

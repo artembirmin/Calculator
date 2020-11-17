@@ -95,4 +95,14 @@ public class Calculator implements Parcelable, CommonListItem {
         parcel.writeString(expression);
         parcel.writeString(answer);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Calculator)) return false;
+        Calculator that = (Calculator) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getExpression(), that.getExpression()) &&
+                Objects.equals(getAnswer(), that.getAnswer());
+    }
 }

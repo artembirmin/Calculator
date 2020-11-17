@@ -11,13 +11,21 @@ import com.example.models.Calculator;
 
 import java.util.List;
 
+import javax.inject.Singleton;
+
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
 @Dao
 public interface CalculatorDao {
+    @Query("SELECT COUNT(*) FROM calculator")
+    long getCount();
+
     @Query("SELECT * FROM calculator")
     Single<List<Calculator>> getAll();
+
+    @Query("SELECT * FROM calculator LIMIT :from, :size" )
+    List<Calculator> getFromBySize(long from, long size);
 
     @Query("SELECT * FROM calculator WHERE id = :id")
     Single<Calculator> getById(String id);

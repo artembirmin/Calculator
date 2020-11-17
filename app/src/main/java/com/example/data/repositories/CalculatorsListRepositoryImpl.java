@@ -4,22 +4,25 @@ import com.example.data.db.CalculatorDao;
 import com.example.data.db.CalculatorRoomDatabase;
 import com.example.models.Calculator;
 
+import java.util.Collections;
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public class CalculatorsListRepositoryImpl implements CalculatorsListRepository {
 
     private static final String TAG = "CalculatorRepository";
-    private CalculatorDao dao;
+    private final CalculatorDao dao;
+    private static long count;
 
     public CalculatorsListRepositoryImpl(CalculatorRoomDatabase calculatorRoomDatabase) {
         dao = calculatorRoomDatabase.CalculatorDao();
+        count = dao.getCount();
     }
 
     public void deleteAll() {
         dao.deleteAll();
+        count = 0;
     }
 
     @Override
@@ -27,8 +30,16 @@ public class CalculatorsListRepositoryImpl implements CalculatorsListRepository 
         return Single.just(new Calculator(name));
     }
 
+    @Override
+    public Single<List<Calculator>> getFromBySize(long from, long size) {
+        List<Calculator> list = dao.getFromBySize(count - from - size, size);
+        Collections.reverse(list);
+        return Single.just(list);
+    }
+
     public void insertCalculator(Calculator calculator) {
         dao.insert(calculator);
+        count++;
     }
 
     public void updateCalculator(Calculator calculator) {
@@ -38,7 +49,6 @@ public class CalculatorsListRepositoryImpl implements CalculatorsListRepository 
 
     @Override
     public Single<Calculator> getCalculator(String id) {
-        System.out.println(id);
         return dao.getById(id);
                 //calculators.get(calculators.size() - position - 1);
     }

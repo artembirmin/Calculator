@@ -4,7 +4,6 @@ import com.example.models.Calculator;
 
 import java.util.List;
 
-import io.reactivex.Observable;
 import io.reactivex.Single;
 
 public interface CalculatorsListRepository {
@@ -20,4 +19,6 @@ public interface CalculatorsListRepository {
     void deleteAll();
 
     Single<Calculator> getNewCalculator(String name);
+
+    Single<List<Calculator>> getFromBySize(long from, long size);
 }
