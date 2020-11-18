@@ -55,7 +55,7 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
 
     @Override
     public void onClickCalculator(int position) {
-        router.goToCalculator((Activity) activity, interactor.getIdByPosition(position, adapter.getItems()));
+        //router.goToCalculator((Activity) activity, interactor.getIdByPosition(position, adapter.getItems()));
     }
 
     final protected void addDisposable(Disposable disposable) {
@@ -68,15 +68,17 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
     @Override
     public void onClickDeleteAll() {
         interactor.deleteAll();
-        addCalculators();
-        addWeather();
+        //TODO
+       // addCalculators();
+        // addWeather();
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onResume() {
-        addCalculators();
-        addWeather();
+        //TODO
+       // addCalculators();
+       // addWeather();
     }
 
     @Override
@@ -85,8 +87,9 @@ public class CalculatorsListPresenterImpl implements CalculatorsListPresenter {
                 .getCalculators()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(list -> {
-                    adapter.setCalculators(list);
-                    adapter.notifyDataSetChanged();
+                    //TODO
+                   // adapter.setCalculators(list);
+                   // adapter.notifyDataSetChanged();
                 }, e->System.out.println(e.getMessage())));
     }
 

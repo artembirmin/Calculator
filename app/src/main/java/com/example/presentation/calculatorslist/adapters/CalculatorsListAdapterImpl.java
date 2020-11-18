@@ -30,7 +30,7 @@ public class CalculatorsListAdapterImpl
         implements CalculatorsListAdapter {
 
     private static final String TAG = "Adapter";
-    private List<CommonListItem> items;
+
     private OnCalculatorClickListener onCalculatorClickListener;
 
     @Override
@@ -41,34 +41,34 @@ public class CalculatorsListAdapterImpl
     public CalculatorsListAdapterImpl(List<Calculator> calculators,
                                       OnCalculatorClickListener calculatorClickListener){
         super(DIFF_CALLBACK);
-        items = new LinkedList<>();
-        items.addAll(calculators);
+
         setCalculators(calculators);
-        notifyDataSetChanged();
         this.onCalculatorClickListener = calculatorClickListener;
     }
 
-    public void initList(List<Calculator> calculators){
-        items.addAll(calculators);
-        setCalculators(calculators);
-    }
-
-    public void addWeather(Weather weather) {
-        items.add(weather);
-        notifyDataSetChanged();
-    }
+//    public void initList(List<Calculator> calculators){
+//        items.addAll(calculators);
+//        setCalculators(calculators);
+//    }
+//
+//    public void addWeather(Weather weather) {
+//        items.add(weather);
+//        notifyDataSetChanged();
+//    }
 
     @Override
     public void setCalculators(Collection<Calculator> calculators) {
-        items.clear();
-        items.addAll(calculators);
-        Collections.reverse(items);
-        notifyDataSetChanged();
+        //TODO
+//        items.clear();
+//        items.addAll(calculators);
+//        Collections.reverse(items);
+//        notifyDataSetChanged();
     }
 
     @Override
     public List<CommonListItem> getItems() {
-        return items;
+        //return items;
+        return null;
     }
 
     @Override
@@ -78,9 +78,9 @@ public class CalculatorsListAdapterImpl
 
     @Override
     public int getItemViewType(int position) {
-        if (items.get(position) instanceof Calculator)
+        if (getItem(position) instanceof Calculator)
             return CommonListItem.CALCULATOR;
-        if (items.get(position) instanceof Weather)
+        if (getItem(position) instanceof Weather)
             return CommonListItem.WEATHER;
         else return -1;
     }
@@ -117,15 +117,15 @@ public class CalculatorsListAdapterImpl
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: " + position);
         if (holder instanceof CalcViewHolder)
-            ((CalcViewHolder) holder).bind((Calculator) items.get(position));
+            ((CalcViewHolder) holder).bind((Calculator) getItem(position));
         if (holder instanceof WeatherViewHolder)
-            ((WeatherViewHolder) holder).bind((Weather) items.get(position));
+            ((WeatherViewHolder) holder).bind((Weather) getItem(position));
     }
-
-    @Override
-    public int getItemCount() {
-        return items.size();
-    }
+//TODO
+//    @Override
+//    public int getItemCount() {
+//        return items.size();
+//    }
 
     public interface OnCalculatorClickListener {
         void onCalculatorClick(int position);
