@@ -59,12 +59,6 @@ public class CalculatorsListActivity extends AppCompatActivity
                 .calculatorsListModule(new CalculatorsListModule(this))
                 .build().inject(this);
 
-        repository.getFromBySize(0, 3).subscribe(list ->{
-            LinkedList<CommonListItem> commonListItems = new LinkedList<>(list);
-            LinkedList<CommonListItem> listItems = new LinkedList<>(list);
-            Log.d(TAG, "onCreate: " + listItems);
-        });
-
         setAdapter();
         presenter.attachView(this);
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
@@ -77,6 +71,8 @@ public class CalculatorsListActivity extends AppCompatActivity
     private void setAdapter(){
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(manager);
+        manager.setReverseLayout(true);
+        manager.setStackFromEnd(true);
         MyPositionalDataSource dataSource = new MyPositionalDataSource(repository);
         PagedList.Config config = new PagedList.Config.Builder()
                 .setEnablePlaceholders(false)
@@ -86,6 +82,7 @@ public class CalculatorsListActivity extends AppCompatActivity
                 .setNotifyExecutor(new MainThreadExecutor())
                 .setFetchExecutor(Executors.newSingleThreadExecutor())
                 .build();
+
         ((CalculatorsListAdapterImpl) adapter).submitList(pagedList);
         //  presenter.addCalculators();//Вынести сюда подписку, если надо
         recyclerView.setAdapter((CalculatorsListAdapterImpl) adapter);//Приведение такое надо?
@@ -121,6 +118,10 @@ public class CalculatorsListActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.delete_all: {
                 presenter.onClickDeleteAll();
+                break;
+            }
+            case R.id.update_all:{
+                adapter.updateItems();
                 break;
             }
         }

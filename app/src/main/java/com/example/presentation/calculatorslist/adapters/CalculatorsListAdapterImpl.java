@@ -30,21 +30,15 @@ public class CalculatorsListAdapterImpl
         implements CalculatorsListAdapter {
 
     private static final String TAG = "Adapter";
-
     private OnCalculatorClickListener onCalculatorClickListener;
-
-    @Override
-    public void submitList(@Nullable PagedList<CommonListItem> pagedList) {
-        super.submitList(pagedList);
-    }
 
     public CalculatorsListAdapterImpl(List<Calculator> calculators,
                                       OnCalculatorClickListener calculatorClickListener){
         super(DIFF_CALLBACK);
-
         setCalculators(calculators);
         this.onCalculatorClickListener = calculatorClickListener;
     }
+
 
 //    public void initList(List<Calculator> calculators){
 //        items.addAll(calculators);
@@ -73,7 +67,8 @@ public class CalculatorsListAdapterImpl
 
     @Override
     public void updateItems() {
-        notifyDataSetChanged();
+        super.notifyItemRangeInserted(0,1);
+        //notifyDataSetChanged();
     }
 
     @Override
@@ -84,13 +79,32 @@ public class CalculatorsListAdapterImpl
             return CommonListItem.WEATHER;
         else return -1;
     }
+    @Override
+    public void submitList(PagedList<CommonListItem> pagedList) {
 
+        pagedList.addWeakCallback(pagedList.snapshot(), new PagedList.Callback() {
+            @Override
+            public void onChanged(int position, int count) {
+            }
+
+            @Override
+            public void onInserted(int position, int count) {
+               submitList(pagedList);
+            }
+
+            @Override
+            public void onRemoved(int position, int count) {
+
+            }
+        });
+
+    }
     private static DiffUtil.ItemCallback<CommonListItem> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<CommonListItem>() {
 
                 @Override
                 public boolean areItemsTheSame(@NonNull CommonListItem oldItem, @NonNull CommonListItem newItem) {
-                   // if(oldItem instanceof Calculator)
+                   // if(oldItem instanceof Calculator) TODO
                     return ((Calculator) oldItem).getId().equals(((Calculator) newItem).getId());
                 }
 

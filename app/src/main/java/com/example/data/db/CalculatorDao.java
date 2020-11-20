@@ -24,8 +24,8 @@ public interface CalculatorDao {
     @Query("SELECT * FROM calculator")
     Single<List<Calculator>> getAll();
 
-    @Query("SELECT * FROM calculator LIMIT :from, :size" )
-    List<Calculator> getFromBySize(long from, long size);
+    @Query("SELECT * FROM calculator LIMIT :from, :count" )
+    List<Calculator> getFromBySize(long from, long count);
 
     @Query("SELECT * FROM calculator WHERE id = :id")
     Single<Calculator> getById(String id);
@@ -33,7 +33,7 @@ public interface CalculatorDao {
     @Query("SELECT COUNT(id) FROM calculator")
     long getCalculatorsCount();
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Calculator calculator);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -1,18 +1,14 @@
 package com.example.presentation.calculatorslist.pagination;
 
 import android.util.Log;
-import android.view.CollapsibleActionView;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PositionalDataSource;
 
 import com.example.data.repositories.CalculatorsListRepository;
-import com.example.models.Calculator;
 import com.example.models.CommonListItem;
 
-import java.util.Collections;
 import java.util.LinkedList;
-import java.util.List;
 
 public class MyPositionalDataSource extends PositionalDataSource<CommonListItem> {
 
@@ -40,7 +36,5 @@ public class MyPositionalDataSource extends PositionalDataSource<CommonListItem>
             LinkedList<CommonListItem> commonListItems = new LinkedList<>(list);
             callback.onResult(new LinkedList<>(list));
         });
-
     }
-
 }
