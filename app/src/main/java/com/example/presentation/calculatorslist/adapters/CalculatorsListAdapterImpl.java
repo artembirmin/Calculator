@@ -35,6 +35,7 @@ public class CalculatorsListAdapterImpl
     public CalculatorsListAdapterImpl(List<Calculator> calculators,
                                       OnCalculatorClickListener calculatorClickListener){
         super(DIFF_CALLBACK);
+        Log.d(TAG, "CalculatorsListAdapterImpl: ");
         setCalculators(calculators);
         this.onCalculatorClickListener = calculatorClickListener;
     }
@@ -79,8 +80,11 @@ public class CalculatorsListAdapterImpl
             return CommonListItem.WEATHER;
         else return -1;
     }
+
     @Override
     public void submitList(PagedList<CommonListItem> pagedList) {
+        Log.d(TAG, "submitList: ");
+        super.submitList(pagedList);
 
         pagedList.addWeakCallback(pagedList.snapshot(), new PagedList.Callback() {
             @Override
@@ -89,7 +93,7 @@ public class CalculatorsListAdapterImpl
 
             @Override
             public void onInserted(int position, int count) {
-               submitList(pagedList);
+
             }
 
             @Override
@@ -102,14 +106,17 @@ public class CalculatorsListAdapterImpl
     private static DiffUtil.ItemCallback<CommonListItem> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<CommonListItem>() {
 
+
                 @Override
                 public boolean areItemsTheSame(@NonNull CommonListItem oldItem, @NonNull CommonListItem newItem) {
                    // if(oldItem instanceof Calculator) TODO
+                    Log.d(TAG, "areItemsTheSame: ");
                     return ((Calculator) oldItem).getId().equals(((Calculator) newItem).getId());
                 }
 
                 @Override
                 public boolean areContentsTheSame(@NonNull CommonListItem oldItem, @NonNull CommonListItem newItem) {
+                    Log.d(TAG, "areContentsTheSame: ");
                     return ((Calculator) oldItem).equals(((Calculator) newItem));
                 }
             };
@@ -117,6 +124,7 @@ public class CalculatorsListAdapterImpl
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d(TAG, "onCreateViewHolder: ");
         if (viewType == CommonListItem.CALCULATOR) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.calculator_card_view, parent, false);
             return new CalcViewHolder(view, onCalculatorClickListener);

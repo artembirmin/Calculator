@@ -53,19 +53,28 @@ public class CalculatorsListActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculators_list);
+        buildActivityComponentAndInject();
+        setAdapter();
+        presenter.attachView(this);
+        initToolbar();
+        initFAB();
+    }
 
+    private void initToolbar() {
+        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+    }
+
+    private void initFAB() {
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(view -> bottomSheetDialog.show(getSupportFragmentManager(), ""));
+    }
+
+    private void buildActivityComponentAndInject() {
         DaggerCalculatorsListComponent.builder()
                 .appComponent(App.getInstance().getAppComponent())
                 .calculatorsListModule(new CalculatorsListModule(this))
                 .build().inject(this);
-
-        setAdapter();
-        presenter.attachView(this);
-        androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        bottomSheetDialog = new NewCalculatorBottomSheet(this); //Тут DI надо
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(view -> bottomSheetDialog.show(getSupportFragmentManager(), ""));
     }
 
     private void setAdapter(){
@@ -97,13 +106,11 @@ public class CalculatorsListActivity extends AppCompatActivity
     @Override
     public void onCalculatorClick(int position) {
         presenter.onClickCalculator(position);
-        // overridePendingTransition(R.anim.animate_swipe_left_enter, R.anim.animate_swipe_left_exit);
     }
 
     @Override
     public void onBottomSheetContinueClick(String name) {
         presenter.goToNewCalculator(name);
-        // overridePendingTransition(R.anim.animate_swipe_left_enter, R.anim.animate_swipe_left_exit);
     }
 
     @Override

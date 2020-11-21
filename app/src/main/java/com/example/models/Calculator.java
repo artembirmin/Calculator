@@ -25,7 +25,7 @@ public class Calculator implements Parcelable, CommonListItem {
     };
     @PrimaryKey
     @NonNull
-    public String id = "";
+    public String id;
     public String expression = "";
     public String answer = "";
 

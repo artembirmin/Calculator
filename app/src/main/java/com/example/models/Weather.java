@@ -1,5 +1,7 @@
 package com.example.models;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -23,19 +25,20 @@ public class Weather implements CommonListItem {
         return weather;
     }
 
+    @NonNull
     @Override
     public String toString() {
         return name + " " + weather.get(0).main + " " + String.format("%.1f", (main.temp - 273.15));
     }
 
-    class Main {
+    static class Main {
 
         @SerializedName("temp")
         public float temp;
 
     }
 
-    class WeatherItem {
+    static class WeatherItem {
 
         @SerializedName("main")
         private String main;
