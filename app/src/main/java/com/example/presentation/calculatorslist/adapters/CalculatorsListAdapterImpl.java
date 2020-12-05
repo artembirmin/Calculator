@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.paging.PagedList;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.PagerAdapter;
 
@@ -27,7 +28,7 @@ import java.util.List;
 
 public class CalculatorsListAdapterImpl
         extends PagedListAdapter<CommonListItem,RecyclerView.ViewHolder>
-        implements CalculatorsListAdapter {
+        implements CalculatorsListAdapter, ItemTouchHelperAdapter {
 
     private static final String TAG = "Adapter";
     private OnCalculatorClickListener onCalculatorClickListener;
@@ -106,7 +107,6 @@ public class CalculatorsListAdapterImpl
     private static DiffUtil.ItemCallback<CommonListItem> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<CommonListItem>() {
 
-
                 @Override
                 public boolean areItemsTheSame(@NonNull CommonListItem oldItem, @NonNull CommonListItem newItem) {
                    // if(oldItem instanceof Calculator) TODO
@@ -143,6 +143,17 @@ public class CalculatorsListAdapterImpl
         if (holder instanceof WeatherViewHolder)
             ((WeatherViewHolder) holder).bind((Weather) getItem(position));
     }
+
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+
+    }
+
 //TODO
 //    @Override
 //    public int getItemCount() {

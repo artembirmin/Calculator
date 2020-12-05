@@ -47,21 +47,15 @@ public class NewCalculatorBottomSheet extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        continueButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        continueButton.setOnClickListener(view1 -> {
 
-                onBottomSheetContinueClick.onBottomSheetContinueClick(nameEditText.getText().toString());
-                nameEditText.setText("");
-                dismiss();
-            }
+            onBottomSheetContinueClick.onBottomSheetContinueClick(nameEditText.getText().toString());
+            nameEditText.setText("");
+            dismiss();
         });
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                nameEditText.setText("");
-                dismiss();
-            }
+        cancelButton.setOnClickListener(view12 -> {
+            nameEditText.setText("");
+            dismiss();
         });
     }
 

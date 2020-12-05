@@ -11,7 +11,6 @@ public class App extends Application {
 
     public static App instance;
     private AppComponent appComponent;
-    private CalculatorRoomDatabase database;
 
     public static App getInstance() {
         return instance;
