@@ -1,5 +1,6 @@
 package com.example.presentation.calculatorslist.adapters;
 
+import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.paging.PagedList;
+import androidx.paging.PagedListAdapter;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.calculatormain.R;
 import com.example.models.Calculator;
@@ -20,55 +27,104 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class CalculatorsListAdapterImpl
-        extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-        implements CalculatorsListAdapter {
+        extends PagedListAdapter<CommonListItem,RecyclerView.ViewHolder>
+        implements CalculatorsListAdapter, ItemTouchHelperAdapter {
 
     private static final String TAG = "Adapter";
-    private List<CommonListItem> items;
     private OnCalculatorClickListener onCalculatorClickListener;
 
-    public CalculatorsListAdapterImpl(List<Calculator> calculators, OnCalculatorClickListener calculatorClickListener) {
-        items = new LinkedList<>();
-        items.addAll(calculators);
+    public CalculatorsListAdapterImpl(List<Calculator> calculators,
+                                      OnCalculatorClickListener calculatorClickListener){
+        super(DIFF_CALLBACK);
+        Log.d(TAG, "CalculatorsListAdapterImpl: ");
         setCalculators(calculators);
         this.onCalculatorClickListener = calculatorClickListener;
     }
 
-    public void addWeather(Weather weather) {
-        items.add(weather);
-        notifyDataSetChanged();
-    }
+
+//    public void initList(List<Calculator> calculators){
+//        items.addAll(calculators);
+//        setCalculators(calculators);
+//    }
+//
+//    public void addWeather(Weather weather) {
+//        items.add(weather);
+//        notifyDataSetChanged();
+//    }
 
     @Override
     public void setCalculators(Collection<Calculator> calculators) {
-        items.clear();
-        items.addAll(calculators);
-        Collections.reverse(items);
-        notifyDataSetChanged();
+        //TODO
+//        items.clear();
+//        items.addAll(calculators);
+//        Collections.reverse(items);
+//        notifyDataSetChanged();
     }
 
     @Override
     public List<CommonListItem> getItems() {
-        return items;
+        //return items;
+        return null;
     }
 
     @Override
     public void updateItems() {
-        notifyDataSetChanged();
+        super.notifyItemRangeInserted(0,1);
+        //notifyDataSetChanged();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (items.get(position) instanceof Calculator)
+        if (getItem(position) instanceof Calculator)
             return CommonListItem.CALCULATOR;
-        if (items.get(position) instanceof Weather)
+        if (getItem(position) instanceof Weather)
             return CommonListItem.WEATHER;
         else return -1;
     }
 
+    @Override
+    public void submitList(PagedList<CommonListItem> pagedList) {
+        Log.d(TAG, "submitList: ");
+        super.submitList(pagedList);
+
+        pagedList.addWeakCallback(pagedList.snapshot(), new PagedList.Callback() {
+            @Override
+            public void onChanged(int position, int count) {
+            }
+
+            @Override
+            public void onInserted(int position, int count) {
+
+            }
+
+            @Override
+            public void onRemoved(int position, int count) {
+
+            }
+        });
+
+    }
+    private static DiffUtil.ItemCallback<CommonListItem> DIFF_CALLBACK =
+            new DiffUtil.ItemCallback<CommonListItem>() {
+
+                @Override
+                public boolean areItemsTheSame(@NonNull CommonListItem oldItem, @NonNull CommonListItem newItem) {
+                   // if(oldItem instanceof Calculator) TODO
+                    Log.d(TAG, "areItemsTheSame: ");
+                    return ((Calculator) oldItem).getId().equals(((Calculator) newItem).getId());
+                }
+
+                @Override
+                public boolean areContentsTheSame(@NonNull CommonListItem oldItem, @NonNull CommonListItem newItem) {
+                    Log.d(TAG, "areContentsTheSame: ");
+                    return ((Calculator) oldItem).equals(((Calculator) newItem));
+                }
+            };
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d(TAG, "onCreateViewHolder: ");
         if (viewType == CommonListItem.CALCULATOR) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.calculator_card_view, parent, false);
             return new CalcViewHolder(view, onCalculatorClickListener);
@@ -81,16 +137,28 @@ public class CalculatorsListAdapterImpl
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder: " + position);
         if (holder instanceof CalcViewHolder)
-            ((CalcViewHolder) holder).bind((Calculator) items.get(position));
+            ((CalcViewHolder) holder).bind((Calculator) getItem(position));
         if (holder instanceof WeatherViewHolder)
-            ((WeatherViewHolder) holder).bind((Weather) items.get(position));
+            ((WeatherViewHolder) holder).bind((Weather) getItem(position));
     }
 
     @Override
-    public int getItemCount() {
-        return items.size();
+    public void onItemMove(int fromPosition, int toPosition) {
+
     }
+
+    @Override
+    public void onItemDismiss(int position) {
+
+    }
+
+//TODO
+//    @Override
+//    public int getItemCount() {
+//        return items.size();
+//    }
 
     public interface OnCalculatorClickListener {
         void onCalculatorClick(int position);

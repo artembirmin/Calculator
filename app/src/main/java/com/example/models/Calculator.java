@@ -12,20 +12,9 @@ import java.util.Objects;
 @Entity
 public class Calculator implements Parcelable, CommonListItem {
 
-    public static final Creator<Calculator> CREATOR = new Creator<Calculator>() {
-        @Override
-        public Calculator createFromParcel(Parcel in) {
-            return new Calculator(in);
-        }
-
-        @Override
-        public Calculator[] newArray(int size) {
-            return new Calculator[size];
-        }
-    };
     @PrimaryKey
     @NonNull
-    public String id = "";
+    public String id;
     public String expression = "";
     public String answer = "";
 
@@ -48,6 +37,18 @@ public class Calculator implements Parcelable, CommonListItem {
         expression = in.readString();
         answer = in.readString();
     }
+
+    public static final Creator<Calculator> CREATOR = new Creator<Calculator>() {
+        @Override
+        public Calculator createFromParcel(Parcel in) {
+            return new Calculator(in);
+        }
+
+        @Override
+        public Calculator[] newArray(int size) {
+            return new Calculator[size];
+        }
+    };
 
     @NonNull
     public String getId() {
@@ -94,5 +95,15 @@ public class Calculator implements Parcelable, CommonListItem {
         parcel.writeString(id);
         parcel.writeString(expression);
         parcel.writeString(answer);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Calculator)) return false;
+        Calculator that = (Calculator) o;
+        return Objects.equals(getId(), that.getId()) &&
+                Objects.equals(getExpression(), that.getExpression()) &&
+                Objects.equals(getAnswer(), that.getAnswer());
     }
 }

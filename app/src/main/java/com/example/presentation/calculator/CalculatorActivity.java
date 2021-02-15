@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.App;
 import com.example.calculatormain.R;
 import com.example.data.repositories.CalculatorsListRepository;
-import com.example.data.repositories.CalculatorsListRepositoryImpl;
+import com.example.di.activity.calculator.CalculatorComponent;
+import com.example.di.activity.calculator.DaggerCalculatorComponent;
 import com.example.domain.calculator.ComplexOperations;
 import com.example.domain.calculator.ExpressionCalculator;
 import com.example.domain.calculator.ReversePolishNotation;
@@ -21,40 +23,50 @@ import com.example.domain.calculator.StringUtil;
 import com.example.models.Calculator;
 import com.example.presentation.ui.widgets.AnswerTextView;
 
+import javax.inject.Inject;
+
 public class CalculatorActivity extends AppCompatActivity {
 
     private static final String TAG = "CalculatorActivity";
-    TextView nameField;
-    EditText inputField;
-    AnswerTextView outputField;
-    StringBuilder input;
-    ExpressionCalculator pn = new ReversePolishNotation();
-    Calculator calculator;
+    private TextView nameField;
+    private EditText inputField;
+    private AnswerTextView outputField;
+    private StringBuilder input;
+    private ExpressionCalculator pn = new ReversePolishNotation();
+    private Calculator calculator;
+
+    @Inject
     CalculatorsListRepository calculatorsListRepository;
-    boolean isNewCalculator;
-    boolean isUpdatedCalculator;
-    int index;
+
+    private boolean isNewCalculator;
+    private boolean isUpdatedCalculator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
+
+        DaggerCalculatorComponent.builder()
+                .appComponent(App.getInstance().getAppComponent())
+                .build().inject(this);
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         nameField = findViewById(R.id.textview_name);
         inputField = findViewById(R.id.edittext_input);
         outputField = findViewById(R.id.textview_output);
-        calculatorsListRepository = new CalculatorsListRepositoryImpl();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM,
                 WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM); //Скрыло клавиатуру
         if (getIntent().hasExtra("selected_calculator")) {
-            calculator = calculatorsListRepository.getCalculator(getIntent().getIntExtra("selected_calculator", -1));
-            index = getIntent().getIntExtra("index", -1);
-            nameField.setText(calculator.getId());
-            inputField.setText(calculator.getExpression());
-            inputField.setSelection(inputField.length());
-            outputField.setText(calculator.getAnswer());
-            isNewCalculator = false;
+            calculatorsListRepository.getCalculator(getIntent().getStringExtra("selected_calculator")).subscribe((calc)->{
+                calculator = calc;
+                nameField.setText(calculator.getId());
+                inputField.setText(calculator.getExpression());
+                inputField.setSelection(inputField.length());
+                outputField.setText(calculator.getAnswer());
+                isNewCalculator = false;
+            });
+
         }
         if (getIntent().hasExtra("new_calculator")) {
             calculator = getIntent().getParcelableExtra("new_calculator");

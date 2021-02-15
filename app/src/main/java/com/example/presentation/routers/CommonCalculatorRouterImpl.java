@@ -10,9 +10,9 @@ import com.example.presentation.calculator.CalculatorActivity;
 public class CommonCalculatorRouterImpl implements CommonCalculatorRouter {
 
     @Override
-    public void goToCalculator(Activity activity, int calculatorPosition) {
+    public void goToCalculator(Activity activity, String id) {
         Intent intent = new Intent((Context) activity, CalculatorActivity.class);
-        intent.putExtra("selected_calculator", calculatorPosition);
+        intent.putExtra("selected_calculator", id);
         activity.startActivity(intent);
     }
 
